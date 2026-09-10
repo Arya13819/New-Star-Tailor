@@ -14,11 +14,16 @@ Flask · SQLAlchemy + Flask-Migrate · MySQL/MariaDB · Bootstrap 5 · Flask-Bab
 (English + Hindi) · Flask-Login · pytest. Server-rendered, mobile-first,
 installable PWA.
 
-## Status — Phase 1 of 18 complete
+## Status — Phase 2 of 18 complete
 
-| ✔ | Phase 1 | App factory, config, extensions, health checks, base UI, error pages, tests |
-| … | Phase 2 | Database models + migrations |
-| … | 3–18 | Auth, customers, measurements, services, orders, payments, dashboard, customer portal, online orders, receipts, notifications, reports, i18n, PWA, hardening, tests |
+| ✔ | Phase 1 | App factory, config, extensions, health checks, base UI, error pages |
+| ✔ | Phase 2 | 14 SQLAlchemy models, initial Alembic migration, decimal money helpers, model tests |
+| … | Phase 3 | Authentication (admin + customer) |
+| … | 4–18 | Customers, measurements, services, orders, payments, dashboard, customer portal, online orders, receipts, notifications, reports, i18n, PWA, hardening, tests |
+
+> **Local DB:** MySQL/MariaDB is the target. Until it's provisioned (see
+> `docs/DATABASE_SETUP.md`), dev + tests run on SQLite automatically — models
+> are written MySQL-first so nothing changes when you switch.
 
 See the master plan for the full phase list.
 
@@ -31,11 +36,11 @@ python3 -m venv .venv
 cp .env.example .env
 # set SECRET_KEY:  python -c "import secrets; print(secrets.token_hex(32))"
 
-# Database (one-time) — see docs/DATABASE_SETUP.md
-#   sudo mysql < ...create nst_dev / nst_user...
-# then put the real DATABASE_URL in .env
+# Optional now / required for MySQL — see docs/DATABASE_SETUP.md, then set
+# DATABASE_URL + TEST_DATABASE_URL in .env. Leaving them blank uses SQLite.
 
-.venv/bin/flask --app wsgi nst check        # connectivity + config summary
+.venv/bin/flask --app wsgi db upgrade       # create the schema
+.venv/bin/flask --app wsgi nst check        # connectivity + schema revision
 .venv/bin/flask --app wsgi run --debug      # http://127.0.0.1:5000
 ```
 

@@ -50,8 +50,21 @@ TEST_DATABASE_URL=mysql+pymysql://nst_user:choose-a-password@127.0.0.1:3306/nst_
 
 Expect `Database : reachable`. Migrations (`flask db upgrade`) arrive in Phase 2.
 
+## Running without MySQL (temporary)
+
+If `DATABASE_URL` is blank the app uses a local SQLite file
+(`instance/nst_dev.sqlite`) and the test suite uses in-memory SQLite. The
+models are written MySQL-first, so switching later is just a matter of setting
+`DATABASE_URL` / `TEST_DATABASE_URL` and running `flask db upgrade`.
+
+## Applying the schema
+
+```bash
+.venv/bin/flask --app wsgi db upgrade     # runs all migrations
+.venv/bin/flask --app wsgi nst check      # shows "Schema revision : <id>"
+```
+
 ## Notes
 - `utf8mb4` is required for Hindi (Devanagari) text.
-- Until Phase 2 there are no tables; `nst check` only tests connectivity.
-- The test suite falls back to in-memory SQLite when `TEST_DATABASE_URL` is
-  unset, but from Phase 2 you should set it so tests run on the real engine.
+- Prefer setting `TEST_DATABASE_URL` to `nst_test` on MySQL so tests run on the
+  real engine before release.

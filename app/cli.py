@@ -6,6 +6,7 @@ Phase 1 provides only ``flask nst check``. Later phases add ``nst seed``,
 from __future__ import annotations
 
 import click
+import sqlalchemy as sa
 from flask import Flask, current_app
 from sqlalchemy import text
 
@@ -28,7 +29,16 @@ def register_cli(app: Flask) -> None:
 
         try:
             db.session.execute(text("SELECT 1"))
-            click.secho("Database         : reachable", fg="green")
+            insp = sa.inspect(db.engine)
+            tables = [t for t in insp.get_table_names() if t != "alembic_version"]
+            rev = None
+            if "alembic_version" in insp.get_table_names():
+                row = db.session.execute(
+                    text("SELECT version_num FROM alembic_version")
+                ).first()
+                rev = row[0] if row else None
+            click.secho(f"Database         : reachable ({len(tables)} tables)", fg="green")
+            click.echo(f"Schema revision  : {rev or 'not migrated — run: flask db upgrade'}")
         except Exception as exc:  # noqa: BLE001
             click.secho(f"Database         : NOT reachable ({type(exc).__name__})", fg="yellow")
             click.echo("  -> see docs/DATABASE_SETUP.md")

@@ -9,6 +9,9 @@ from __future__ import annotations
 import os
 from datetime import timedelta
 
+_ROOT = os.path.dirname(os.path.dirname(__file__))
+_INSTANCE = os.path.join(_ROOT, "instance")
+
 
 def _bool(name: str, default: bool = False) -> bool:
     return os.environ.get(name, str(default)).strip().lower() in {"1", "true", "yes", "on"}
@@ -95,9 +98,11 @@ class Config:
 class DevelopmentConfig(Config):
     ENV = "development"
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = os.environ.get(
-        "DATABASE_URL",
-        "mysql+pymysql://nst_user:nst_pass@127.0.0.1:3306/nst_dev?charset=utf8mb4",
+    # Prefer a real MySQL/MariaDB via DATABASE_URL. Until that database is
+    # provisioned (see docs/DATABASE_SETUP.md) fall back to a local SQLite
+    # file so development is not blocked. Models are written MySQL-first.
+    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL") or (
+        "sqlite:///" + os.path.join(_INSTANCE, "nst_dev.sqlite")
     )
 
 
@@ -106,9 +111,8 @@ class TestingConfig(Config):
     TESTING = True
     DEBUG = True
     WTF_CSRF_ENABLED = False
-    # Phase 1: no models yet — an in-memory SQLite DB keeps the suite runnable
-    # without a MySQL server. From Phase 2 set TEST_DATABASE_URL to a MySQL
-    # database so tests run on the real dialect.
+    # Set TEST_DATABASE_URL to a MySQL/MariaDB database to run the suite on the
+    # real dialect; otherwise an in-memory SQLite DB keeps tests runnable.
     SQLALCHEMY_DATABASE_URI = os.environ.get(
         "TEST_DATABASE_URL", "sqlite+pysqlite:///:memory:"
     )

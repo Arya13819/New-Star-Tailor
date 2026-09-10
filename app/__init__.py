@@ -57,7 +57,12 @@ def _configure_logging(app: Flask) -> None:
 
 def _init_extensions(app: Flask) -> None:
     db.init_app(app)
-    migrate.init_app(app, db)
+    # Import models so they register on db.metadata for Flask-Migrate.
+    from . import models  # noqa: F401
+
+    # Batch mode lets Alembic emit ALTERs SQLite can run; not needed on MySQL.
+    is_sqlite = app.config["SQLALCHEMY_DATABASE_URI"].startswith("sqlite")
+    migrate.init_app(app, db, render_as_batch=is_sqlite)
     csrf.init_app(app)
     limiter.init_app(app)
     babel.init_app(app, locale_selector=_select_locale)
