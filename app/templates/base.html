@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="{{ CURRENT_LOCALE }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{{ SHOP.name }}{% endblock %}</title>
+  <meta name="description" content="{% block meta_description %}{{ _('Expert men\'s tailoring and uniform specialists in Neemuch, Madhya Pradesh.') }}{% endblock %}">
+  <link rel="icon" href="{{ url_for('static', filename='img/favicon.svg') }}" type="image/svg+xml">
+  <link rel="stylesheet" href="{{ url_for('static', filename='vendor/bootstrap/bootstrap.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/theme.css') }}">
+  {% block head_extra %}{% endblock %}
+</head>
+<body>
+  {% include "partials/_nav.html" %}
+
+  <main class="py-4">
+    <div class="container">
+      {% include "partials/_flash.html" %}
+      {% block content %}{% endblock %}
+    </div>
+  </main>
+
+  {% include "partials/_footer.html" %}
+
+  <script src="{{ url_for('static', filename='vendor/bootstrap/bootstrap.bundle.min.js') }}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

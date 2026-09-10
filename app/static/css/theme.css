@@ -1,0 +1,124 @@
+/* NEW STAR TAILOR — base theme
+   Navy + gold on warm cream. Large, calm, mobile-first.
+   The admin is one non-technical operator: big targets, high contrast. */
+
+:root {
+  --nst-navy: #1b2a4a;
+  --nst-navy-700: #24365c;
+  --nst-gold: #c5993a;
+  --nst-gold-soft: #e7c987;
+  --nst-cream: #faf8f5;
+  --nst-linen: #f1ece3;
+  --nst-border: #e4dfd6;
+  --nst-ink: #1b2a4a;
+  --nst-muted: #6f6a61;
+
+  --bs-body-bg: var(--nst-cream);
+  --bs-body-color: var(--nst-ink);
+  --bs-primary: var(--nst-navy);
+  --bs-primary-rgb: 27, 42, 74;
+  --bs-border-color: var(--nst-border);
+  --bs-link-color: var(--nst-navy-700);
+  --bs-link-hover-color: var(--nst-gold);
+}
+
+body {
+  font-family: "Segoe UI", system-ui, -apple-system, "Noto Sans", "Noto Sans Devanagari", sans-serif;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+h1, h2, h3, h4, h5 {
+  color: var(--nst-navy);
+  font-weight: 600;
+}
+
+.btn {
+  --bs-btn-font-weight: 600;
+  border-radius: 0.6rem;
+  padding-inline: 1.1rem;
+  padding-block: 0.6rem;
+}
+
+.btn-lg {
+  padding-block: 0.85rem;
+  font-size: 1.05rem;
+}
+
+.btn-primary {
+  --bs-btn-bg: var(--nst-navy);
+  --bs-btn-border-color: var(--nst-navy);
+  --bs-btn-hover-bg: var(--nst-navy-700);
+  --bs-btn-hover-border-color: var(--nst-navy-700);
+  --bs-btn-active-bg: var(--nst-navy-700);
+}
+
+.btn-gold {
+  --bs-btn-color: #1b2a4a;
+  --bs-btn-bg: var(--nst-gold);
+  --bs-btn-border-color: var(--nst-gold);
+  --bs-btn-hover-color: #1b2a4a;
+  --bs-btn-hover-bg: var(--nst-gold-soft);
+  --bs-btn-hover-border-color: var(--nst-gold-soft);
+}
+
+.text-gold { color: var(--nst-gold) !important; }
+.bg-navy { background-color: var(--nst-navy) !important; }
+.bg-linen { background-color: var(--nst-linen) !important; }
+
+.navbar-nst {
+  background: var(--nst-navy);
+}
+.navbar-nst .navbar-brand,
+.navbar-nst .nav-link {
+  color: #fff;
+}
+.navbar-nst .nav-link:hover {
+  color: var(--nst-gold-soft);
+}
+
+.brand-mark {
+  width: 34px;
+  height: 34px;
+}
+
+.stitch-divider {
+  border: 0;
+  border-top: 2px dashed rgba(197, 153, 58, 0.55);
+  margin: 2rem 0;
+}
+
+.card {
+  border-radius: 0.9rem;
+  border-color: var(--nst-border);
+  box-shadow: 0 1px 2px rgba(27, 42, 74, 0.04), 0 10px 28px -16px rgba(27, 42, 74, 0.18);
+}
+
+.section-label {
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--nst-gold);
+}
+
+footer.site-footer {
+  background: var(--nst-navy);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.lang-switch .btn {
+  padding-block: 0.3rem;
+  padding-inline: 0.7rem;
+}
+
+/* Print: only the receipt area prints (used from Phase 12) */
+@media print {
+  .no-print { display: none !important; }
+  body { background: #fff; }
+}
