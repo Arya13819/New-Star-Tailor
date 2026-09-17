@@ -5,12 +5,7 @@ from flask_wtf import FlaskForm
 from wtforms import BooleanField, PasswordField, StringField
 from wtforms.validators import DataRequired, Length, Optional, ValidationError
 
-from ..utils.security import normalise_mobile
-
-
-def _valid_mobile(form, field) -> None:  # noqa: ANN001
-    if len(normalise_mobile(field.data)) != 10:
-        raise ValidationError("Enter a valid 10-digit mobile number.")
+from .validators import valid_mobile
 
 
 class AdminLoginForm(FlaskForm):
@@ -23,7 +18,7 @@ class AdminLoginForm(FlaskForm):
 
 class CustomerLoginForm(FlaskForm):
     mobile = StringField(
-        "Mobile number", validators=[DataRequired(), _valid_mobile]
+        "Mobile number", validators=[DataRequired(), valid_mobile]
     )
     password = PasswordField("Password", validators=[DataRequired()])
     remember = BooleanField("Keep me signed in")
@@ -32,7 +27,7 @@ class CustomerLoginForm(FlaskForm):
 class CustomerRegisterForm(FlaskForm):
     name = StringField("Full name", validators=[DataRequired(), Length(max=120)])
     mobile = StringField(
-        "Mobile number", validators=[DataRequired(), _valid_mobile]
+        "Mobile number", validators=[DataRequired(), valid_mobile]
     )
     address = StringField("Address", validators=[Optional(), Length(max=400)])
     password = PasswordField(

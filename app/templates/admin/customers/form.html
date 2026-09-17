@@ -1,0 +1,42 @@
+{% extends "admin/_layout.html" %}
+{% from "partials/_form_macros.html" import field %}
+{% set active = 'customers' %}
+{% block title %}{{ _('New customer') if mode == 'new' else _('Edit customer') }} — {{ SHOP.name }}{% endblock %}
+
+{% block admin_content %}
+<h1 class="h3 mb-4">{{ _('New customer') if mode == 'new' else _('Edit customer') }}</h1>
+
+{% if existing_matches %}
+  <div class="alert alert-warning">
+    <p class="mb-2">
+      {{ _('{count} existing customer(s) already use this mobile number:').format(count=existing_matches|length) }}
+    </p>
+    <ul class="mb-2">
+      {% for m in existing_matches %}
+        <li>
+          <a href="{{ url_for('admin.customer_detail', customer_id=m.id) }}">{{ m.name }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+    <p class="mb-0 small">
+      {{ _('That is expected for family members sharing one number — each person keeps their own profile and measurements. Only continue if this really is a different person.') }}
+    </p>
+  </div>
+{% endif %}
+
+<div class="row">
+  <div class="col-12 col-md-7">
+    <form method="post" novalidate>
+      {{ form.hidden_tag() }}
+      {{ field(form.name, autofocus=True) }}
+      {{ field(form.mobile) }}
+      {{ field(form.address) }}
+      {{ field(form.notes) }}
+      <button type="submit" class="btn btn-primary btn-lg">{{ _('Save') }}</button>
+      {% if mode == 'edit' %}
+        <a class="btn btn-outline-secondary btn-lg" href="{{ url_for('admin.customer_detail', customer_id=customer.id) }}">{{ _('Cancel') }}</a>
+      {% endif %}
+    </form>
+  </div>
+</div>
+{% endblock %}

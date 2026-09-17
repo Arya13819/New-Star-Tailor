@@ -14,12 +14,14 @@ Flask · SQLAlchemy + Flask-Migrate · MySQL/MariaDB · Bootstrap 5 · Flask-Bab
 (English + Hindi) · Flask-Login · pytest. Server-rendered, mobile-first,
 installable PWA.
 
-## Status — Phase 3 of 18 complete
+## Status — Phase 5 of 18 complete
 
 | ✔ | Phase 1 | App factory, config, extensions, health checks, base UI, error pages |
 | ✔ | Phase 2 | 14 SQLAlchemy models, initial Alembic migration, decimal money helpers, model tests |
 | ✔ | Phase 3 | Admin + customer authentication, role-gated routes, rate-limited login, `flask nst create-admin` |
-| … | 4–18 | Customers, measurements, services, orders, payments, dashboard, customer portal, online orders, receipts, notifications, reports, i18n, PWA, hardening, tests |
+| ✔ | Phase 4 | Admin customer CRUD, search (name/mobile), duplicate-mobile warning (not a block), audit log |
+| ✔ | Phase 5 | Measurement versioning UI — inches, fitting preference, history, pre-fill from last version |
+| … | 6–18 | Services & pricing, orders, payments, dashboard, customer portal, online orders, receipts, notifications, reports, i18n, PWA, hardening, tests |
 
 > **Local DB:** MySQL/MariaDB is the target. Until it's provisioned (see
 > `docs/DATABASE_SETUP.md`), dev + tests run on SQLite automatically — models
@@ -43,7 +45,8 @@ cp .env.example .env
 .venv/bin/flask --app wsgi nst check        # connectivity + schema revision
 .venv/bin/flask --app wsgi nst create-admin # first shop staff login
 .venv/bin/flask --app wsgi run --debug      # http://127.0.0.1:5000
-# then: /admin/login (staff) · /customer/login or /customer/register (customers)
+# then: /admin/login (staff) · /admin/customers (customer + measurement management)
+#       /customer/login or /customer/register (customers)
 ```
 
 The app runs **without** a database (health shows `degraded`); you need MySQL

@@ -1,0 +1,101 @@
+{% extends "admin/_layout.html" %}
+{% set active = 'customers' %}
+{% block title %}{{ customer.name }} — {{ SHOP.name }}{% endblock %}
+
+{% block admin_content %}
+<div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4">
+  <div>
+    <h1 class="h3 mb-1">{{ customer.name }}</h1>
+    <p class="text-secondary mb-0">
+      {{ customer.mobile }}
+      {% if customer.address %} · {{ customer.address }}{% endif %}
+    </p>
+  </div>
+  <a class="btn btn-outline-primary" href="{{ url_for('admin.customer_edit', customer_id=customer.id) }}">
+    {{ _('Edit profile') }}
+  </a>
+</div>
+
+{% if customer.notes %}
+  <div class="alert alert-secondary">{{ customer.notes }}</div>
+{% endif %}
+
+<div class="row g-4">
+  <div class="col-12 col-lg-7">
+    <div class="card">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h2 class="h5 mb-0">{{ _('Measurements') }}</h2>
+          <a class="btn btn-sm btn-primary" href="{{ url_for('admin.measurement_new', customer_id=customer.id) }}">
+            {{ _('+ New measurement') }}
+          </a>
+        </div>
+
+        {% set current = customer.measurement.current_version if customer.measurement else None %}
+        {% if current %}
+          <p class="small text-secondary mb-3">
+            {{ _('Version {n} · taken {date}').format(n=current.version_number, date=current.created_at.strftime('%d %b %Y')) }}
+            {% if current.fitting_preference %} · {{ current.fitting_preference.value|title }}{% endif %}
+          </p>
+          <div class="row">
+            <div class="col-6">
+              <p class="section-label">{{ _('Shirt (in)') }}</p>
+              <table class="table table-sm">
+                {% for key, label in shirt_fields %}
+                  <tr><td>{{ _(label) }}</td><td class="text-end">{{ current[key] if current[key] is not none else '—' }}</td></tr>
+                {% endfor %}
+              </table>
+            </div>
+            <div class="col-6">
+              <p class="section-label">{{ _('Pant (in)') }}</p>
+              <table class="table table-sm">
+                {% for key, label in pant_fields %}
+                  <tr><td>{{ _(label) }}</td><td class="text-end">{{ current[key] if current[key] is not none else '—' }}</td></tr>
+                {% endfor %}
+              </table>
+            </div>
+          </div>
+          {% if current.allowance %}<p class="small mb-1"><strong>{{ _('Allowance') }}:</strong> {{ current.allowance }}</p>{% endif %}
+          {% if current.notes %}<p class="small mb-1"><strong>{{ _('Notes') }}:</strong> {{ current.notes }}</p>{% endif %}
+          {% if current.alteration_notes %}<p class="small mb-0"><strong>{{ _('Alteration notes') }}:</strong> {{ current.alteration_notes }}</p>{% endif %}
+        {% else %}
+          <p class="text-secondary">{{ _('No measurements recorded yet.') }}</p>
+        {% endif %}
+
+        {% if customer.measurement and customer.measurement.versions|length > 1 %}
+          <hr>
+          <p class="section-label mb-2">{{ _('History') }}</p>
+          <ul class="list-unstyled small mb-0">
+            {% for v in customer.measurement.versions|sort(attribute='version_number', reverse=True) %}
+              {% if v.id != current.id %}
+                <li class="text-secondary">
+                  {{ _('Version {n} · {date}').format(n=v.version_number, date=v.created_at.strftime('%d %b %Y')) }}
+                </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-lg-5">
+    <div class="card">
+      <div class="card-body">
+        <h2 class="h5 mb-3">{{ _('Order history') }}</h2>
+        {% if customer.orders %}
+          <ul class="list-unstyled mb-0">
+            {% for o in customer.orders|sort(attribute='created_at', reverse=True) %}
+              <li class="border-bottom py-2">
+                <strong>{{ o.order_number or _('Draft') }}</strong> — {{ o.status.value|title }}
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p class="text-secondary mb-0">{{ _('No orders yet — order management arrives in Phase 7.') }}</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
