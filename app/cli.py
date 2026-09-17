@@ -1,7 +1,7 @@
 """Custom Flask CLI commands.
 
-Phase 1 provides only ``flask nst check``. Later phases add ``nst seed``,
-``nst notifications process`` and ``nst reminders run``.
+``nst check`` (Phase 1) and ``nst create-admin`` (Phase 3) so far. Later
+phases add ``nst seed``, ``nst notifications process`` and ``nst reminders run``.
 """
 from __future__ import annotations
 
@@ -45,3 +45,44 @@ def register_cli(app: Flask) -> None:
 
         click.echo(f"Payments wired   : {cfg['PAYMENT_PROVIDER'] != 'manual' and bool(cfg['PAYMENT_PROVIDER_KEY'])}")
         click.echo(f"Messaging wired  : {bool(cfg['WHATSAPP_API_KEY'] and cfg['WHATSAPP_PHONE_ID'])}")
+
+    @nst.command("create-admin")
+    @click.option("--name", prompt=True)
+    @click.option("--email", prompt=True)
+    @click.option("--mobile", prompt=True, default="", show_default=False)
+    @click.option(
+        "--password",
+        prompt=True,
+        hide_input=True,
+        confirmation_prompt=True,
+    )
+    def create_admin(name: str, email: str, mobile: str, password: str):
+        """Create (or promote) the shop admin account."""
+        from .models.enums import UserRole
+        from .models.user import User
+        from .utils.security import normalise_mobile
+
+        email = email.strip().lower()
+        mobile_clean = normalise_mobile(mobile) if mobile else None
+        if mobile_clean and len(mobile_clean) != 10:
+            raise click.ClickException("Mobile number must have 10 digits.")
+        if len(password) < 8:
+            raise click.ClickException("Password must be at least 8 characters.")
+
+        existing = User.query.filter(
+            (User.email == email) | (User.mobile == mobile_clean if mobile_clean else False)
+        ).first()
+        if existing:
+            existing.role = UserRole.ADMIN
+            existing.name = name
+            existing.is_active = True
+            existing.set_password(password)
+            db.session.commit()
+            click.secho(f"Updated existing account -> admin: {email}", fg="green")
+            return
+
+        user = User(name=name, email=email, mobile=mobile_clean, role=UserRole.ADMIN)
+        user.set_password(password)
+        db.session.add(user)
+        db.session.commit()
+        click.secho(f"Admin account created: {email}", fg="green")

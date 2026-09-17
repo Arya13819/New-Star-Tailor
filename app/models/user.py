@@ -12,12 +12,16 @@ from .enums import UserRole
 
 class User(PkMixin, TimestampMixin, UserMixin, db.Model):
     __tablename__ = "users"
-    __table_args__ = TABLE_ARGS
+    __table_args__ = (
+        sa.UniqueConstraint("mobile", name="uq_users_mobile"),
+        TABLE_ARGS,
+    )
 
     name: Mapped[str] = mapped_column(sa.String(120), nullable=False)
-    # Customers log in with mobile; admins may use either. Both optional at the
-    # column level, enforced per-role in the auth layer (Phase 3).
-    mobile: Mapped[str | None] = mapped_column(sa.String(20), index=True)
+    # Customers log in with mobile; admins may use either. Unique when present
+    # so a mobile number unambiguously identifies one login account (distinct
+    # from customers.mobile, which is deliberately NOT unique).
+    mobile: Mapped[str | None] = mapped_column(sa.String(20))
     email: Mapped[str | None] = mapped_column(sa.String(190), unique=True)
 
     password_hash: Mapped[str] = mapped_column(sa.String(255), nullable=False)

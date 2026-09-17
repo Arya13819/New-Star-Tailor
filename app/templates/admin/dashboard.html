@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}{{ _('Dashboard') }} — {{ SHOP.name }}{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+  <div>
+    <p class="section-label mb-1">{{ _('Shop dashboard') }}</p>
+    <h1 class="h3 mb-0">{{ _('Welcome, {name}').format(name=user.name) }}</h1>
+  </div>
+  <form method="post" action="{{ url_for('auth.admin_logout') }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <button type="submit" class="btn btn-outline-primary">{{ _('Sign out') }}</button>
+  </form>
+</div>
+
+<div class="alert alert-info">
+  {{ _('The full dashboard (order counts, quick actions, recent orders) arrives in Phase 9. Access control is working: you are signed in as an admin.') }}
+</div>
+{% endblock %}

@@ -18,6 +18,15 @@
 
       <div class="d-flex align-items-center gap-3">
         <a class="btn btn-gold btn-sm" href="tel:{{ SHOP.phone }}">{{ _('Call') }} {{ SHOP.phone }}</a>
+        {% if current_user.is_authenticated %}
+          {% if current_user.role.value == 'ADMIN' %}
+            <a class="btn btn-outline-light btn-sm" href="{{ url_for('admin.dashboard') }}">{{ _('Dashboard') }}</a>
+          {% else %}
+            <a class="btn btn-outline-light btn-sm" href="{{ url_for('customer.dashboard') }}">{{ _('My account') }}</a>
+          {% endif %}
+        {% else %}
+          <a class="btn btn-outline-light btn-sm" href="{{ url_for('auth.customer_login') }}">{{ _('Sign in') }}</a>
+        {% endif %}
         <div class="btn-group lang-switch" role="group" aria-label="{{ _('Language') }}">
           {% for code, label in LANGUAGES.items() %}
             <a class="btn btn-sm {{ 'btn-light' if code == CURRENT_LOCALE else 'btn-outline-light' }}"
