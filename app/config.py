@@ -71,7 +71,10 @@ class Config:
     )
     SHOP_PHONE = "9352672795"
     ORDER_NUMBER_PREFIX = "NST-"
-    ORDER_NUMBER_PAD = 6
+    # Minimum digit width, e.g. NST-0001. Not a hard cap — order #10000 still
+    # prints in full as NST-10000, so this never needs to be "widened" later;
+    # raise it only to change how many leading zeros a low order number shows.
+    ORDER_NUMBER_PAD = 4
     MEASUREMENT_UNIT = "in"
 
     # --- Payment provider (connected later; see docs/PAYMENTS.md) ---

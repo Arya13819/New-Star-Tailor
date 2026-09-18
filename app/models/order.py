@@ -140,7 +140,7 @@ class OrderItem(PkMixin, db.Model):
 
 
 class OrderSequence(db.Model):
-    """Single-row counter for atomic ``NST-000001`` generation.
+    """Single-row counter for atomic ``NST-0001`` generation.
 
     The numbering service takes a ``SELECT ... FOR UPDATE`` on this row inside
     the order-creation transaction.

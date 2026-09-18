@@ -55,7 +55,11 @@ Stitching charges + Material charges = Final total
 - **No udhaar / credit system.** An unpaid balance is just that order's remaining balance.
 
 ## Order numbers
-- Format `NST-000001`, zero-padded to 6 digits, auto-incrementing.
+- Format `NST-0001`, zero-padded to **4 digits** (owner's call, 2026-09-18 —
+  was 6), auto-incrementing. This is a minimum width, not a cap: order #10000
+  still prints in full as `NST-10000`, so it never needs code changes to
+  "widen" later — only `Config.ORDER_NUMBER_PAD` would change, and only to
+  alter how many leading zeros a low number shows.
 - Generated **server-side**, atomically. Never generated on the frontend.
 - Assigned when an order is confirmed (walk-in: on create; complete online order: on submit). Enquiries get no number until converted to an order.
 
