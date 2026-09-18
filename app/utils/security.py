@@ -54,6 +54,13 @@ def _(text: str) -> str:  # local alias to avoid a circular import at module loa
     return gettext(text)
 
 
+def owned_customer_ids() -> list[int]:
+    """Every Customer profile (self + linked family members) the signed-in
+    customer account may see. Used to enforce data isolation (master prompt
+    §64/§76: one customer must never see another's orders/measurements)."""
+    return [c.id for c in current_user.customers]
+
+
 def safe_next_url(candidate: str | None, default_endpoint: str) -> str:
     """Only follow a same-site relative ``next`` path — never an open redirect."""
     if candidate and candidate.startswith("/") and not candidate.startswith("//"):

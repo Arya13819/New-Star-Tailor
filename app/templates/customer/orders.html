@@ -1,0 +1,36 @@
+{% extends "customer/_layout.html" %}
+{% set active = 'orders' %}
+{% block title %}{{ _('My orders') }} — {{ SHOP.name }}{% endblock %}
+
+{% block customer_content %}
+<h1 class="h3 mb-4">{{ _('My orders') }}</h1>
+
+{% if not orders %}
+  <p class="text-secondary">{{ _('No orders yet.') }}</p>
+{% else %}
+  <div class="table-responsive">
+    <table class="table align-middle">
+      <thead>
+        <tr>
+          <th>{{ _('Order') }}</th>
+          <th>{{ _('Date') }}</th>
+          <th>{{ _('Status') }}</th>
+          <th class="text-end">{{ _('Total') }}</th>
+          <th class="text-end">{{ _('Balance') }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for o, balance in orders %}
+          <tr>
+            <td><a href="{{ url_for('customer.order_detail', order_id=o.id) }}">{{ o.order_number }}</a></td>
+            <td>{{ o.created_at.strftime('%d %b %Y') }}</td>
+            <td><span class="badge text-bg-secondary">{{ o.status.value|title }}</span></td>
+            <td class="text-end">₹{{ '%.2f'|format(o.grand_total) }}</td>
+            <td class="text-end">₹{{ '%.2f'|format(balance) }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endif %}
+{% endblock %}

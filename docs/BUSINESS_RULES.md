@@ -84,6 +84,7 @@ Stitching charges + Material charges = Final total
 - Fields: Name, Mobile, Address.
 - **Mobile is NOT unique.** Two people (e.g. family members) can share a mobile and remain separate customer profiles.
 - A customer profile may be linked to a login account (`user_id`), or not (walk-ins created by the admin).
+- **Known gap (flag before Phase 11):** if a walk-in customer later self-registers a portal account with the *same* mobile number, registration creates a brand-new `Customer` profile rather than linking to their existing walk-in history — their old orders won't show in the portal. Deliberately not auto-linked by mobile alone (a recycled SIM could otherwise let a stranger inherit someone else's order history); needs an explicit "claim my history" flow with a real identity check if the owner wants this solved.
 
 ## Self-submitted measurements (online)
 - Optional. If the customer enters their own measurements, they must see and accept an acknowledgement that **they are responsible for the accuracy** and the shop is not liable for measurement-related issues from self-submitted values.
