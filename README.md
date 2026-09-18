@@ -14,14 +14,15 @@ Flask · SQLAlchemy + Flask-Migrate · MySQL/MariaDB · Bootstrap 5 · Flask-Bab
 (English + Hindi) · Flask-Login · pytest. Server-rendered, mobile-first,
 installable PWA.
 
-## Status — Phase 5 of 18 complete
+## Status — Phase 6 of 18 complete
 
 | ✔ | Phase 1 | App factory, config, extensions, health checks, base UI, error pages |
 | ✔ | Phase 2 | 14 SQLAlchemy models, initial Alembic migration, decimal money helpers, model tests |
 | ✔ | Phase 3 | Admin + customer authentication, role-gated routes, rate-limited login, `flask nst create-admin` |
 | ✔ | Phase 4 | Admin customer CRUD, search (name/mobile), duplicate-mobile warning (not a block), audit log |
 | ✔ | Phase 5 | Measurement versioning UI — inches, fitting preference, history, pre-fill from last version |
-| … | 6–18 | Services & pricing, orders, payments, dashboard, customer portal, online orders, receipts, notifications, reports, i18n, PWA, hardening, tests |
+| ✔ | Phase 6 | Service catalogue & pricing — `/admin/services`, seeded defaults, unset prices flagged not guessed |
+| … | 7–18 | Orders, payments, dashboard, customer portal, online orders, receipts, notifications, reports, i18n, PWA, hardening, tests |
 
 > **Local DB:** running on real **MariaDB 11.8** (`nst_dev` / `nst_test`) as of
 > 2026-09-18 — see `docs/DATABASE_SETUP.md`. The SQLite fallback used during
@@ -41,11 +42,13 @@ cp .env.example .env
 # Optional now / required for MySQL — see docs/DATABASE_SETUP.md, then set
 # DATABASE_URL + TEST_DATABASE_URL in .env. Leaving them blank uses SQLite.
 
-.venv/bin/flask --app wsgi db upgrade       # create the schema
-.venv/bin/flask --app wsgi nst check        # connectivity + schema revision
-.venv/bin/flask --app wsgi nst create-admin # first shop staff login
-.venv/bin/flask --app wsgi run --debug      # http://127.0.0.1:5000
+.venv/bin/flask --app wsgi db upgrade        # create the schema
+.venv/bin/flask --app wsgi nst check         # connectivity + schema revision
+.venv/bin/flask --app wsgi nst create-admin  # first shop staff login
+.venv/bin/flask --app wsgi nst seed-services # default service catalogue (idempotent)
+.venv/bin/flask --app wsgi run --debug       # http://127.0.0.1:5000
 # then: /admin/login (staff) · /admin/customers (customer + measurement management)
+#       /admin/services (pricing — some prices are intentionally unset, see BUSINESS_RULES.md)
 #       /customer/login or /customer/register (customers)
 ```
 

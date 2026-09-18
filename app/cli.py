@@ -86,3 +86,14 @@ def register_cli(app: Flask) -> None:
         db.session.add(user)
         db.session.commit()
         click.secho(f"Admin account created: {email}", fg="green")
+
+    @nst.command("seed-services")
+    def seed_services():
+        """Load the known default services (idempotent — safe to re-run)."""
+        from .services import catalog_service
+
+        created = catalog_service.seed_defaults()
+        if created:
+            click.secho(f"Added {created} service(s).", fg="green")
+        else:
+            click.echo("Default services already present — nothing to do.")

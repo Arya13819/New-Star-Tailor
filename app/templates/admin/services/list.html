@@ -1,0 +1,74 @@
+{% extends "admin/_layout.html" %}
+{% set active = 'services' %}
+{% block title %}{{ _('Services') }} — {{ SHOP.name }}{% endblock %}
+
+{% block admin_content %}
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-3">
+  <h1 class="h3 mb-0">{{ _('Services & pricing') }}</h1>
+  <div class="d-flex gap-2">
+    <form method="post" action="{{ url_for('admin.service_seed_defaults') }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <button type="submit" class="btn btn-outline-primary">{{ _('Load default services') }}</button>
+    </form>
+    <a class="btn btn-primary" href="{{ url_for('admin.service_new') }}">{{ _('+ New service') }}</a>
+  </div>
+</div>
+
+<p class="text-secondary small">
+  {{ _('Stitching price only — cloth/material is always billed separately on the order. Changing a price here only affects new orders; existing orders keep the price they were created with.') }}
+</p>
+
+{% if not services %}
+  <p class="text-secondary">
+    {{ _('No services yet. Use "Load default services" above to get started.') }}
+  </p>
+{% else %}
+  {% for category, group in services|groupby('category') %}
+    <h2 class="h6 section-label mt-4">{{ category.value }}</h2>
+    <div class="table-responsive">
+      <table class="table align-middle">
+        <thead>
+          <tr>
+            <th>{{ _('Name') }}</th>
+            <th>{{ _('Hindi') }}</th>
+            <th class="text-end">{{ _('Stitching price') }}</th>
+            <th>{{ _('Status') }}</th>
+            <th class="text-end">{{ _('Actions') }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for s in group %}
+            <tr class="{{ '' if s.is_active else 'text-secondary' }}">
+              <td>{{ s.name_en }}<br><small class="text-secondary">{{ s.code }}</small></td>
+              <td>{{ s.name_hi or '—' }}</td>
+              <td class="text-end">
+                {% if s.price_is_set %}
+                  ₹{{ '%.2f'|format(s.default_stitching_price) }}
+                {% else %}
+                  <span class="badge text-bg-warning">{{ _('Not set') }}</span>
+                {% endif %}
+              </td>
+              <td>
+                {% if s.is_active %}
+                  <span class="badge text-bg-success">{{ _('Active') }}</span>
+                {% else %}
+                  <span class="badge text-bg-secondary">{{ _('Hidden') }}</span>
+                {% endif %}
+              </td>
+              <td class="text-end">
+                <a class="btn btn-sm btn-outline-primary" href="{{ url_for('admin.service_edit', service_id=s.id) }}">{{ _('Edit') }}</a>
+                <form method="post" class="d-inline" action="{{ url_for('admin.service_toggle', service_id=s.id) }}">
+                  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                  <button type="submit" class="btn btn-sm btn-outline-secondary">
+                    {{ _('Hide') if s.is_active else _('Unhide') }}
+                  </button>
+                </form>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% endfor %}
+{% endif %}
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "admin/_layout.html" %}
+{% from "partials/_form_macros.html" import field %}
+{% set active = 'services' %}
+{% block title %}{{ _('New service') if mode == 'new' else _('Edit service') }} — {{ SHOP.name }}{% endblock %}
+
+{% block admin_content %}
+<h1 class="h3 mb-4">{{ _('New service') if mode == 'new' else _('Edit service') }}</h1>
+
+{% if mode == 'edit' and not service.price_is_set %}
+  <div class="alert alert-warning">
+    {{ _('This service has no stitching price yet — it cannot be used on an order until you set one.') }}
+  </div>
+{% endif %}
+
+<div class="row">
+  <div class="col-12 col-md-7">
+    <form method="post" novalidate>
+      {{ form.hidden_tag() }}
+      {% if mode == 'edit' %}
+        <div class="mb-3">
+          <label class="form-label fw-semibold">{{ _('Code') }}</label>
+          <input type="text" class="form-control" value="{{ service.code }}" disabled>
+          <input type="hidden" name="code" value="{{ service.code }}">
+          <div class="form-text">{{ _('Code cannot be changed after creation.') }}</div>
+        </div>
+      {% else %}
+        {{ field(form.code, autofocus=True) }}
+      {% endif %}
+      {{ field(form.name_en) }}
+      {{ field(form.name_hi) }}
+      {{ field(form.category) }}
+      {{ field(form.default_stitching_price) }}
+      {{ field(form.description) }}
+      {{ field(form.sort_order) }}
+      {{ field(form.is_active) }}
+      <button type="submit" class="btn btn-primary btn-lg">{{ _('Save') }}</button>
+      <a class="btn btn-outline-secondary btn-lg" href="{{ url_for('admin.service_list') }}">{{ _('Cancel') }}</a>
+    </form>
+  </div>
+</div>
+{% endblock %}

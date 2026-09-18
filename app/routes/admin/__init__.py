@@ -9,4 +9,4 @@ from flask import Blueprint
 
 bp = Blueprint("admin", __name__, url_prefix="/admin")
 
-from . import customers, dashboard, measurements  # noqa: E402,F401
+from . import customers, dashboard, measurements, services  # noqa: E402,F401
