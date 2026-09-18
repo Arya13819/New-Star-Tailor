@@ -10,6 +10,8 @@
      href="{{ url_for('admin.customer_list') }}">{{ _('Customers') }}</a>
   <a class="btn btn-sm {{ 'btn-primary' if active == 'services' else 'btn-outline-primary' }}"
      href="{{ url_for('admin.service_list') }}">{{ _('Services') }}</a>
+  <a class="btn btn-sm {{ 'btn-primary' if active == 'payments' else 'btn-outline-primary' }}"
+     href="{{ url_for('admin.payment_list') }}">{{ _('Payments') }}</a>
 </nav>
 
 {% block admin_content %}{% endblock %}

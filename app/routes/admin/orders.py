@@ -6,6 +6,7 @@ from flask_babel import gettext as _
 from flask_login import current_user
 
 from ...forms.order import OrderForm
+from ...forms.payment import PaymentForm
 from ...models.enums import FabricSource, OrderPriority, OrderStatus
 from ...models.service import Service
 from ...repositories import customer_repo, order_repo
@@ -120,6 +121,7 @@ def order_detail(order_id: int):
         paid=paid,
         pending=pending,
         balance=balance,
+        payment_form=PaymentForm(),
     )
 
 
