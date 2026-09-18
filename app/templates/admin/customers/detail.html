@@ -11,9 +11,14 @@
       {% if customer.address %} · {{ customer.address }}{% endif %}
     </p>
   </div>
-  <a class="btn btn-outline-primary" href="{{ url_for('admin.customer_edit', customer_id=customer.id) }}">
-    {{ _('Edit profile') }}
-  </a>
+  <div class="d-flex gap-2">
+    <a class="btn btn-primary" href="{{ url_for('admin.order_new', customer_id=customer.id) }}">
+      {{ _('+ New order') }}
+    </a>
+    <a class="btn btn-outline-primary" href="{{ url_for('admin.customer_edit', customer_id=customer.id) }}">
+      {{ _('Edit profile') }}
+    </a>
+  </div>
 </div>
 
 {% if customer.notes %}
@@ -86,13 +91,14 @@
         {% if customer.orders %}
           <ul class="list-unstyled mb-0">
             {% for o in customer.orders|sort(attribute='created_at', reverse=True) %}
-              <li class="border-bottom py-2">
-                <strong>{{ o.order_number or _('Draft') }}</strong> — {{ o.status.value|title }}
+              <li class="border-bottom py-2 d-flex justify-content-between">
+                <a href="{{ url_for('admin.order_detail', order_id=o.id) }}">{{ o.order_number or _('Draft') }}</a>
+                <span class="badge text-bg-secondary">{{ o.status.value|title }}</span>
               </li>
             {% endfor %}
           </ul>
         {% else %}
-          <p class="text-secondary mb-0">{{ _('No orders yet — order management arrives in Phase 7.') }}</p>
+          <p class="text-secondary mb-0">{{ _('No orders yet.') }}</p>
         {% endif %}
       </div>
     </div>

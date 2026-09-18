@@ -4,6 +4,8 @@
 <nav class="d-flex flex-wrap gap-2 mb-4 no-print">
   <a class="btn btn-sm {{ 'btn-primary' if active == 'dashboard' else 'btn-outline-primary' }}"
      href="{{ url_for('admin.dashboard') }}">{{ _('Dashboard') }}</a>
+  <a class="btn btn-sm {{ 'btn-primary' if active == 'orders' else 'btn-outline-primary' }}"
+     href="{{ url_for('admin.order_list') }}">{{ _('Orders') }}</a>
   <a class="btn btn-sm {{ 'btn-primary' if active == 'customers' else 'btn-outline-primary' }}"
      href="{{ url_for('admin.customer_list') }}">{{ _('Customers') }}</a>
   <a class="btn btn-sm {{ 'btn-primary' if active == 'services' else 'btn-outline-primary' }}"
