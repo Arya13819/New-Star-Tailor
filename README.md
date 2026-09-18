@@ -23,9 +23,9 @@ installable PWA.
 | ✔ | Phase 5 | Measurement versioning UI — inches, fitting preference, history, pre-fill from last version |
 | … | 6–18 | Services & pricing, orders, payments, dashboard, customer portal, online orders, receipts, notifications, reports, i18n, PWA, hardening, tests |
 
-> **Local DB:** MySQL/MariaDB is the target. Until it's provisioned (see
-> `docs/DATABASE_SETUP.md`), dev + tests run on SQLite automatically — models
-> are written MySQL-first so nothing changes when you switch.
+> **Local DB:** running on real **MariaDB 11.8** (`nst_dev` / `nst_test`) as of
+> 2026-09-18 — see `docs/DATABASE_SETUP.md`. The SQLite fallback used during
+> early phases still works out of the box if `DATABASE_URL` is ever unset.
 
 See the master plan for the full phase list.
 
