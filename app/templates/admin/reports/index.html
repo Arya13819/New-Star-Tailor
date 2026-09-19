@@ -1,0 +1,107 @@
+{% extends "admin/_layout.html" %}
+{% set active = 'reports' %}
+{% block title %}{{ _('Reports') }} — {{ SHOP.name }}{% endblock %}
+
+{% block admin_content %}
+<h1 class="h3 mb-4">{{ _('Reports') }}</h1>
+
+<ul class="nav nav-pills mb-4">
+  {% for key, label in [('today', _('Today')), ('week', _('This week')), ('month', _('This month')), ('custom', _('Custom'))] %}
+    <li class="nav-item">
+      <a class="nav-link {{ 'active' if range_key == key else '' }}" href="{{ url_for('admin.reports', range=key, **({'from': from_str, 'to': to_str} if key == 'custom' else {})) }}">
+        {{ label }}
+      </a>
+    </li>
+  {% endfor %}
+</ul>
+
+{% if range_key == 'custom' %}
+  <form method="get" class="row g-2 align-items-end mb-4">
+    <input type="hidden" name="range" value="custom">
+    <div class="col-auto">
+      <label class="form-label small">{{ _('From') }}</label>
+      <input type="date" name="from" class="form-control" value="{{ from_str }}">
+    </div>
+    <div class="col-auto">
+      <label class="form-label small">{{ _('To') }}</label>
+      <input type="date" name="to" class="form-control" value="{{ to_str }}">
+    </div>
+    <div class="col-auto">
+      <button type="submit" class="btn btn-primary">{{ _('Apply') }}</button>
+    </div>
+  </form>
+{% endif %}
+
+<div class="row g-3 mb-4">
+  <div class="col-6 col-md-3">
+    <div class="card h-100"><div class="card-body">
+      <p class="section-label mb-1">{{ _('Total orders') }}</p>
+      <p class="h3 mb-0">{{ data.total_orders }}</p>
+    </div></div>
+  </div>
+  <div class="col-6 col-md-3">
+    <div class="card h-100"><div class="card-body">
+      <p class="section-label mb-1">{{ _('Delivered') }}</p>
+      <p class="h3 mb-0">{{ data.delivered_orders }}</p>
+    </div></div>
+  </div>
+  <div class="col-6 col-md-3">
+    <div class="card h-100"><div class="card-body">
+      <p class="section-label mb-1">{{ _('Pending') }}</p>
+      <p class="h3 mb-0">{{ data.pending_orders }}</p>
+    </div></div>
+  </div>
+  <div class="col-6 col-md-3">
+    <div class="card h-100 border-success-subtle"><div class="card-body">
+      <p class="section-label mb-1">{{ _('Revenue collected') }}</p>
+      <p class="h3 mb-0 text-success">₹{{ '%.2f'|format(data.total_revenue) }}</p>
+    </div></div>
+  </div>
+</div>
+
+<div class="row g-4">
+  <div class="col-12 col-lg-6">
+    <div class="card">
+      <div class="card-body">
+        <h2 class="h5 mb-3">{{ _('Orders by category') }}</h2>
+        {% set max_amount = (data.category_breakdown|map(attribute='amount')|max) or 1 %}
+        {% for row in data.category_breakdown %}
+          <div class="mb-3">
+            <div class="d-flex justify-content-between small mb-1">
+              <span>{{ _(row.category|title) }}</span>
+              <span>{{ row.order_count }} {{ _('orders') }} · ₹{{ '%.2f'|format(row.amount) }}</span>
+            </div>
+            <div class="progress" style="height: 8px;">
+              <div class="progress-bar bg-navy" style="width: {{ (row.amount / max_amount * 100) if max_amount else 0 }}%;"></div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-lg-6">
+    <div class="card">
+      <div class="card-body">
+        <h2 class="h5 mb-3">
+          {{ _('Pending payments') }}
+          <span class="badge text-bg-secondary">{{ pending.count }}</span>
+        </h2>
+        <p class="text-secondary small">{{ _('Total outstanding') }}: <strong>₹{{ '%.2f'|format(pending.total) }}</strong></p>
+        {% if pending.rows %}
+          <ul class="list-unstyled mb-0">
+            {% for o, bal in pending.rows %}
+              <li class="border-bottom py-2 d-flex justify-content-between">
+                <a href="{{ url_for('admin.order_detail', order_id=o.id) }}">{{ o.order_number }}</a>
+                <span>₹{{ '%.2f'|format(bal) }}</span>
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p class="text-secondary mb-0">{{ _('Nothing outstanding right now.') }}</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -17,5 +17,6 @@ from . import (  # noqa: E402,F401
     notifications,
     orders,
     payments,
+    reports,
     services,
 )
