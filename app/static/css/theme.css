@@ -121,4 +121,5 @@ footer.site-footer {
 @media print {
   .no-print { display: none !important; }
   body { background: #fff; }
+  .print-area .card { border: none !important; box-shadow: none !important; }
 }

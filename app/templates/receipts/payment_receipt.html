@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}{{ _('Payment receipt') }} — {{ SHOP.name }}{% endblock %}
+
+{% block content %}
+<div class="print-area mx-auto" style="max-width: 32rem;">
+  <div class="card">
+    <div class="card-body">
+      <div class="text-center mb-4">
+        <h1 class="h4 mb-0">{{ SHOP.name }}</h1>
+        <p class="small text-secondary mb-0">{{ SHOP.address }}</p>
+        <p class="small text-secondary">{{ _('Phone') }}: {{ SHOP.phone }}</p>
+      </div>
+
+      <hr class="stitch-divider">
+      <p class="section-label text-center mb-3">{{ _('Payment receipt') }}</p>
+
+      <dl class="row mb-0">
+        <dt class="col-6">{{ _('Order No') }}</dt>
+        <dd class="col-6 text-end">{{ payment.order.order_number }}</dd>
+        <dt class="col-6">{{ _('Customer') }}</dt>
+        <dd class="col-6 text-end">{{ payment.customer.name }}</dd>
+        <dt class="col-6">{{ _('Date') }}</dt>
+        <dd class="col-6 text-end">{{ payment.created_at.strftime('%d %b %Y') }}</dd>
+        <dt class="col-6">{{ _('Method') }}</dt>
+        <dd class="col-6 text-end">{{ payment.method.value }}</dd>
+        {% if payment.transaction_reference %}
+          <dt class="col-6">{{ _('Reference') }}</dt>
+          <dd class="col-6 text-end">{{ payment.transaction_reference }}</dd>
+        {% endif %}
+        <dt class="col-6">{{ _('Status') }}</dt>
+        <dd class="col-6 text-end">
+          {% if payment.status.value == 'VERIFIED' %}{{ _('Verified') }}{% else %}{{ _('Pending') }}{% endif %}
+        </dd>
+      </dl>
+
+      <hr class="stitch-divider">
+
+      <dl class="row mb-0">
+        <dt class="col-7 fw-bold fs-5">{{ _('Amount paid') }}</dt>
+        <dd class="col-5 text-end fw-bold fs-5">₹{{ '%.2f'|format(payment.amount) }}</dd>
+        <dt class="col-7">{{ _('Order total') }}</dt>
+        <dd class="col-5 text-end">₹{{ '%.2f'|format(payment.order.grand_total) }}</dd>
+        <dt class="col-7">{{ _('Total paid so far') }}</dt>
+        <dd class="col-5 text-end">₹{{ '%.2f'|format(total_paid) }}</dd>
+        <dt class="col-7 fw-bold">{{ _('Balance due') }}</dt>
+        <dd class="col-5 text-end fw-bold">₹{{ '%.2f'|format(balance) }}</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="text-center mt-3 no-print">
+    <button type="button" class="btn btn-primary" onclick="window.print()">{{ _('Print') }}</button>
+  </div>
+</div>
+{% endblock %}

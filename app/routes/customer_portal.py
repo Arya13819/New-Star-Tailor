@@ -74,6 +74,17 @@ def order_detail(order_id: int):
     )
 
 
+@bp.get("/orders/<int:order_id>/receipt")
+@customer_required
+def order_receipt(order_id: int):
+    order = db.session.get(Order, order_id)
+    if order is None or order.customer_id not in owned_customer_ids():
+        abort(404)
+    paid = payment_service.paid_for_order(order.id)
+    balance = payment_service.balance_for_order(order)
+    return render_template("receipts/order_receipt.html", order=order, paid=paid, balance=balance)
+
+
 @bp.get("/orders/<int:order_id>/images/<int:image_id>")
 @customer_required
 def order_image(order_id: int, image_id: int):

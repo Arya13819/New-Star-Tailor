@@ -56,6 +56,7 @@
             <td>
               {% if p.status.value == 'VERIFIED' %}
                 <span class="badge text-bg-success">{{ _('Verified') }}</span>
+                <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('admin.payment_receipt', payment_id=p.id) }}" target="_blank">{{ _('Receipt') }}</a>
               {% else %}
                 <span class="badge text-bg-warning">{{ _('Pending') }}</span>
               {% endif %}

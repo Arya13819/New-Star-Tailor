@@ -4,7 +4,12 @@
 
 {% block customer_content %}
 <h1 class="h3 mb-1">{{ order.order_number }}</h1>
-<p class="mb-4"><span class="badge text-bg-secondary fs-6">{{ order.status.value|title }}</span></p>
+<p class="mb-4">
+  <span class="badge text-bg-secondary fs-6">{{ order.status.value|title }}</span>
+  <a class="btn btn-sm btn-outline-primary ms-2" href="{{ url_for('customer.order_receipt', order_id=order.id) }}" target="_blank">
+    {{ _('Print receipt') }}
+  </a>
+</p>
 
 <div class="row g-4">
   <div class="col-12 col-lg-7">

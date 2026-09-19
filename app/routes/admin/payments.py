@@ -54,6 +54,19 @@ def payment_verify(payment_id: int):
     return redirect(request.referrer or url_for("admin.order_detail", order_id=payment.order_id))
 
 
+@bp.get("/payments/<int:payment_id>/receipt")
+@admin_required
+def payment_receipt(payment_id: int):
+    payment = db.session.get(Payment, payment_id)
+    if payment is None:
+        abort(404)
+    total_paid = payment_service.paid_for_order(payment.order_id)
+    balance = payment_service.balance_for_order(payment.order)
+    return render_template(
+        "receipts/payment_receipt.html", payment=payment, total_paid=total_paid, balance=balance
+    )
+
+
 @bp.get("/payments")
 @admin_required
 def payment_list():

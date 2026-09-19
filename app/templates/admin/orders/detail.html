@@ -14,7 +14,12 @@
       <span class="text-secondary">· {{ order.customer.mobile }}</span>
     </p>
   </div>
-  <span class="badge text-bg-secondary fs-6">{{ order.status.value|title }}</span>
+  <div class="text-end">
+    <span class="badge text-bg-secondary fs-6 d-block mb-2">{{ order.status.value|title }}</span>
+    <a class="btn btn-sm btn-outline-primary" href="{{ url_for('admin.order_receipt', order_id=order.id) }}" target="_blank">
+      {{ _('Print receipt') }}
+    </a>
+  </div>
 </div>
 
 {% if not order.advance_satisfied %}
@@ -205,6 +210,7 @@
                 <div>
                   {% if p.status.value == 'VERIFIED' %}
                     <span class="badge text-bg-success">{{ _('Verified') }}</span>
+                    <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('admin.payment_receipt', payment_id=p.id) }}" target="_blank">{{ _('Receipt') }}</a>
                   {% else %}
                     <span class="badge text-bg-warning">{{ _('Pending') }}</span>
                     <form method="post" action="{{ url_for('admin.payment_verify', payment_id=p.id) }}" class="d-inline">
