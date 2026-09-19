@@ -96,6 +96,22 @@
         </p>
       </div>
     </div>
+
+    {% if order.reference_images %}
+      <div class="card mt-4">
+        <div class="card-body">
+          <h2 class="h5 mb-3">{{ _('Reference photos') }}</h2>
+          <div class="d-flex flex-wrap gap-2">
+            {% for img in order.reference_images %}
+              <a href="{{ url_for('admin.order_image', order_id=order.id, image_id=img.id) }}" target="_blank">
+                <img src="{{ url_for('admin.order_image', order_id=order.id, image_id=img.id) }}"
+                     alt="{{ _('Reference photo') }}" style="width:120px;height:120px;object-fit:cover;border-radius:.5rem;">
+              </a>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    {% endif %}
   </div>
 
   <div class="col-12 col-lg-5">

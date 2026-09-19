@@ -1,13 +1,24 @@
 """Admin order management (Phase 7)."""
 from __future__ import annotations
 
-from flask import flash, redirect, render_template, request, url_for
+from flask import (
+    abort,
+    current_app,
+    flash,
+    redirect,
+    render_template,
+    request,
+    send_from_directory,
+    url_for,
+)
 from flask_babel import gettext as _
 from flask_login import current_user
 
+from ...extensions import db
 from ...forms.order import OrderForm
 from ...forms.payment import PaymentForm
 from ...models.enums import FabricSource, OrderPriority, OrderStatus
+from ...models.reference_image import ReferenceImage
 from ...models.service import Service
 from ...repositories import customer_repo, order_repo
 from ...services import order_service, payment_service
@@ -164,3 +175,12 @@ def order_update_details(order_id: int):
     )
     flash(_("Order details updated."), "success")
     return redirect(url_for("admin.order_detail", order_id=order.id))
+
+
+@bp.get("/orders/<int:order_id>/images/<int:image_id>")
+@admin_required
+def order_image(order_id: int, image_id: int):
+    image = db.session.get(ReferenceImage, image_id)
+    if image is None or image.order_id != order_id:
+        abort(404)
+    return send_from_directory(current_app.config["UPLOAD_DIR"], image.storage_path)

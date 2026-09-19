@@ -12,10 +12,10 @@ from decimal import Decimal
 from ..extensions import db
 from ..models.audit_log import AuditLog
 from ..models.base import utcnow
-from ..models.enums import FabricSource, OrderStatus
+from ..models.enums import FabricSource, OrderSource, OrderStatus
 from ..models.order import Order, OrderItem
 from ..utils.money import percent_of, to_money
-from . import numbering_service
+from . import notification_service, numbering_service
 
 
 class OrderError(ValueError):
@@ -32,6 +32,8 @@ def create_order(
     confirmed_delivery_date=None,
     notes: str | None,
     actor_id: int | None,
+    source: OrderSource = OrderSource.SHOP,
+    self_measurement_acknowledged: bool = False,
 ) -> Order:
     if not items:
         raise OrderError("Add at least one service to the order.")
@@ -97,6 +99,9 @@ def create_order(
         notes=(notes or "").strip() or None,
         created_by_id=actor_id,
         confirmed_at=utcnow(),
+        source=source,
+        self_measurement_acknowledged=self_measurement_acknowledged,
+        self_measurement_acknowledged_at=(utcnow() if self_measurement_acknowledged else None),
     )
     order.items = order_items
     db.session.add(order)
@@ -111,6 +116,13 @@ def create_order(
             to_value=order.order_number,
         )
     )
+    notification_service.queue_notification(
+        customer=customer,
+        order=order,
+        type_="ORDER_CONFIRMATION",
+        body=f"Namaste {customer.name}, your order {order.order_number} has been "
+        f"received at New Star Tailor. Total: Rs. {grand_total}.",
+    )
     db.session.commit()
     return order
 
@@ -122,6 +134,15 @@ def update_status(order: Order, new_status: OrderStatus, *, actor_id: int | None
         order.delivered_at = utcnow()
     elif order.delivered_at is not None:
         order.delivered_at = None  # moved back out of DELIVERED
+
+    if new_status == OrderStatus.READY and before != OrderStatus.READY:
+        notification_service.queue_notification(
+            customer=order.customer,
+            order=order,
+            type_="ORDER_READY",
+            body=f"Namaste {order.customer.name}, your order {order.order_number} "
+            f"is ready for pickup at New Star Tailor.",
+        )
 
     db.session.add(
         AuditLog(

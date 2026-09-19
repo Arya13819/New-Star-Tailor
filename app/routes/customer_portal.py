@@ -7,12 +7,13 @@ confirm it exists (master prompt §35/§64/§76: no cross-customer data leaks).
 """
 from __future__ import annotations
 
-from flask import Blueprint, abort, render_template
+from flask import Blueprint, abort, current_app, render_template, send_from_directory
 from flask_login import current_user
 
 from ..extensions import db
 from ..models.order import Order
 from ..models.payment import Payment
+from ..models.reference_image import ReferenceImage
 from ..services import payment_service
 from ..utils.measurement_fields import PANT_FIELDS, SHIRT_FIELDS
 from ..utils.security import customer_required, owned_customer_ids
@@ -71,6 +72,18 @@ def order_detail(order_id: int):
     return render_template(
         "customer/order_detail.html", order=order, paid=paid, balance=balance
     )
+
+
+@bp.get("/orders/<int:order_id>/images/<int:image_id>")
+@customer_required
+def order_image(order_id: int, image_id: int):
+    order = db.session.get(Order, order_id)
+    if order is None or order.customer_id not in owned_customer_ids():
+        abort(404)
+    image = db.session.get(ReferenceImage, image_id)
+    if image is None or image.order_id != order_id:
+        abort(404)
+    return send_from_directory(current_app.config["UPLOAD_DIR"], image.storage_path)
 
 
 @bp.get("/measurements")

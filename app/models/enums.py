@@ -85,3 +85,9 @@ class NotificationStatus(StrEnum):
     SENT = "SENT"
     FAILED = "FAILED"
     CANCELLED = "CANCELLED"
+
+
+class EnquiryStatus(StrEnum):
+    NEW = "NEW"
+    CONTACTED = "CONTACTED"
+    CLOSED = "CLOSED"

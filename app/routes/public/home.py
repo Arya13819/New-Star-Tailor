@@ -1,15 +1,10 @@
-"""Public (no-login) pages.
-
-Phase 1 ships the homepage shell, a language switch, and the operational
-health check. Services, enquiry, ordering and tracking arrive in later phases.
-"""
+"""Homepage, health check, language switch."""
 from __future__ import annotations
 
-from flask import Blueprint, redirect, render_template, request, session, url_for
+from flask import redirect, render_template, request, session, url_for
 
-from ..config import Config
-
-bp = Blueprint("public", __name__)
+from ...config import Config
+from . import bp
 
 
 @bp.get("/")

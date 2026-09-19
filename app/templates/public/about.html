@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}{{ _('About us') }} — {{ SHOP.name }}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-12 col-md-8 text-center">
+    <p class="section-label mb-2">{{ _('About us') }}</p>
+    <h1 class="h3 mb-3">{{ SHOP.name }}</h1>
+    <p class="text-secondary">
+      {{ _('Men\'s tailoring and uniform specialists in Neemuch, Madhya Pradesh — shirts, trousers, and regulation Police, CRPF and Army uniforms.') }}
+    </p>
+    <p class="text-secondary small">{{ _('More about our story is coming soon.') }}</p>
+  </div>
+</div>
+{% endblock %}

@@ -8,6 +8,7 @@ from __future__ import annotations
 from ..extensions import db
 from .audit_log import AuditLog
 from .customer import Customer
+from .enquiry import Enquiry
 from .measurement import Measurement, MeasurementVersion
 from .notification import Notification
 from .order import Order, OrderItem, OrderSequence
@@ -21,6 +22,7 @@ __all__ = [
     "db",
     "AuditLog",
     "Customer",
+    "Enquiry",
     "Measurement",
     "MeasurementVersion",
     "Notification",

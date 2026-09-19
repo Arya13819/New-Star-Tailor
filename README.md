@@ -14,7 +14,7 @@ Flask · SQLAlchemy + Flask-Migrate · MySQL/MariaDB · Bootstrap 5 · Flask-Bab
 (English + Hindi) · Flask-Login · pytest. Server-rendered, mobile-first,
 installable PWA.
 
-## Status — Phase 10 of 18 complete
+## Status — Phase 11 of 18 complete
 
 | ✔ | Phase 1 | App factory, config, extensions, health checks, base UI, error pages |
 | ✔ | Phase 2 | 14 SQLAlchemy models, initial Alembic migration, decimal money helpers, model tests |
@@ -26,7 +26,8 @@ installable PWA.
 | ✔ | Phase 8 | Payments — partial payments, cash/UPI auto-verified vs online pending, overpayment blocked, provider abstraction, inert webhook |
 | ✔ | Phase 9 | Admin dashboard — status counts, urgent/overdue/today's deliveries, outstanding balance, recent orders, quick actions, global search |
 | ✔ | Phase 10 | Customer portal — own orders/measurements/payments only, strict per-customer data isolation (404, not 403, on a guessed id) |
-| … | 11–18 | Online orders, receipts, notifications, reports, i18n, PWA, hardening, tests |
+| ✔ | Phase 11 | Online ordering — `/enquiry`, `/order` (self-measurement + ack, reference photo, pending payment intent), `/track-order`, `/admin/enquiries` |
+| … | 12–18 | Receipts, notifications, reports, i18n, PWA, hardening, tests |
 
 > **Local DB:** running on real **MariaDB 11.8** (`nst_dev` / `nst_test`) as of
 > 2026-09-18 — see `docs/DATABASE_SETUP.md`. The SQLite fallback used during
@@ -54,6 +55,7 @@ cp .env.example .env
 # then: /admin/login (staff) · /admin/customers (customer + measurement management)
 #       /admin/services (pricing — some prices are intentionally unset, see BUSINESS_RULES.md)
 #       /customer/login or /customer/register (customers)
+#       /enquiry · /order · /track-order (public, no login needed)
 ```
 
 The app runs **without** a database (health shows `degraded`); you need MySQL
