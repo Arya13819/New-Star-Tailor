@@ -1,8 +1,5 @@
-"""Custom Flask CLI commands.
-
-``nst check`` (Phase 1) and ``nst create-admin`` (Phase 3) so far. Later
-phases add ``nst seed``, ``nst notifications process`` and ``nst reminders run``.
-"""
+"""Custom Flask CLI commands: ``nst check``, ``nst create-admin``,
+``nst seed-services``, ``nst notifications process``, ``nst reminders run``."""
 from __future__ import annotations
 
 import click
@@ -97,3 +94,47 @@ def register_cli(app: Flask) -> None:
             click.secho(f"Added {created} service(s).", fg="green")
         else:
             click.echo("Default services already present — nothing to do.")
+
+    @nst.group("notifications")
+    def notifications():
+        """Notification queue management."""
+
+    @notifications.command("process")
+    def notifications_process():
+        """Attempt to dispatch every SCHEDULED notification.
+
+        With no WhatsApp/SMS provider configured this touches nothing and
+        says so plainly — it never marks a message SENT that wasn't.
+        """
+        from .services import notification_service
+
+        result = notification_service.dispatch_pending()
+        if not result["configured"]:
+            click.secho(
+                f"Messaging is not configured — {result['pending']} notification(s) "
+                "remain SCHEDULED. Set WHATSAPP_API_KEY and WHATSAPP_PHONE_ID to send.",
+                fg="yellow",
+            )
+        else:
+            click.secho(
+                f"Sent {result['sent']}, failed {result['failed']} "
+                f"(of {result['pending']} pending).",
+                fg="green",
+            )
+
+    @nst.group("reminders")
+    def reminders():
+        """Payment reminder scheduling."""
+
+    @reminders.command("run")
+    @click.option("--days-after-delivery", default=7, show_default=True, type=int)
+    def reminders_run(days_after_delivery: int):
+        """Queue a PAYMENT_REMINDER for every delivered order still owing a
+        balance, N days after delivery. Safe to run daily via cron — the
+        same order is never queued twice on the same day."""
+        from .services import notification_service
+
+        count = notification_service.queue_payment_reminders(
+            days_after_delivery=days_after_delivery
+        )
+        click.secho(f"Queued {count} payment reminder(s).", fg="green")

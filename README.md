@@ -14,7 +14,7 @@ Flask · SQLAlchemy + Flask-Migrate · MySQL/MariaDB · Bootstrap 5 · Flask-Bab
 (English + Hindi) · Flask-Login · pytest. Server-rendered, mobile-first,
 installable PWA.
 
-## Status — Phase 12 of 18 complete
+## Status — Phase 13 of 18 complete
 
 | ✔ | Phase 1 | App factory, config, extensions, health checks, base UI, error pages |
 | ✔ | Phase 2 | 14 SQLAlchemy models, initial Alembic migration, decimal money helpers, model tests |
@@ -28,7 +28,8 @@ installable PWA.
 | ✔ | Phase 10 | Customer portal — own orders/measurements/payments only, strict per-customer data isolation (404, not 403, on a guessed id) |
 | ✔ | Phase 11 | Online ordering — `/enquiry`, `/order` (self-measurement + ack, reference photo, pending payment intent), `/track-order`, `/admin/enquiries` |
 | ✔ | Phase 12 | Printable order + payment receipts for admin and the customer portal (own orders only) |
-| … | 13–18 | Notifications, reports, i18n, PWA, hardening, tests |
+| ✔ | Phase 13 | WhatsApp-ready notifications — order confirmation/ready hooks, `/admin/notifications`, `nst notifications process` + `nst reminders run` CLI (honest no-op until a provider is configured) |
+| … | 14–18 | Reports, i18n, PWA, hardening, tests |
 
 > **Local DB:** running on real **MariaDB 11.8** (`nst_dev` / `nst_test`) as of
 > 2026-09-18 — see `docs/DATABASE_SETUP.md`. The SQLite fallback used during

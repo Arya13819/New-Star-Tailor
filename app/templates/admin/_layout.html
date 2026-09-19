@@ -14,6 +14,8 @@
      href="{{ url_for('admin.payment_list') }}">{{ _('Payments') }}</a>
   <a class="btn btn-sm {{ 'btn-primary' if active == 'enquiries' else 'btn-outline-primary' }}"
      href="{{ url_for('admin.enquiry_list') }}">{{ _('Enquiries') }}</a>
+  <a class="btn btn-sm {{ 'btn-primary' if active == 'notifications' else 'btn-outline-primary' }}"
+     href="{{ url_for('admin.notification_list') }}">{{ _('Notifications') }}</a>
 </nav>
 
 {% block admin_content %}{% endblock %}
