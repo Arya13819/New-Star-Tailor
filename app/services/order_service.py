@@ -9,6 +9,8 @@ from __future__ import annotations
 
 from decimal import Decimal
 
+from flask_babel import gettext as _
+
 from ..extensions import db
 from ..models.audit_log import AuditLog
 from ..models.base import utcnow
@@ -36,7 +38,7 @@ def create_order(
     self_measurement_acknowledged: bool = False,
 ) -> Order:
     if not items:
-        raise OrderError("Add at least one service to the order.")
+        raise OrderError(_("Add at least one service to the order."))
 
     shop_cloth = fabric_source == FabricSource.SHOP
     current_version_id = (
@@ -51,7 +53,7 @@ def create_order(
         quantity = max(1, int(raw["quantity"]))
         stitching_price = to_money(raw["stitching_price"])
         if stitching_price <= 0:
-            raise OrderError("Each item's stitching price must be greater than zero.")
+            raise OrderError(_("Each item's stitching price must be greater than zero."))
         # Material is only ever charged when the shop provides the cloth.
         material_price = to_money(raw.get("material_price", 0)) if shop_cloth else Decimal("0.00")
         line_total = to_money((stitching_price + material_price) * quantity)

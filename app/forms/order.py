@@ -1,6 +1,7 @@
 """Walk-in order form (master prompt §41)."""
 from __future__ import annotations
 
+from flask_babel import lazy_gettext as _l
 from flask_wtf import FlaskForm
 from wtforms import (
     DateField,
@@ -18,15 +19,16 @@ class OrderItemForm(FlaskForm):
     class Meta:
         csrf = False  # CSRF is on the parent OrderForm only
 
-    service_id = SelectField("Service", validators=[DataRequired()])
+    service_id = SelectField(_l("Service"), validators=[DataRequired()])
     quantity = IntegerField(
-        "Qty", default=1, validators=[DataRequired(), NumberRange(min=1, max=99)]
+        _l("Qty"), default=1, validators=[DataRequired(), NumberRange(min=1, max=99)]
     )
     stitching_price = DecimalField(
-        "Stitching price (₹)", places=2, rounding=None, validators=[DataRequired(), NumberRange(min=0.01)]
+        _l("Stitching price (₹)"), places=2, rounding=None,
+        validators=[DataRequired(), NumberRange(min=0.01)],
     )
     material_price = DecimalField(
-        "Cloth price (₹)", places=2, rounding=None, default=0,
+        _l("Cloth price (₹)"), places=2, rounding=None, default=0,
         validators=[Optional(), NumberRange(min=0)],
     )
 
@@ -34,16 +36,16 @@ class OrderItemForm(FlaskForm):
 class OrderForm(FlaskForm):
     items = FieldList(FormField(OrderItemForm), min_entries=1)
     fabric_source = SelectField(
-        "Who provides the cloth?",
-        choices=[("CUSTOMER", "Customer brings cloth"), ("SHOP", "Shop provides cloth")],
+        _l("Who provides the cloth?"),
+        choices=[("CUSTOMER", _l("Customer brings cloth")), ("SHOP", _l("Shop provides cloth"))],
         validators=[DataRequired()],
     )
     priority = SelectField(
-        "Priority",
-        choices=[("NORMAL", "Normal"), ("URGENT", "Urgent")],
+        _l("Priority"),
+        choices=[("NORMAL", _l("Normal")), ("URGENT", _l("Urgent"))],
         default="NORMAL",
         validators=[DataRequired()],
     )
-    requested_delivery_date = DateField("Customer requested date", validators=[Optional()])
-    confirmed_delivery_date = DateField("Confirmed delivery date", validators=[Optional()])
-    notes = TextAreaField("Notes", validators=[Optional()])
+    requested_delivery_date = DateField(_l("Customer requested date"), validators=[Optional()])
+    confirmed_delivery_date = DateField(_l("Confirmed delivery date"), validators=[Optional()])
+    notes = TextAreaField(_l("Notes"), validators=[Optional()])

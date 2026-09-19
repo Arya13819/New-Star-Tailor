@@ -7,6 +7,8 @@ from __future__ import annotations
 
 from decimal import Decimal
 
+from flask_babel import gettext as _
+
 from ..extensions import db
 from ..models.audit_log import AuditLog
 from ..models.enums import PaymentMethod, PaymentStatus
@@ -58,11 +60,13 @@ def record_payment(
 ) -> Payment:
     amount = to_money(amount)
     if amount <= 0:
-        raise PaymentError("Enter an amount greater than zero.")
+        raise PaymentError(_("Enter an amount greater than zero."))
 
     balance = balance_for_order(order)
     if amount - balance > Decimal("0.50"):
-        raise PaymentError(f"That is more than the outstanding balance (₹{balance}).")
+        raise PaymentError(
+            _("That is more than the outstanding balance (₹%(balance)s).", balance=balance)
+        )
 
     # Cash/UPI is collected and confirmed in person; online awaits verification
     # (by a future provider webhook, or a manual check) — never fabricated.

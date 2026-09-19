@@ -11,6 +11,7 @@ import secrets
 from io import BytesIO
 
 from flask import current_app
+from flask_babel import gettext as _
 
 _MIME_BY_FORMAT = {"JPEG": "image/jpeg", "PNG": "image/png", "WEBP": "image/webp"}
 
@@ -22,34 +23,34 @@ class UploadError(ValueError):
 def save_reference_image(file_storage) -> dict:
     filename = (file_storage.filename or "").strip()
     if not filename:
-        raise UploadError("Please choose a file.")
+        raise UploadError(_("Please choose a file."))
 
     ext = filename.rsplit(".", 1)[-1].lower() if "." in filename else ""
     allowed_ext = current_app.config["ALLOWED_IMAGE_EXTENSIONS"]
     if ext not in allowed_ext:
-        raise UploadError("Only JPG, PNG or WEBP images are allowed.")
+        raise UploadError(_("Only JPG, PNG or WEBP images are allowed."))
 
     data = file_storage.read()
     if not data:
-        raise UploadError("That file is empty.")
+        raise UploadError(_("That file is empty."))
     if len(data) > current_app.config["MAX_CONTENT_LENGTH"]:
-        raise UploadError("That image is too large.")
+        raise UploadError(_("That image is too large."))
 
     try:
         from PIL import Image, UnidentifiedImageError
     except ImportError as exc:  # pragma: no cover - Pillow is a hard dependency
-        raise UploadError("Image support is not available.") from exc
+        raise UploadError(_("Image support is not available.")) from exc
 
     try:
         img = Image.open(BytesIO(data))
         img.verify()
         detected_format = img.format
     except (UnidentifiedImageError, OSError, ValueError) as exc:
-        raise UploadError("That file doesn't look like a valid image.") from exc
+        raise UploadError(_("That file doesn't look like a valid image.")) from exc
 
     mime_type = _MIME_BY_FORMAT.get(detected_format or "")
     if mime_type not in current_app.config["ALLOWED_IMAGE_MIME_TYPES"]:
-        raise UploadError("Unsupported image type.")
+        raise UploadError(_("Unsupported image type."))
 
     upload_dir = current_app.config["UPLOAD_DIR"]
     os.makedirs(upload_dir, exist_ok=True)

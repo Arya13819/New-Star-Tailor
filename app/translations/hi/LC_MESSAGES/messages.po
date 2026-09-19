@@ -1,0 +1,1588 @@
+# Hindi translations for PROJECT.
+# Copyright (C) 2026 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-09-19 16:21+0530\n"
+"PO-Revision-Date: 2026-09-19 16:21+0530\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: hi\n"
+"Language-Team: hi <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: app/forms/auth.py:15
+msgid "Email or mobile"
+msgstr "ईमेल या मोबाइल"
+
+#: app/forms/auth.py:17 app/forms/auth.py:25 app/forms/auth.py:36
+msgid "Password"
+msgstr "पासवर्ड"
+
+#: app/forms/auth.py:18 app/forms/auth.py:26
+msgid "Keep me signed in"
+msgstr "मुझे साइन इन रखें"
+
+#: app/forms/auth.py:23 app/forms/auth.py:32 app/forms/customer.py:14
+#: app/forms/public.py:26 app/forms/public.py:49 app/forms/public.py:108
+msgid "Mobile number"
+msgstr "मोबाइल नंबर"
+
+#: app/forms/auth.py:30
+msgid "Full name"
+msgstr "पूरा नाम"
+
+#: app/forms/auth.py:34 app/forms/customer.py:15 app/forms/public.py:27
+#: app/forms/public.py:50 app/templates/public/contact.html:10
+msgid "Address"
+msgstr "पता"
+
+#: app/forms/auth.py:39
+msgid "Confirm password"
+msgstr "पासवर्ड दोबारा डालें"
+
+#: app/forms/auth.py:44
+msgid "Passwords do not match."
+msgstr "दोनों पासवर्ड मेल नहीं खाते।"
+
+#: app/forms/customer.py:13 app/forms/public.py:25 app/forms/public.py:48
+#: app/templates/admin/services/list.html:32
+msgid "Name"
+msgstr "नाम"
+
+#: app/forms/customer.py:16 app/forms/measurement.py:36 app/forms/order.py:51
+#: app/forms/public.py:62 app/templates/admin/customers/detail.html:64
+#: app/templates/admin/orders/detail.html:88
+#: app/templates/receipts/order_receipt.html:67
+msgid "Notes"
+msgstr "नोट"
+
+#: app/forms/measurement.py:18 app/forms/measurement.py:25
+msgid "Length"
+msgstr "लंबाई"
+
+#: app/forms/measurement.py:19 app/forms/public.py:66
+msgid "Chest"
+msgstr "छाती"
+
+#: app/forms/measurement.py:20 app/forms/public.py:67
+msgid "Shoulder"
+msgstr "कंधा"
+
+#: app/forms/measurement.py:21 app/forms/public.py:68
+msgid "Sleeves"
+msgstr "आस्तीन"
+
+#: app/forms/measurement.py:22 app/forms/public.py:69
+msgid "Neck"
+msgstr "कॉलर"
+
+#: app/forms/measurement.py:26 app/forms/public.py:71
+msgid "Waist"
+msgstr "कमर"
+
+#: app/forms/measurement.py:27 app/forms/public.py:72
+msgid "Hips"
+msgstr "हिप"
+
+#: app/forms/measurement.py:28 app/forms/public.py:73
+msgid "Mori / pant end"
+msgstr "मोरी (पैंट का खुला हिस्सा)"
+
+#: app/forms/measurement.py:31 app/forms/public.py:75
+msgid "Fitting preference"
+msgstr "फिटिंग की पसंद"
+
+#: app/forms/measurement.py:32 app/forms/public.py:76
+msgid "Loose"
+msgstr "ढीली"
+
+#: app/forms/measurement.py:32 app/forms/order.py:45 app/forms/public.py:76
+#: app/templates/admin/orders/detail.html:73
+msgid "Normal"
+msgstr "सामान्य"
+
+#: app/forms/measurement.py:32 app/forms/public.py:76
+msgid "Slim"
+msgstr "स्लिम"
+
+#: app/forms/measurement.py:35 app/forms/public.py:79
+#: app/templates/admin/customers/detail.html:63
+msgid "Allowance"
+msgstr "एलाउंस (थोड़ी जगह)"
+
+#: app/forms/measurement.py:38 app/templates/admin/customers/detail.html:65
+msgid "Alteration notes"
+msgstr "फेरबदल का नोट"
+
+#: app/forms/measurement.py:41
+msgid "Taken by"
+msgstr "नाप किसने ली"
+
+#: app/forms/measurement.py:42
+msgid "Shop (in person)"
+msgstr "दुकान पर (खुद आकर)"
+
+#: app/forms/measurement.py:42
+msgid "Customer (self-submitted)"
+msgstr "ग्राहक (खुद दिया गया)"
+
+#: app/forms/order.py:22 app/forms/public.py:37
+#: app/templates/admin/orders/detail.html:41
+#: app/templates/admin/orders/form.html:9
+#: app/templates/customer/order_detail.html:21
+#: app/templates/public/order.html:8
+msgid "Service"
+msgstr "सेवा"
+
+#: app/forms/order.py:24 app/forms/public.py:39
+#: app/templates/admin/orders/detail.html:42
+#: app/templates/admin/orders/form.html:21
+#: app/templates/customer/order_detail.html:21
+#: app/templates/public/order.html:19
+#: app/templates/receipts/order_receipt.html:31
+msgid "Qty"
+msgstr "संख्या"
+
+#: app/forms/order.py:27 app/forms/service.py:31
+msgid "Stitching price (₹)"
+msgstr "सिलाई (₹)"
+
+#: app/forms/order.py:31
+msgid "Cloth price (₹)"
+msgstr "कपड़ा (₹)"
+
+#: app/forms/order.py:39 app/forms/public.py:54
+#: app/templates/admin/orders/form.html:73
+msgid "Who provides the cloth?"
+msgstr "कपड़ा कौन देगा?"
+
+#: app/forms/order.py:40
+msgid "Customer brings cloth"
+msgstr "ग्राहक कपड़ा लाएंगे"
+
+#: app/forms/order.py:40
+msgid "Shop provides cloth"
+msgstr "दुकान कपड़ा देगी"
+
+#: app/forms/order.py:44 app/templates/admin/orders/detail.html:71
+msgid "Priority"
+msgstr "प्राथमिकता"
+
+#: app/forms/order.py:45 app/templates/admin/orders/detail.html:10
+#: app/templates/admin/orders/detail.html:74
+#: app/templates/admin/orders/list.html:51
+msgid "Urgent"
+msgstr "जल्दी चाहिए"
+
+#: app/forms/order.py:49
+msgid "Customer requested date"
+msgstr "ग्राहक की मांगी तारीख"
+
+#: app/forms/order.py:50 app/templates/admin/orders/detail.html:82
+msgid "Confirmed delivery date"
+msgstr "तय डिलीवरी तारीख"
+
+#: app/forms/payment.py:12
+msgid "Amount (₹)"
+msgstr "रकम (₹)"
+
+#: app/forms/payment.py:16 app/templates/admin/payments/list.html:43
+#: app/templates/customer/payments.html:17
+#: app/templates/receipts/payment_receipt.html:24
+msgid "Method"
+msgstr "तरीका"
+
+#: app/forms/payment.py:17
+msgid "Cash"
+msgstr "नकद"
+
+#: app/forms/payment.py:17
+msgid "UPI"
+msgstr "यूपीआई"
+
+#: app/forms/payment.py:17
+msgid "Online"
+msgstr "ऑनलाइन"
+
+#: app/forms/payment.py:21
+msgid "Transaction reference"
+msgstr "लेन-देन संदर्भ"
+
+#: app/forms/payment.py:23
+msgid "Note"
+msgstr "नोट"
+
+#: app/forms/public.py:29
+msgid "What do you need stitched?"
+msgstr "क्या सिलवाना है?"
+
+#: app/forms/public.py:56
+msgid "I will bring my own cloth"
+msgstr "मैं अपना कपड़ा लाऊंगा"
+
+#: app/forms/public.py:57
+msgid "Shop provides the cloth"
+msgstr "दुकान कपड़ा देगी"
+
+#: app/forms/public.py:61
+msgid "Preferred delivery date"
+msgstr "पसंदीदा डिलीवरी तारीख"
+
+#: app/forms/public.py:64
+msgid "I want to submit my own measurements"
+msgstr "मैं अपना नाप खुद देना चाहता/चाहती हूं"
+
+#: app/forms/public.py:65
+msgid "Shirt length"
+msgstr "शर्ट की लंबाई"
+
+#: app/forms/public.py:70
+msgid "Pant length"
+msgstr "पैंट की लंबाई"
+
+#: app/forms/public.py:82
+msgid "I confirm these measurements are accurate. New Star Tailor is not responsible for fit issues caused by measurements I provided myself."
+msgstr "मैं पुष्टि करता/करती हूं कि यह नाप सही है। खुद दिए गए नाप की वजह से फिटिंग में किसी भी दिक्कत के लिए न्यू स्टार टेलर ज़िम्मेदार नहीं होगा।"
+
+#: app/forms/public.py:88
+msgid "Reference photo (optional)"
+msgstr "संदर्भ फोटो (ज़रूरी नहीं)"
+
+#: app/forms/public.py:89
+msgid "Images only."
+msgstr "सिर्फ फोटो।"
+
+#: app/forms/public.py:92
+msgid "UPI/payment reference, if you've already paid the advance"
+msgstr "यूपीआई/भुगतान संदर्भ, अगर आपने अग्रिम पहले ही दे दिया है"
+
+#: app/forms/public.py:100
+msgid "Please confirm the measurement acknowledgement, or leave measurements to be taken at the shop."
+msgstr "कृपया नाप की पुष्टि वाला बॉक्स चेक करें, या नाप दुकान पर लेने के लिए छोड़ दें।"
+
+#: app/forms/public.py:107
+msgid "Order number"
+msgstr "ऑर्डर नंबर"
+
+#: app/forms/service.py:10
+#: app/templates/admin/customers/measurement_form.html:16
+msgid "Shirt"
+msgstr "शर्ट"
+
+#: app/forms/service.py:11
+#: app/templates/admin/customers/measurement_form.html:24
+msgid "Pant"
+msgstr "पैंट"
+
+#: app/forms/service.py:12
+msgid "Police"
+msgstr "पुलिस"
+
+#: app/forms/service.py:13
+msgid "CRPF"
+msgstr "सीआरपीएफ"
+
+#: app/forms/service.py:14
+msgid "Army"
+msgstr "सेना"
+
+#: app/forms/service.py:20 app/templates/admin/services/form.html:21
+msgid "Code"
+msgstr "कोड"
+
+#: app/forms/service.py:24
+msgid "Upper-case letters, digits and underscore only."
+msgstr "सिर्फ बड़े अक्षर, अंक और अंडरस्कोर।"
+
+#: app/forms/service.py:27
+msgid "Name (English)"
+msgstr "नाम (अंग्रेज़ी)"
+
+#: app/forms/service.py:28
+msgid "Name (Hindi)"
+msgstr "नाम (हिन्दी)"
+
+#: app/forms/service.py:29
+msgid "Category"
+msgstr "श्रेणी"
+
+#: app/forms/service.py:36
+msgid "Description"
+msgstr "विवरण"
+
+#: app/forms/service.py:37
+msgid "Sort order"
+msgstr "क्रम संख्या"
+
+#: app/forms/service.py:38 app/templates/admin/services/list.html:53
+msgid "Active"
+msgstr "चालू"
+
+#: app/forms/validators.py:12
+msgid "Enter a valid 10-digit mobile number."
+msgstr "कृपया सही 10 अंकों का मोबाइल नंबर डालें।"
+
+#: app/routes/auth.py:50 app/routes/auth.py:83
+msgid "Welcome back."
+msgstr "वापसी पर स्वागत है।"
+
+#: app/routes/auth.py:52
+msgid "That email/mobile or password is not correct."
+msgstr "यह ईमेल/मोबाइल या पासवर्ड सही नहीं है।"
+
+#: app/routes/auth.py:61 app/routes/auth.py:132
+msgid "You have been signed out."
+msgstr "आप साइन आउट हो गए हैं।"
+
+#: app/routes/auth.py:85
+msgid "That mobile number or password is not correct."
+msgstr "यह मोबाइल नंबर या पासवर्ड सही नहीं है।"
+
+#: app/routes/auth.py:101
+msgid "An account with this mobile number already exists. Please sign in instead."
+msgstr "इस मोबाइल नंबर से पहले से एक खाता मौजूद है। कृपया साइन इन करें।"
+
+#: app/routes/auth.py:122
+msgid "Welcome to New Star Tailor."
+msgstr "न्यू स्टार टेलर में आपका स्वागत है।"
+
+#: app/routes/admin/customers.py:48
+msgid "Customer added."
+msgstr "ग्राहक जुड़ गया।"
+
+#: app/routes/admin/customers.py:85
+msgid "Customer updated."
+msgstr "ग्राहक अपडेट हो गया।"
+
+#: app/routes/admin/enquiries.py:35
+msgid "Enquiry updated."
+msgstr "पूछताछ अपडेट हो गई।"
+
+#: app/routes/admin/measurements.py:64
+#, python-brace-format
+msgid "Saved as version {n}."
+msgstr "वर्ज़न {n} के रूप में सेव हो गया।"
+
+#: app/routes/admin/orders.py:80
+msgid "No services have a price set yet — add one under Services first."
+msgstr "अभी किसी सेवा का रेट तय नहीं है — पहले सेवाओं में जाकर रेट डालें।"
+
+#: app/routes/admin/orders.py:113
+#, python-brace-format
+msgid "Order {number} created."
+msgstr "ऑर्डर {number} बन गया।"
+
+#: app/routes/admin/orders.py:154
+msgid "Unknown status."
+msgstr "अनजान स्थिति।"
+
+#: app/routes/admin/orders.py:157
+msgid "Status updated."
+msgstr "स्थिति बदल गई।"
+
+#: app/routes/admin/orders.py:185
+msgid "Order details updated."
+msgstr "ऑर्डर विवरण अपडेट हो गया।"
+
+#: app/routes/admin/payments.py:38
+msgid "Payment recorded."
+msgstr "भुगतान दर्ज हो गया।"
+
+#: app/routes/admin/payments.py:53
+msgid "Payment verified."
+msgstr "भुगतान पुष्ट हो गया।"
+
+#: app/routes/admin/services.py:29
+#, python-brace-format
+msgid "Added {count} default service(s)."
+msgstr "{count} डिफ़ॉल्ट सेवा(एं) जोड़ी गईं।"
+
+#: app/routes/admin/services.py:31
+msgid "Default services are already in the catalogue."
+msgstr "डिफ़ॉल्ट सेवाएं पहले से सूची में हैं।"
+
+#: app/routes/admin/services.py:41
+msgid "A service with this code already exists."
+msgstr "इस कोड से एक सेवा पहले से मौजूद है।"
+
+#: app/routes/admin/services.py:54
+msgid "Service added."
+msgstr "सेवा जुड़ गई।"
+
+#: app/routes/admin/services.py:80
+msgid "Service updated. Existing orders keep their original price."
+msgstr "सेवा अपडेट हो गई। पुराने ऑर्डर अपने पुराने रेट पर ही रहेंगे।"
+
+#: app/routes/admin/services.py:96
+#, python-brace-format
+msgid "{name} is now {state}."
+msgstr "{name} अब {state} है।"
+
+#: app/routes/admin/services.py:97
+msgid "active"
+msgstr "चालू"
+
+#: app/routes/admin/services.py:97
+msgid "hidden"
+msgstr "छिपी हुई"
+
+#: app/routes/public/enquiry.py:61
+msgid "Thank you. We have received your enquiry and will contact you soon."
+msgstr "धन्यवाद। आपकी पूछताछ मिल गई है — हम जल्द ही संपर्क करेंगे।"
+
+#: app/routes/public/enquiry.py:78 app/templates/public/order.html:38
+msgid "Online ordering is temporarily unavailable — please call the shop."
+msgstr "ऑनलाइन ऑर्डर अभी उपलब्ध नहीं है — कृपया दुकान पर कॉल करें।"
+
+#: app/services/order_service.py:41
+msgid "Add at least one service to the order."
+msgstr "ऑर्डर में कम से कम एक सेवा जोड़ें।"
+
+#: app/services/order_service.py:56
+msgid "Each item's stitching price must be greater than zero."
+msgstr "हर सामान की सिलाई का रेट शून्य से ज़्यादा होना चाहिए।"
+
+#: app/services/payment_service.py:63
+msgid "Enter an amount greater than zero."
+msgstr "शून्य से ज़्यादा रकम डालें।"
+
+#: app/services/payment_service.py:68
+#, python-format
+msgid "That is more than the outstanding balance (₹%(balance)s)."
+msgstr "यह बकाया रकम (₹%(balance)s) से ज़्यादा है।"
+
+#: app/templates/base.html:7
+msgid "Expert men's tailoring and uniform specialists in Neemuch, Madhya Pradesh."
+msgstr "नीमच, मध्य प्रदेश में माहिर सिलाई और वर्दी के विशेषज्ञ।"
+
+#: app/templates/admin/_layout.html:6 app/templates/admin/dashboard.html:3
+#: app/templates/partials/_nav.html:26
+msgid "Dashboard"
+msgstr "डैशबोर्ड"
+
+#: app/templates/admin/_layout.html:8 app/templates/admin/orders/list.html:3
+#: app/templates/admin/orders/list.html:7 app/templates/admin/search.html:36
+msgid "Orders"
+msgstr "ऑर्डर"
+
+#: app/templates/admin/_layout.html:10
+#: app/templates/admin/customers/list.html:3
+#: app/templates/admin/customers/list.html:7 app/templates/admin/search.html:19
+msgid "Customers"
+msgstr "ग्राहक"
+
+#: app/templates/admin/_layout.html:12 app/templates/admin/orders/form.html:58
+#: app/templates/admin/services/list.html:3 app/templates/partials/_nav.html:16
+#: app/templates/public/order.html:50
+msgid "Services"
+msgstr "सेवाएं"
+
+#: app/templates/admin/_layout.html:14 app/templates/admin/payments/list.html:3
+#: app/templates/admin/payments/list.html:6
+#: app/templates/customer/_layout.html:13
+#: app/templates/customer/payments.html:3
+msgid "Payments"
+msgstr "भुगतान"
+
+#: app/templates/admin/_layout.html:16
+#: app/templates/admin/enquiries/list.html:3
+#: app/templates/admin/enquiries/list.html:6
+msgid "Enquiries"
+msgstr "पूछताछ"
+
+#: app/templates/admin/_layout.html:18
+#: app/templates/admin/notifications/list.html:3
+#: app/templates/admin/notifications/list.html:6
+msgid "Notifications"
+msgstr "सूचनाएं"
+
+#: app/templates/admin/_layout.html:20 app/templates/admin/reports/index.html:3
+#: app/templates/admin/reports/index.html:6
+msgid "Reports"
+msgstr "रिपोर्ट"
+
+#: app/templates/admin/dashboard.html:8
+msgid "Shop dashboard"
+msgstr "दुकान डैशबोर्ड"
+
+#: app/templates/admin/dashboard.html:9 app/templates/customer/dashboard.html:6
+#, python-brace-format
+msgid "Welcome, {name}"
+msgstr "नमस्ते, {name}"
+
+#: app/templates/admin/dashboard.html:13 app/templates/customer/_layout.html:17
+msgid "Sign out"
+msgstr "साइन आउट"
+
+#: app/templates/admin/dashboard.html:19
+msgid "Search customer, mobile or order number…"
+msgstr "ग्राहक, मोबाइल या ऑर्डर नंबर खोजें…"
+
+#: app/templates/admin/customers/list.html:15
+#: app/templates/admin/dashboard.html:20 app/templates/admin/dashboard.html:100
+#: app/templates/admin/orders/list.html:28
+#: app/templates/admin/orders/pick_customer.html:12
+#: app/templates/admin/search.html:3 app/templates/admin/search.html:6
+#: app/templates/admin/search.html:12
+msgid "Search"
+msgstr "खोजें"
+
+#: app/templates/admin/dashboard.html:28
+#: app/templates/admin/enquiries/list.html:9
+#: app/templates/admin/orders/list.html:12
+msgid "New"
+msgstr "नया"
+
+#: app/templates/admin/dashboard.html:36
+#: app/templates/admin/orders/list.html:12
+msgid "Measurement"
+msgstr "नाप"
+
+#: app/templates/admin/dashboard.html:44
+#: app/templates/admin/orders/list.html:12
+msgid "Ready"
+msgstr "तैयार"
+
+#: app/templates/admin/dashboard.html:52
+#: app/templates/admin/orders/list.html:12
+#: app/templates/admin/reports/index.html:44
+msgid "Delivered"
+msgstr "दिया गया"
+
+#: app/templates/admin/dashboard.html:62
+msgid "Urgent, still open"
+msgstr "जल्दी वाले, अभी बाकी"
+
+#: app/templates/admin/dashboard.html:68
+msgid "Today's deliveries"
+msgstr "आज की डिलीवरी"
+
+#: app/templates/admin/dashboard.html:74
+msgid "Overdue"
+msgstr "समय निकल गया"
+
+#: app/templates/admin/dashboard.html:81
+msgid "Outstanding balance"
+msgstr "कुल बकाया"
+
+#: app/templates/admin/dashboard.html:83
+#, python-brace-format
+msgid "{count} orders"
+msgstr "{count} ऑर्डर"
+
+#: app/templates/admin/dashboard.html:91 app/templates/admin/orders/form.html:4
+#: app/templates/admin/orders/pick_customer.html:3
+msgid "New order"
+msgstr "नया ऑर्डर"
+
+#: app/templates/admin/customers/form.html:4
+#: app/templates/admin/customers/form.html:7
+#: app/templates/admin/dashboard.html:94
+msgid "New customer"
+msgstr "नया ग्राहक"
+
+#: app/templates/admin/dashboard.html:97
+#: app/templates/admin/orders/detail.html:173
+msgid "Record a payment"
+msgstr "भुगतान दर्ज करें"
+
+#: app/templates/admin/dashboard.html:108
+#: app/templates/customer/dashboard.html:30
+msgid "Recent orders"
+msgstr "हाल के ऑर्डर"
+
+#: app/templates/admin/dashboard.html:120
+msgid "No orders yet. Create your first order to get started."
+msgstr "अभी कोई ऑर्डर नहीं। शुरू करने के लिए पहला ऑर्डर बनाएं।"
+
+#: app/templates/admin/dashboard.html:129
+#: app/templates/admin/reports/index.html:87
+msgid "Pending payments"
+msgstr "बाकी भुगतान"
+
+#: app/templates/admin/dashboard.html:140
+#: app/templates/admin/reports/index.html:101
+msgid "Nothing outstanding right now."
+msgstr "अभी कुछ भी बकाया नहीं है।"
+
+#: app/templates/admin/search.html:11
+msgid "Customer name, mobile number, or order number"
+msgstr "ग्राहक का नाम, मोबाइल नंबर या ऑर्डर नंबर"
+
+#: app/templates/admin/search.html:31
+msgid "No matching customers."
+msgstr "कोई मिलता-जुलता ग्राहक नहीं मिला।"
+
+#: app/templates/admin/search.html:48
+msgid "No matching orders."
+msgstr "कोई मिलता-जुलता ऑर्डर नहीं मिला।"
+
+#: app/templates/admin/customers/detail.html:16
+#: app/templates/admin/orders/list.html:8
+msgid "+ New order"
+msgstr "+ नया ऑर्डर"
+
+#: app/templates/admin/customers/detail.html:19
+msgid "Edit profile"
+msgstr "प्रोफ़ाइल बदलें"
+
+#: app/templates/admin/customers/detail.html:33
+#: app/templates/customer/_layout.html:11
+#: app/templates/customer/measurements.html:3
+#: app/templates/customer/measurements.html:6
+#: app/templates/public/order.html:68
+msgid "Measurements"
+msgstr "नाप"
+
+#: app/templates/admin/customers/detail.html:35
+msgid "+ New measurement"
+msgstr "+ नया नाप"
+
+#: app/templates/admin/customers/detail.html:42
+#: app/templates/customer/measurements.html:15
+#, python-brace-format
+msgid "Version {n} · taken {date}"
+msgstr "वर्ज़न {n} · {date} को लिया गया"
+
+#: app/templates/admin/customers/detail.html:47
+#: app/templates/customer/measurements.html:19
+msgid "Shirt (in)"
+msgstr "शर्ट (इंच)"
+
+#: app/templates/admin/customers/detail.html:55
+#: app/templates/customer/measurements.html:27
+msgid "Pant (in)"
+msgstr "पैंट (इंच)"
+
+#: app/templates/admin/customers/detail.html:67
+msgid "No measurements recorded yet."
+msgstr "अभी कोई नाप दर्ज नहीं है।"
+
+#: app/templates/admin/customers/detail.html:72
+msgid "History"
+msgstr "इतिहास"
+
+#: app/templates/admin/customers/detail.html:77
+#, python-brace-format
+msgid "Version {n} · {date}"
+msgstr "वर्ज़न {n} · {date}"
+
+#: app/templates/admin/customers/detail.html:90
+msgid "Order history"
+msgstr "ऑर्डर का इतिहास"
+
+#: app/templates/admin/customers/detail.html:95
+msgid "Draft"
+msgstr "ड्राफ्ट"
+
+#: app/templates/admin/customers/detail.html:101
+#: app/templates/customer/dashboard.html:44
+#: app/templates/customer/orders.html:9
+msgid "No orders yet."
+msgstr "अभी कोई ऑर्डर नहीं।"
+
+#: app/templates/admin/customers/form.html:4
+#: app/templates/admin/customers/form.html:7
+msgid "Edit customer"
+msgstr "ग्राहक बदलें"
+
+#: app/templates/admin/customers/form.html:12
+#, python-brace-format
+msgid "{count} existing customer(s) already use this mobile number:"
+msgstr "इस मोबाइल नंबर से पहले से {count} ग्राहक जुड़े हैं:"
+
+#: app/templates/admin/customers/form.html:22
+msgid "That is expected for family members sharing one number — each person keeps their own profile and measurements. Only continue if this really is a different person."
+msgstr "यह तब होता है जब परिवार के लोग एक ही नंबर इस्तेमाल करते हैं — हर व्यक्ति की अपनी अलग प्रोफ़ाइल और नाप रहती है। सिर्फ तभी आगे बढ़ें जब यह सच में कोई अलग व्यक्ति हो।"
+
+#: app/templates/admin/customers/form.html:35
+#: app/templates/admin/services/form.html:36
+msgid "Save"
+msgstr "सेव करें"
+
+#: app/templates/admin/customers/form.html:37
+#: app/templates/admin/customers/measurement_form.html:47
+#: app/templates/admin/orders/form.html:95
+#: app/templates/admin/services/form.html:37
+msgid "Cancel"
+msgstr "रद्द करें"
+
+#: app/templates/admin/customers/list.html:8
+msgid "+ New customer"
+msgstr "+ नया ग्राहक"
+
+#: app/templates/admin/customers/list.html:14
+#: app/templates/admin/orders/pick_customer.html:11
+msgid "Search by name or mobile number"
+msgstr "नाम या मोबाइल नंबर से खोजें"
+
+#: app/templates/admin/customers/list.html:29
+#: app/templates/admin/reports/index.html:72
+msgid "orders"
+msgstr "ऑर्डर"
+
+#: app/templates/admin/customers/list.html:36
+#: app/templates/admin/orders/list.html:64
+#: app/templates/admin/payments/list.html:71
+msgid "Pagination"
+msgstr "पेज नंबर"
+
+#: app/templates/admin/customers/list.html:53
+#: app/templates/admin/orders/pick_customer.html:28
+#, python-brace-format
+msgid "No customers match \"{term}\"."
+msgstr "\"{term}\" से कोई ग्राहक नहीं मिला।"
+
+#: app/templates/admin/customers/list.html:54
+msgid "Add a new customer"
+msgstr "नया ग्राहक जोड़ें"
+
+#: app/templates/admin/customers/list.html:56
+msgid "No customers yet."
+msgstr "अभी कोई ग्राहक नहीं है।"
+
+#: app/templates/admin/customers/measurement_form.html:4
+msgid "New measurement"
+msgstr "नया नाप"
+
+#: app/templates/admin/customers/measurement_form.html:7
+#, python-brace-format
+msgid "New measurement for {name}"
+msgstr "{name} के लिए नया नाप"
+
+#: app/templates/admin/customers/measurement_form.html:9
+msgid "All values in inches. Saving creates a new version — the customer's old orders keep the measurements they were cut to."
+msgstr "सभी नाप इंच में हैं। सेव करने पर एक नया वर्ज़न बनेगा — ग्राहक के पुराने ऑर्डर उसी नाप पर रहेंगे जिस पर वे सिले गए थे।"
+
+#: app/templates/admin/customers/measurement_form.html:46
+msgid "Save as new version"
+msgstr "नए वर्ज़न के रूप में सेव करें"
+
+#: app/templates/admin/enquiries/list.html:9
+#: app/templates/admin/notifications/list.html:15
+#: app/templates/admin/orders/list.html:12
+#: app/templates/admin/payments/list.html:24
+msgid "All"
+msgstr "सभी"
+
+#: app/templates/admin/enquiries/list.html:9
+msgid "Contacted"
+msgstr "संपर्क हो गया"
+
+#: app/templates/admin/enquiries/list.html:9
+msgid "Closed"
+msgstr "बंद"
+
+#: app/templates/admin/enquiries/list.html:19
+msgid "No enquiries yet."
+msgstr "अभी कोई पूछताछ नहीं है।"
+
+#: app/templates/admin/notifications/list.html:10
+msgid "WhatsApp/SMS is not configured yet — messages below are queued but not sent. Set WHATSAPP_API_KEY and WHATSAPP_PHONE_ID to enable sending."
+msgstr "WhatsApp/SMS अभी सेट नहीं है — नीचे दिए संदेश लाइन में हैं पर भेजे नहीं गए हैं। भेजने के लिए WHATSAPP_API_KEY और WHATSAPP_PHONE_ID सेट करें।"
+
+#: app/templates/admin/notifications/list.html:15
+msgid "Scheduled"
+msgstr "लाइन में"
+
+#: app/templates/admin/notifications/list.html:15
+msgid "Sent"
+msgstr "भेज दिया"
+
+#: app/templates/admin/notifications/list.html:15
+msgid "Failed"
+msgstr "असफल"
+
+#: app/templates/admin/notifications/list.html:25
+msgid "No notifications yet."
+msgstr "अभी कोई सूचना नहीं है।"
+
+#: app/templates/admin/orders/detail.html:8
+#: app/templates/admin/orders/list.html:39
+#: app/templates/admin/payments/list.html:41
+#: app/templates/customer/orders.html:15
+#: app/templates/customer/payments.html:16
+msgid "Order"
+msgstr "ऑर्डर"
+
+#: app/templates/admin/orders/detail.html:20
+#: app/templates/customer/order_detail.html:10
+msgid "Print receipt"
+msgstr "रसीद प्रिंट करें"
+
+#: app/templates/admin/orders/detail.html:27
+#, python-brace-format
+msgid "Advance not fully received yet — required ₹{req}, paid ₹{paid}."
+msgstr "अग्रिम अभी पूरा नहीं मिला — ज़रूरी ₹{req}, मिला ₹{paid}।"
+
+#: app/templates/admin/orders/detail.html:28
+msgid "The order still proceeds; this is a reminder only."
+msgstr "ऑर्डर फिर भी चलता रहेगा; यह सिर्फ एक याद-दिलावा है।"
+
+#: app/templates/admin/orders/detail.html:36
+#: app/templates/customer/order_detail.html:18
+msgid "Items"
+msgstr "सामान"
+
+#: app/templates/admin/orders/detail.html:43
+#: app/templates/receipts/order_receipt.html:32
+msgid "Stitching"
+msgstr "सिलाई"
+
+#: app/templates/admin/orders/detail.html:44
+#: app/templates/receipts/order_receipt.html:33
+msgid "Cloth"
+msgstr "कपड़ा"
+
+#: app/templates/admin/orders/detail.html:45
+msgid "Line total"
+msgstr "लाइन कुल"
+
+#: app/templates/admin/orders/detail.html:66
+msgid "Order details"
+msgstr "ऑर्डर विवरण"
+
+#: app/templates/admin/orders/detail.html:78
+msgid "Requested date"
+msgstr "मांगी गई तारीख"
+
+#: app/templates/admin/orders/detail.html:91
+msgid "Save details"
+msgstr "विवरण सेव करें"
+
+#: app/templates/admin/orders/detail.html:97
+#, python-brace-format
+msgid "Cut to measurement version {n} (taken {date})."
+msgstr "नाप वर्ज़न {n} के हिसाब से सिला गया ({date} को लिया गया)।"
+
+#: app/templates/admin/orders/detail.html:99
+msgid "No measurement version was on file when this order was created."
+msgstr "यह ऑर्डर बनाते समय कोई नाप रिकॉर्ड में नहीं थी।"
+
+#: app/templates/admin/orders/detail.html:108
+msgid "Reference photos"
+msgstr "संदर्भ फोटो"
+
+#: app/templates/admin/orders/detail.html:113
+#: app/templates/public/order.html:97
+msgid "Reference photo"
+msgstr "संदर्भ फोटो"
+
+#: app/templates/admin/orders/detail.html:125
+#: app/templates/admin/orders/list.html:41
+#: app/templates/admin/payments/list.html:45
+#: app/templates/admin/services/list.html:35
+#: app/templates/customer/orders.html:17
+#: app/templates/customer/payments.html:19
+#: app/templates/receipts/payment_receipt.html:30
+msgid "Status"
+msgstr "स्थिति"
+
+#: app/templates/admin/orders/detail.html:138
+#, python-brace-format
+msgid "Move to {status}"
+msgstr "{status} पर ले जाएं"
+
+#: app/templates/admin/orders/detail.html:148
+msgid "Financial summary"
+msgstr "हिसाब का ब्यौरा"
+
+#: app/templates/admin/orders/detail.html:150
+#: app/templates/receipts/order_receipt.html:53
+msgid "Stitching total"
+msgstr "सिलाई कुल"
+
+#: app/templates/admin/orders/detail.html:152
+#: app/templates/receipts/order_receipt.html:55
+msgid "Cloth total"
+msgstr "कपड़ा कुल"
+
+#: app/templates/admin/orders/detail.html:154
+#: app/templates/customer/order_detail.html:63
+#: app/templates/public/order_success.html:16
+#: app/templates/public/track_order.html:35
+#: app/templates/receipts/order_receipt.html:57
+msgid "Grand total"
+msgstr "कुल जोड़"
+
+#: app/templates/admin/orders/detail.html:156
+msgid "Required advance"
+msgstr "ज़रूरी अग्रिम"
+
+#: app/templates/admin/orders/detail.html:158
+msgid "Paid (verified)"
+msgstr "जमा (पुष्ट)"
+
+#: app/templates/admin/orders/detail.html:161
+#: app/templates/admin/payments/list.html:17
+msgid "Pending verification"
+msgstr "पुष्टि बाकी"
+
+#: app/templates/admin/orders/detail.html:164
+#: app/templates/customer/dashboard.html:22
+#: app/templates/customer/order_detail.html:67
+#: app/templates/public/track_order.html:39
+#: app/templates/receipts/payment_receipt.html:45
+msgid "Balance due"
+msgstr "बकाया"
+
+#: app/templates/admin/orders/detail.html:186
+msgid "UPI ref / transaction ID"
+msgstr "यूपीआई संदर्भ / ट्रांज़ैक्शन आईडी"
+
+#: app/templates/admin/orders/detail.html:192
+msgid "Add payment"
+msgstr "भुगतान जोड़ें"
+
+#: app/templates/admin/orders/detail.html:200
+#: app/templates/customer/payments.html:6
+msgid "Payment history"
+msgstr "भुगतान का इतिहास"
+
+#: app/templates/admin/orders/detail.html:212
+#: app/templates/admin/payments/list.html:11
+#: app/templates/admin/payments/list.html:24
+#: app/templates/admin/payments/list.html:58
+#: app/templates/customer/payments.html:31
+#: app/templates/receipts/payment_receipt.html:32
+msgid "Verified"
+msgstr "पुष्ट"
+
+#: app/templates/admin/orders/detail.html:213
+#: app/templates/admin/payments/list.html:59
+#: app/templates/receipts/order_receipt.html:2
+msgid "Receipt"
+msgstr "रसीद"
+
+#: app/templates/admin/orders/detail.html:215
+#: app/templates/admin/payments/list.html:24
+#: app/templates/admin/payments/list.html:61
+#: app/templates/admin/reports/index.html:50
+#: app/templates/customer/payments.html:33
+#: app/templates/receipts/payment_receipt.html:32
+msgid "Pending"
+msgstr "बाकी"
+
+#: app/templates/admin/orders/detail.html:218
+msgid "Verify"
+msgstr "पुष्ट करें"
+
+#: app/templates/admin/orders/detail.html:226
+msgid "No payments recorded yet."
+msgstr "अभी कोई भुगतान दर्ज नहीं।"
+
+#: app/templates/admin/orders/form.html:27
+msgid "Stitching ₹"
+msgstr "सिलाई ₹"
+
+#: app/templates/admin/orders/form.html:33
+msgid "Cloth ₹"
+msgstr "कपड़ा ₹"
+
+#: app/templates/admin/orders/form.html:39
+msgid "Remove"
+msgstr "हटाएं"
+
+#: app/templates/admin/orders/form.html:45
+#, python-brace-format
+msgid "New order for {name}"
+msgstr "{name} के लिए नया ऑर्डर"
+
+#: app/templates/admin/orders/form.html:50
+msgid "No services have a stitching price set yet."
+msgstr "अभी किसी सेवा का सिलाई रेट तय नहीं है।"
+
+#: app/templates/admin/orders/form.html:51
+msgid "Set one up first"
+msgstr "पहले एक रेट सेट करें"
+
+#: app/templates/admin/orders/form.html:65 app/templates/public/order.html:57
+msgid "+ Add another service"
+msgstr "+ एक और सेवा जोड़ें"
+
+#: app/templates/admin/orders/form.html:84
+msgid "Estimated total"
+msgstr "अनुमानित कुल"
+
+#: app/templates/admin/orders/form.html:87
+msgid "Cloth charges only count when the shop provides the cloth."
+msgstr "कपड़े का चार्ज सिर्फ तब लगेगा जब दुकान कपड़ा दे।"
+
+#: app/templates/admin/orders/form.html:94
+msgid "Create order"
+msgstr "ऑर्डर बनाएं"
+
+#: app/templates/admin/orders/list.html:27
+msgid "Search by order number, customer name or mobile"
+msgstr "ऑर्डर नंबर, ग्राहक का नाम या मोबाइल से खोजें"
+
+#: app/templates/admin/orders/list.html:33
+msgid "No orders match this filter."
+msgstr "इस फ़िल्टर से कोई ऑर्डर नहीं मिला।"
+
+#: app/templates/admin/orders/list.html:40
+#: app/templates/admin/payments/list.html:42
+#: app/templates/receipts/payment_receipt.html:20
+msgid "Customer"
+msgstr "ग्राहक"
+
+#: app/templates/admin/orders/list.html:42
+#: app/templates/customer/orders.html:18
+msgid "Total"
+msgstr "कुल"
+
+#: app/templates/admin/orders/list.html:43
+#: app/templates/customer/orders.html:19
+msgid "Balance"
+msgstr "बकाया"
+
+#: app/templates/admin/orders/pick_customer.html:6
+msgid "New order — find the customer"
+msgstr "नया ऑर्डर — ग्राहक खोजें"
+
+#: app/templates/admin/orders/pick_customer.html:23
+msgid "Select"
+msgstr "चुनें"
+
+#: app/templates/admin/orders/pick_customer.html:31
+msgid "+ Add as a new customer"
+msgstr "+ नए ग्राहक के रूप में जोड़ें"
+
+#: app/templates/admin/payments/list.html:34
+msgid "No payments to show."
+msgstr "दिखाने के लिए कोई भुगतान नहीं।"
+
+#: app/templates/admin/payments/list.html:40
+#: app/templates/customer/orders.html:16
+#: app/templates/customer/payments.html:15
+#: app/templates/receipts/payment_receipt.html:22
+msgid "Date"
+msgstr "तारीख"
+
+#: app/templates/admin/payments/list.html:44
+#: app/templates/customer/order_detail.html:21
+#: app/templates/customer/payments.html:18
+#: app/templates/receipts/order_receipt.html:34
+msgid "Amount"
+msgstr "रकम"
+
+#: app/templates/admin/reports/index.html:9
+msgid "Today"
+msgstr "आज"
+
+#: app/templates/admin/reports/index.html:9
+msgid "This week"
+msgstr "इस हफ्ते"
+
+#: app/templates/admin/reports/index.html:9
+msgid "This month"
+msgstr "इस महीने"
+
+#: app/templates/admin/reports/index.html:9
+msgid "Custom"
+msgstr "तारीख चुनें"
+
+#: app/templates/admin/reports/index.html:22
+msgid "From"
+msgstr "से"
+
+#: app/templates/admin/reports/index.html:26
+msgid "To"
+msgstr "तक"
+
+#: app/templates/admin/reports/index.html:30
+msgid "Apply"
+msgstr "लागू करें"
+
+#: app/templates/admin/reports/index.html:38
+msgid "Total orders"
+msgstr "कुल ऑर्डर"
+
+#: app/templates/admin/reports/index.html:56
+msgid "Revenue collected"
+msgstr "जमा हुई कमाई"
+
+#: app/templates/admin/reports/index.html:66
+msgid "Orders by category"
+msgstr "श्रेणी के अनुसार ऑर्डर"
+
+#: app/templates/admin/reports/index.html:90
+msgid "Total outstanding"
+msgstr "कुल बकाया"
+
+#: app/templates/admin/services/form.html:4
+#: app/templates/admin/services/form.html:7
+msgid "New service"
+msgstr "नई सेवा"
+
+#: app/templates/admin/services/form.html:4
+#: app/templates/admin/services/form.html:7
+msgid "Edit service"
+msgstr "सेवा बदलें"
+
+#: app/templates/admin/services/form.html:11
+msgid "This service has no stitching price yet — it cannot be used on an order until you set one."
+msgstr "इस सेवा का सिलाई रेट अभी तय नहीं है — जब तक रेट नहीं डालोगे, यह ऑर्डर में इस्तेमाल नहीं हो सकती।"
+
+#: app/templates/admin/services/form.html:24
+msgid "Code cannot be changed after creation."
+msgstr "बनने के बाद कोड बदला नहीं जा सकता।"
+
+#: app/templates/admin/services/list.html:7
+#: app/templates/public/services.html:2 app/templates/public/services.html:7
+msgid "Services & pricing"
+msgstr "सेवाएं और रेट"
+
+#: app/templates/admin/services/list.html:11
+msgid "Load default services"
+msgstr "डिफ़ॉल्ट सेवाएं लोड करें"
+
+#: app/templates/admin/services/list.html:13
+msgid "+ New service"
+msgstr "+ नई सेवा"
+
+#: app/templates/admin/services/list.html:18
+msgid "Stitching price only — cloth/material is always billed separately on the order. Changing a price here only affects new orders; existing orders keep the price they were created with."
+msgstr "यह सिर्फ सिलाई का रेट है — कपड़े का बिल हमेशा अलग से लगता है। यहां रेट बदलने से सिर्फ नए ऑर्डर पर असर पड़ेगा; पुराने ऑर्डर उसी रेट पर रहेंगे जिस पर बने थे।"
+
+#: app/templates/admin/services/list.html:23
+msgid "No services yet. Use \"Load default services\" above to get started."
+msgstr "अभी कोई सेवा नहीं है। शुरू करने के लिए ऊपर \"डिफ़ॉल्ट सेवाएं लोड करें\" दबाएं।"
+
+#: app/templates/admin/services/list.html:33
+msgid "Hindi"
+msgstr "हिन्दी"
+
+#: app/templates/admin/services/list.html:34
+msgid "Stitching price"
+msgstr "सिलाई का रेट"
+
+#: app/templates/admin/services/list.html:36
+msgid "Actions"
+msgstr "काम"
+
+#: app/templates/admin/services/list.html:48
+msgid "Not set"
+msgstr "तय नहीं"
+
+#: app/templates/admin/services/list.html:55
+msgid "Hidden"
+msgstr "छिपा हुआ"
+
+#: app/templates/admin/services/list.html:59
+msgid "Edit"
+msgstr "बदलें"
+
+#: app/templates/admin/services/list.html:63
+msgid "Hide"
+msgstr "छिपाएं"
+
+#: app/templates/admin/services/list.html:63
+msgid "Unhide"
+msgstr "दिखाएं"
+
+#: app/templates/auth/admin_login.html:3
+msgid "Staff sign in"
+msgstr "स्टाफ साइन इन"
+
+#: app/templates/auth/admin_login.html:10
+msgid "Shop staff"
+msgstr "दुकान स्टाफ"
+
+#: app/templates/auth/admin_login.html:11
+#: app/templates/auth/admin_login.html:17
+#: app/templates/auth/customer_login.html:3
+#: app/templates/auth/customer_login.html:16
+#: app/templates/auth/customer_register.html:22
+#: app/templates/partials/_nav.html:31
+msgid "Sign in"
+msgstr "साइन इन करें"
+
+#: app/templates/auth/customer_login.html:10
+msgid "Sign in to track your orders"
+msgstr "अपने ऑर्डर देखने के लिए साइन इन करें"
+
+#: app/templates/auth/customer_login.html:19
+msgid "Don't have an account?"
+msgstr "खाता नहीं है?"
+
+#: app/templates/auth/customer_login.html:20
+msgid "Create one"
+msgstr "नया बनाएं"
+
+#: app/templates/auth/customer_register.html:3
+#: app/templates/auth/customer_register.html:18
+msgid "Create account"
+msgstr "खाता बनाएं"
+
+#: app/templates/auth/customer_register.html:10
+msgid "Create your account"
+msgstr "अपना खाता बनाएं"
+
+#: app/templates/auth/customer_register.html:21
+msgid "Already have an account?"
+msgstr "पहले से खाता है?"
+
+#: app/templates/customer/_layout.html:7
+#: app/templates/customer/dashboard.html:3 app/templates/partials/_nav.html:28
+msgid "My account"
+msgstr "मेरा खाता"
+
+#: app/templates/customer/_layout.html:9 app/templates/customer/orders.html:3
+#: app/templates/customer/orders.html:6
+msgid "My orders"
+msgstr "मेरे ऑर्डर"
+
+#: app/templates/customer/dashboard.html:9
+#, python-brace-format
+msgid "You are managing {count} profiles."
+msgstr "आप {count} प्रोफ़ाइल संभाल रहे हैं।"
+
+#: app/templates/customer/dashboard.html:16
+msgid "Open orders"
+msgstr "चालू ऑर्डर"
+
+#: app/templates/customer/dashboard.html:41
+msgid "View all orders"
+msgstr "सभी ऑर्डर देखें"
+
+#: app/templates/customer/measurements.html:36
+msgid "No measurements on file yet — these are taken at the shop."
+msgstr "अभी तक कोई नाप दर्ज नहीं है — यह दुकान पर ली जाती है।"
+
+#: app/templates/customer/measurements.html:41
+msgid "No profile found."
+msgstr "कोई प्रोफ़ाइल नहीं मिली।"
+
+#: app/templates/customer/order_detail.html:35
+#: app/templates/public/track_order.html:44
+#, python-brace-format
+msgid "Expected delivery: {date}"
+msgstr "डिलीवरी की तारीख: {date}"
+
+#: app/templates/customer/order_detail.html:44
+msgid "Your reference photos"
+msgstr "आपकी संदर्भ फोटो"
+
+#: app/templates/customer/order_detail.html:61
+#: app/templates/public/order.html:101
+msgid "Payment"
+msgstr "भुगतान"
+
+#: app/templates/customer/order_detail.html:65
+#: app/templates/public/track_order.html:37
+#: app/templates/receipts/order_receipt.html:59
+msgid "Paid"
+msgstr "जमा"
+
+#: app/templates/customer/payments.html:9
+msgid "No payments yet."
+msgstr "अभी कोई भुगतान नहीं।"
+
+#: app/templates/errors/error.html:9
+msgid "Go to the homepage"
+msgstr "होमपेज पर जाएं"
+
+#: app/templates/partials/_flash.html:7
+msgid "Close"
+msgstr "बंद करें"
+
+#: app/templates/partials/_footer.html:7 app/templates/public/contact.html:12
+#: app/templates/receipts/order_receipt.html:11
+#: app/templates/receipts/payment_receipt.html:11
+msgid "Phone"
+msgstr "फ़ोन"
+
+#: app/templates/partials/_footer.html:10
+msgid "Men's tailoring · Police · CRPF · Army uniforms"
+msgstr "पुरुषों की सिलाई · पुलिस · सीआरपीएफ · सेना की वर्दी"
+
+#: app/templates/partials/_footer.html:11
+msgid "All rights reserved."
+msgstr "सर्वाधिकार सुरक्षित।"
+
+#: app/templates/partials/_nav.html:15
+msgid "Home"
+msgstr "होम"
+
+#: app/templates/partials/_nav.html:17 app/templates/public/order.html:3
+#: app/templates/public/order.html:33
+msgid "Order online"
+msgstr "ऑनलाइन ऑर्डर करें"
+
+#: app/templates/partials/_nav.html:18 app/templates/public/enquiry.html:3
+msgid "Enquiry"
+msgstr "पूछताछ"
+
+#: app/templates/partials/_nav.html:19 app/templates/public/track_order.html:3
+msgid "Track order"
+msgstr "ऑर्डर देखें"
+
+#: app/templates/partials/_nav.html:23
+msgid "Call"
+msgstr "कॉल करें"
+
+#: app/templates/partials/_nav.html:33
+msgid "Language"
+msgstr "भाषा"
+
+#: app/templates/public/about.html:2 app/templates/public/about.html:7
+msgid "About us"
+msgstr "हमारे बारे में"
+
+#: app/templates/public/about.html:10
+msgid "Men's tailoring and uniform specialists in Neemuch, Madhya Pradesh — shirts, trousers, and regulation Police, CRPF and Army uniforms."
+msgstr "नीमच, मध्य प्रदेश में सिलाई और वर्दी के विशेषज्ञ — शर्ट, पैंट, और नियम के मुताबिक पुलिस, सीआरपीएफ और सेना की वर्दी।"
+
+#: app/templates/public/about.html:12
+msgid "More about our story is coming soon."
+msgstr "हमारी कहानी के बारे में और जानकारी जल्द आएगी।"
+
+#: app/templates/public/contact.html:2 app/templates/public/contact.html:7
+msgid "Contact us"
+msgstr "संपर्क करें"
+
+#: app/templates/public/contact.html:14
+msgid "Hours"
+msgstr "समय"
+
+#: app/templates/public/contact.html:15
+msgid "Monday to Saturday, 10:00 AM – 8:00 PM"
+msgstr "सोमवार से शनिवार, सुबह 10 बजे से रात 8 बजे तक"
+
+#: app/templates/public/contact.html:17
+msgid "Send us an enquiry"
+msgstr "हमें पूछताछ भेजें"
+
+#: app/templates/public/enquiry.html:8
+msgid "Quick enquiry"
+msgstr "छोटी पूछताछ"
+
+#: app/templates/public/enquiry.html:9
+msgid "Tell us what you need"
+msgstr "बताएं आपको क्या चाहिए"
+
+#: app/templates/public/enquiry.html:11
+msgid "Send us your details and we will call you back. Measurements are taken at the shop."
+msgstr "अपनी जानकारी भेजें, हम आपको वापस कॉल करेंगे। नाप दुकान पर ली जाती है।"
+
+#: app/templates/public/enquiry.html:21
+msgid "Send enquiry"
+msgstr "पूछताछ भेजें"
+
+#: app/templates/public/enquiry.html:26
+msgid "Prefer to place a full order online instead?"
+msgstr "इसकी जगह पूरा ऑर्डर ऑनलाइन देना चाहेंगे?"
+
+#: app/templates/public/gallery.html:2 app/templates/public/gallery.html:7
+msgid "Gallery"
+msgstr "गैलरी"
+
+#: app/templates/public/gallery.html:8
+msgid "Our work"
+msgstr "हमारा काम"
+
+#: app/templates/public/gallery.html:9
+msgid "Photos of our stitching work are coming soon."
+msgstr "हमारी सिलाई के काम की फोटो जल्द आएंगी।"
+
+#: app/templates/public/index.html:2
+msgid "Neemuch"
+msgstr "नीमच"
+
+#: app/templates/public/index.html:6
+msgid "Neemuch, Madhya Pradesh"
+msgstr "नीमच, मध्य प्रदेश"
+
+#: app/templates/public/index.html:7
+msgid "Expert men's tailoring & uniform specialists"
+msgstr "माहिर सिलाई और वर्दी के विशेषज्ञ"
+
+#: app/templates/public/index.html:9
+msgid "Shirts, trousers and regulation Police, CRPF and Army uniforms — stitched to your measurements, priced clearly with stitching and cloth kept separate."
+msgstr "शर्ट, पैंट और नियम के मुताबिक पुलिस, सीआरपीएफ और सेना की वर्दी — आपके नाप पर सिली हुई, सिलाई और कपड़े का साफ अलग-अलग रेट।"
+
+#: app/templates/public/index.html:12
+msgid "Call the shop"
+msgstr "दुकान पर कॉल करें"
+
+#: app/templates/public/index.html:13 app/templates/public/track_order.html:8
+msgid "Track your order"
+msgstr "अपना ऑर्डर देखें"
+
+#: app/templates/public/index.html:13
+msgid "soon"
+msgstr "जल्द"
+
+#: app/templates/public/index.html:23
+msgid "Shirt + Pant stitching (cloth separate)"
+msgstr "शर्ट + पैंट सिलाई (कपड़ा अलग)"
+
+#: app/templates/public/index.html:29
+msgid "Khaaki / Cheetah full dress stitching"
+msgstr "खाकी / चीता फुल ड्रेस सिलाई"
+
+#: app/templates/public/index.html:35
+msgid "Cheetah US pattern full dress stitching"
+msgstr "चीता यूएस पैटर्न फुल ड्रेस सिलाई"
+
+#: app/templates/public/index.html:41
+msgid "days normal delivery after confirmation"
+msgstr "दिन में सामान्य डिलीवरी, ऑर्डर पक्का होने के बाद"
+
+#: app/templates/public/index.html:47
+msgid "Full website — services, online orders, order tracking and the shop dashboard — is under construction."
+msgstr "पूरी वेबसाइट — सेवाएं, ऑनलाइन ऑर्डर, ऑर्डर ट्रैकिंग और दुकान डैशबोर्ड — अभी बन रही है।"
+
+#: app/templates/public/order.html:34
+msgid "Place your order"
+msgstr "अपना ऑर्डर करें"
+
+#: app/templates/public/order.html:45
+msgid "Your details"
+msgstr "आपकी जानकारी"
+
+#: app/templates/public/order.html:63
+msgid "If the shop is providing the cloth, our staff will call you to discuss fabric options and confirm the material cost."
+msgstr "अगर दुकान कपड़ा दे रही है, तो हमारा स्टाफ कपड़े के बारे में बात करने और उसका दाम पक्का करने के लिए आपको कॉल करेगा।"
+
+#: app/templates/public/order.html:104
+msgid "Place order"
+msgstr "ऑर्डर करें"
+
+#: app/templates/public/order_success.html:2
+msgid "Order placed"
+msgstr "ऑर्डर हो गया"
+
+#: app/templates/public/order_success.html:9
+msgid "Thank you!"
+msgstr "धन्यवाद!"
+
+#: app/templates/public/order_success.html:10
+msgid "Your order number is"
+msgstr "आपका ऑर्डर नंबर है"
+
+#: app/templates/public/order_success.html:13
+msgid "Please save this number — you can use it with your mobile number to track your order."
+msgstr "इस नंबर को संभालकर रखें — इससे और अपने मोबाइल नंबर से आप अपना ऑर्डर देख सकते हैं।"
+
+#: app/templates/public/order_success.html:18
+msgid "Advance required"
+msgstr "ज़रूरी अग्रिम"
+
+#: app/templates/public/order_success.html:22
+msgid "Our staff will call you shortly to confirm your order and measurements."
+msgstr "हमारा स्टाफ आपका ऑर्डर और नाप पक्का करने के लिए जल्द ही कॉल करेगा।"
+
+#: app/templates/public/order_success.html:24
+msgid "Track this order"
+msgstr "यह ऑर्डर देखें"
+
+#: app/templates/public/services.html:6
+msgid "Our services"
+msgstr "हमारी सेवाएं"
+
+#: app/templates/public/services.html:9
+msgid "Stitching charges only — cloth is billed separately, whether you bring your own or the shop provides it."
+msgstr "सिर्फ सिलाई का चार्ज — कपड़े का बिल अलग से लगेगा, चाहे आप अपना कपड़ा लाएं या दुकान से लें।"
+
+#: app/templates/public/services.html:26
+msgid "Please call for pricing"
+msgstr "रेट जानने के लिए कॉल करें"
+
+#: app/templates/public/track_order.html:9
+msgid "Check your order status"
+msgstr "अपने ऑर्डर की स्थिति देखें"
+
+#: app/templates/public/track_order.html:17
+msgid "Check status"
+msgstr "स्थिति देखें"
+
+#: app/templates/public/track_order.html:24
+msgid "We could not find an order matching that order number and mobile number."
+msgstr "इस ऑर्डर नंबर और मोबाइल नंबर से कोई ऑर्डर नहीं मिला।"
+
+#: app/templates/receipts/order_receipt.html:18
+#: app/templates/receipts/payment_receipt.html:18
+msgid "Order No"
+msgstr "ऑर्डर नंबर"
+
+#: app/templates/receipts/order_receipt.html:30
+msgid "Item"
+msgstr "सामान"
+
+#: app/templates/receipts/order_receipt.html:61
+msgid "Remaining"
+msgstr "बकाया"
+
+#: app/templates/receipts/order_receipt.html:71
+#, python-brace-format
+msgid "Thank you for choosing {shop}."
+msgstr "{shop} को चुनने के लिए धन्यवाद।"
+
+#: app/templates/receipts/order_receipt.html:77
+#: app/templates/receipts/payment_receipt.html:52
+msgid "Print"
+msgstr "प्रिंट करें"
+
+#: app/templates/receipts/payment_receipt.html:2
+#: app/templates/receipts/payment_receipt.html:15
+msgid "Payment receipt"
+msgstr "भुगतान रसीद"
+
+#: app/templates/receipts/payment_receipt.html:27
+msgid "Reference"
+msgstr "संदर्भ"
+
+#: app/templates/receipts/payment_receipt.html:39
+msgid "Amount paid"
+msgstr "जमा रकम"
+
+#: app/templates/receipts/payment_receipt.html:41
+msgid "Order total"
+msgstr "ऑर्डर कुल"
+
+#: app/templates/receipts/payment_receipt.html:43
+msgid "Total paid so far"
+msgstr "अब तक जमा कुल"
+
+#: app/utils/security.py:26 app/utils/security.py:42
+msgid "Please sign in to continue."
+msgstr "जारी रखने के लिए कृपया साइन इन करें।"
+
+#: app/utils/uploads.py:26
+msgid "Please choose a file."
+msgstr "कृपया एक फ़ाइल चुनें।"
+
+#: app/utils/uploads.py:31
+msgid "Only JPG, PNG or WEBP images are allowed."
+msgstr "सिर्फ JPG, PNG या WEBP फोटो की अनुमति है।"
+
+#: app/utils/uploads.py:35
+msgid "That file is empty."
+msgstr "यह फ़ाइल खाली है।"
+
+#: app/utils/uploads.py:37
+msgid "That image is too large."
+msgstr "यह फोटो बहुत बड़ी है।"
+
+#: app/utils/uploads.py:42
+msgid "Image support is not available."
+msgstr "फोटो सपोर्ट उपलब्ध नहीं है।"
+
+#: app/utils/uploads.py:49
+msgid "That file doesn't look like a valid image."
+msgstr "यह फ़ाइल सही फोटो नहीं लगती।"
+
+#: app/utils/uploads.py:53
+msgid "Unsupported image type."
+msgstr "यह फोटो का प्रकार समर्थित नहीं है।"
+
