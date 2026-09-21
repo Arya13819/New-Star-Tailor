@@ -1,4 +1,4 @@
-# Backups (outline — finalised at Phase 18)
+# Backups
 
 Customer, order and payment data is business-critical. Losing it is losing the
 shop's diary.

@@ -33,6 +33,15 @@ def create_app(config_name: str | None = None) -> Flask:
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_object(resolve_config(config_name))
 
+    # Production runs behind Nginx (TLS-terminating reverse proxy — see
+    # docs/DEPLOYMENT.md). Without this, request.is_secure is always False
+    # and url_for(_external=True) always emits http://, breaking HSTS,
+    # secure cookies, and the canonical/Open Graph URLs. Harmless when there
+    # is no proxy (dev/tests): X-Forwarded-* headers simply aren't sent.
+    from werkzeug.middleware.proxy_fix import ProxyFix
+
+    app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1)
+
     os.makedirs(app.instance_path, exist_ok=True)
     os.makedirs(app.config["UPLOAD_DIR"], exist_ok=True)
 
@@ -41,6 +50,7 @@ def create_app(config_name: str | None = None) -> Flask:
     _register_blueprints(app)
     _register_error_handlers(app)
     _register_context(app)
+    _register_security_headers(app)
     _register_cli(app)
 
     return app
@@ -120,10 +130,23 @@ def _register_context(app: Flask) -> None:
                 "name": app.config["SHOP_NAME"],
                 "address": app.config["SHOP_ADDRESS"],
                 "phone": app.config["SHOP_PHONE"],
+                "city": app.config["SHOP_CITY"],
+                "region": app.config["SHOP_REGION"],
+                "postal_code": app.config["SHOP_POSTAL_CODE"],
+                "country": app.config["SHOP_COUNTRY"],
+                "hours_days": app.config["SHOP_HOURS_DAYS"],
+                "hours_opens": app.config["SHOP_HOURS_OPENS"],
+                "hours_closes": app.config["SHOP_HOURS_CLOSES"],
             },
             "MESSAGING_CONFIGURED": Config.messaging_configured(),
             "PAYMENTS_CONFIGURED": Config.payments_configured(),
         }
+
+
+def _register_security_headers(app: Flask) -> None:
+    from .utils.headers import register_security_headers
+
+    register_security_headers(app)
 
 
 def _register_cli(app: Flask) -> None:

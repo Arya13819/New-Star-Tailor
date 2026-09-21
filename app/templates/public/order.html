@@ -111,7 +111,7 @@
 {% endblock %}
 
 {% block scripts %}
-<script>
+<script nonce="{{ csp_nonce }}">
 (function () {
   var container = document.getElementById('item-rows');
   var addBtn = document.getElementById('add-item-row');

@@ -49,7 +49,13 @@
   </div>
 
   <div class="text-center mt-3 no-print">
-    <button type="button" class="btn btn-primary" onclick="window.print()">{{ _('Print') }}</button>
+    <button type="button" id="print-btn" class="btn btn-primary">{{ _('Print') }}</button>
   </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script nonce="{{ csp_nonce }}">
+  document.getElementById('print-btn').addEventListener('click', function () { window.print(); });
+</script>
 {% endblock %}

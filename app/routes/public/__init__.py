@@ -5,4 +5,4 @@ from flask import Blueprint
 
 bp = Blueprint("public", __name__)
 
-from . import enquiry, home, pages, services, track_order  # noqa: E402,F401
+from . import enquiry, home, pages, seo, services, track_order  # noqa: E402,F401

@@ -70,6 +70,13 @@ class Config:
         "Neemuch, Madhya Pradesh, India"
     )
     SHOP_PHONE = "9352672795"
+    SHOP_CITY = "Neemuch"
+    SHOP_REGION = "Madhya Pradesh"
+    SHOP_POSTAL_CODE = "458441"
+    SHOP_COUNTRY = "IN"
+    SHOP_HOURS_DAYS = "Mo-Sa"
+    SHOP_HOURS_OPENS = "10:00"
+    SHOP_HOURS_CLOSES = "20:00"
     ORDER_NUMBER_PREFIX = "NST-"
     # Minimum digit width, e.g. NST-0001. Not a hard cap — order #10000 still
     # prints in full as NST-10000, so this never needs to be "widened" later;
