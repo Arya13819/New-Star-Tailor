@@ -10,7 +10,11 @@
   </p>
   <div class="d-flex flex-wrap justify-content-center gap-2 mt-4">
     <a class="btn btn-gold btn-lg" href="tel:{{ SHOP.phone }}">{{ _('Call the shop') }}</a>
-    <a class="btn btn-outline-primary btn-lg disabled" aria-disabled="true">{{ _('Track your order') }} <span class="badge text-bg-light ms-1">{{ _('soon') }}</span></a>
+    <a class="btn btn-outline-primary btn-lg" target="_blank" rel="noopener"
+       href="https://www.google.com/maps/dir/?api=1&destination={{ (SHOP.name ~ ', ' ~ SHOP.address)|urlencode }}">
+      {{ _('Get directions') }}
+    </a>
+    <a class="btn btn-outline-primary btn-lg" href="{{ url_for('public.track_order') }}">{{ _('Track your order') }}</a>
   </div>
 </div>
 
@@ -43,7 +47,4 @@
   </div>
 </div>
 
-<p class="text-center text-secondary small mt-4 mb-0">
-  {{ _('Full website — services, online orders, order tracking and the shop dashboard — is under construction.') }}
-</p>
 {% endblock %}

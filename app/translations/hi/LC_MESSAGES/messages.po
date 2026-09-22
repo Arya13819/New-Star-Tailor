@@ -1626,3 +1626,6 @@ msgstr "सिर्फ आपके चालू ऑर्डर दिखा�
 msgid "No open orders right now."
 msgstr "अभी कोई चालू ऑर्डर नहीं है।"
 
+msgid "Get directions"
+msgstr "रास्ता दिखाएं"
+

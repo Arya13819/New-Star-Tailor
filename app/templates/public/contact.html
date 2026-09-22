@@ -14,7 +14,13 @@
       <dt class="col-4">{{ _('Hours') }}</dt>
       <dd class="col-8">{{ _('Monday to Saturday, 10:00 AM – 8:00 PM') }}</dd>
     </dl>
-    <a class="btn btn-primary" href="{{ url_for('public.enquiry') }}">{{ _('Send us an enquiry') }}</a>
+    <div class="d-flex flex-wrap justify-content-center gap-2">
+      <a class="btn btn-primary" href="{{ url_for('public.enquiry') }}">{{ _('Send us an enquiry') }}</a>
+      <a class="btn btn-outline-primary" target="_blank" rel="noopener"
+         href="https://www.google.com/maps/dir/?api=1&destination={{ (SHOP.name ~ ', ' ~ SHOP.address)|urlencode }}">
+        {{ _('Get directions') }}
+      </a>
+    </div>
   </div>
 </div>
 {% endblock %}
