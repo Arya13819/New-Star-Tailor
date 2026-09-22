@@ -4,7 +4,7 @@ Tailoring management website + PWA for **New Star Tailor**, Old UCO Bank Gully,
 Near Patel Plaza, Tagore Marg, Neemuch, Madhya Pradesh — phone **9352672795**.
 
 It replaces the shop's paper diary: customers, measurements (versioned), orders,
-payments, receipts, reports, a customer portal and (later) WhatsApp
+payments, receipts, reports, a customer portal and (later) SMS
 notifications. Scope is **men's tailoring only**.
 
 > Business logic is authoritative in **[docs/BUSINESS_RULES.md](docs/BUSINESS_RULES.md)** — read it first.
@@ -28,7 +28,7 @@ installable PWA.
 | ✔ | Phase 10 | Customer portal — own orders/measurements/payments only, strict per-customer data isolation (404, not 403, on a guessed id) |
 | ✔ | Phase 11 | Online ordering — `/enquiry`, `/order` (self-measurement + ack, reference photo, pending payment intent), `/track-order`, `/admin/enquiries` |
 | ✔ | Phase 12 | Printable order + payment receipts for admin and the customer portal (own orders only) |
-| ✔ | Phase 13 | WhatsApp-ready notifications — order confirmation/ready hooks, `/admin/notifications`, `nst notifications process` + `nst reminders run` CLI (honest no-op until a provider is configured) |
+| ✔ | Phase 13 | SMS-ready notifications (never WhatsApp) — order confirmation/ready hooks, `/admin/notifications`, `nst notifications process` + `nst reminders run` CLI (honest no-op until a provider is configured) |
 | ✔ | Phase 14 | Reports — today/week/month/custom, category breakdown, revenue from verified payments only, live pending-payments list |
 | ✔ | Phase 15 | Full Hindi translation — every form label, flash message and template string wrapped for i18n, 351-string `hi` catalogue, `?lang=hi` switch remembered in session |
 | ✔ | Phase 16 | PWA — installable manifest + icon set, service worker caching only the static shell and read-only public pages (never admin/customer/API), `/sw.js` served at root scope |

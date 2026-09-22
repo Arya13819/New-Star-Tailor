@@ -45,6 +45,12 @@
 <h1 class="h3 mb-1">{{ _('New order for {name}').format(name=customer.name) }}</h1>
 <p class="text-secondary mb-4">{{ customer.mobile }}</p>
 
+{% if enquiry %}
+  <div class="alert alert-info">
+    {{ _('Converting enquiry from {name} ({mobile}). Saving this order will mark that enquiry as converted.').format(name=enquiry.name, mobile=enquiry.mobile) }}
+  </div>
+{% endif %}
+
 {% if not services %}
   <div class="alert alert-warning">
     {{ _('No services have a stitching price set yet.') }}

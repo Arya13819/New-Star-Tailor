@@ -17,11 +17,12 @@ from flask_login import current_user
 from ...extensions import db
 from ...forms.order import OrderForm
 from ...forms.payment import PaymentForm
-from ...models.enums import FabricSource, OrderPriority, OrderStatus
+from ...models.enquiry import Enquiry
+from ...models.enums import EnquiryStatus, FabricSource, OrderPriority, OrderStatus
 from ...models.reference_image import ReferenceImage
 from ...models.service import Service
 from ...repositories import customer_repo, order_repo
-from ...services import order_service, payment_service
+from ...services import enquiry_service, order_service, payment_service
 from ...services.order_service import OrderError
 from ...utils.security import admin_required
 from . import bp
@@ -41,9 +42,12 @@ def _priced_services() -> list[Service]:
 @admin_required
 def order_list():
     status = request.args.get("status", "").upper() or None
+    view = request.args.get("view", "").lower() or None
+    if view not in order_repo.VIEWS:
+        view = None
     term = request.args.get("q", "").strip()
     page = request.args.get("page", 1, type=int)
-    pagination = order_repo.search(status, term, page=page)
+    pagination = order_repo.search(status, term, view=view, page=page)
     counts = order_repo.counts_by_status()
     return render_template(
         "admin/orders/list.html",
@@ -51,6 +55,7 @@ def order_list():
         orders=pagination.items,
         counts=counts,
         status=status,
+        view=view,
         term=term,
         payment_service=payment_service,
     )
@@ -71,6 +76,13 @@ def order_new():
     choices = [
         (str(s.id), f"{s.name_en} — ₹{s.default_stitching_price:.2f}") for s in services
     ]
+
+    enquiry_id = request.args.get("enquiry_id", type=int)
+    enquiry = None
+    if enquiry_id:
+        candidate = db.session.get(Enquiry, enquiry_id)
+        if candidate is not None and candidate.status != EnquiryStatus.CONVERTED:
+            enquiry = candidate
 
     form = OrderForm()
     for item_form in form.items:
@@ -109,13 +121,15 @@ def order_new():
         except OrderError as exc:
             flash(str(exc), "error")
         else:
+            if enquiry is not None:
+                enquiry_service.mark_converted(enquiry, order)
             flash(
                 _("Order {number} created.").format(number=order.order_number), "success"
             )
             return redirect(url_for("admin.order_detail", order_id=order.id))
 
     return render_template(
-        "admin/orders/form.html", form=form, customer=customer, services=services
+        "admin/orders/form.html", form=form, customer=customer, services=services, enquiry=enquiry
     )
 
 

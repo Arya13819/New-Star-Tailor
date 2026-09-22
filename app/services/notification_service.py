@@ -1,4 +1,8 @@
-"""Customer notifications (master prompt §30-32) — WhatsApp-ready architecture.
+"""Customer notifications (master prompt §30-32) — SMS-ready architecture.
+
+Plain SMS only — never WhatsApp (WhatsApp Business API needs Meta business
+verification the shop isn't pursuing; SMS needs a DLT-registered sender ID
+instead, which is simpler for a single small shop).
 
 Queuing a notification only ever writes a row. Nothing here ever claims a
 message was sent unless a real provider confirmed it — until one is
@@ -10,22 +14,84 @@ from __future__ import annotations
 from ..config import Config
 from ..extensions import db
 from ..models.base import utcnow
-from ..models.enums import NotificationChannel, NotificationStatus, NotificationType
+from ..models.enums import NotificationChannel, NotificationStatus, NotificationType, UserRole
 from ..models.notification import Notification
+
+
+def _customer_wants_hindi(customer) -> bool:
+    """A customer's SMS language is their own persisted preference (set via
+    the language switcher while logged into the portal), never the admin's
+    UI language at the moment a notification happens to be queued — an
+    admin marking an order READY, or the reminders cron, has no "current
+    language" of the customer's to go by. No recorded preference (walk-in
+    customers with no portal login, or an explicit English choice) means
+    Hinglish, not English — an SMS in plain English reads as oddly formal
+    for this audience."""
+    user = customer.user if customer else None
+    return bool(user and user.role == UserRole.CUSTOMER and user.preferred_locale == "hi")
+
+
+def order_confirmation_message(customer, order, grand_total) -> str:
+    if _customer_wants_hindi(customer):
+        return (
+            f"नमस्ते {customer.name}, आपका ऑर्डर {order.order_number} न्यू स्टार टेलर "
+            f"में प्राप्त हो गया है। कुल राशि: ₹{grand_total}।"
+        )
+    return (
+        f"Namaste {customer.name}, aapka order {order.order_number} New Star "
+        f"Tailor mein mil gaya hai. Total: Rs. {grand_total}."
+    )
+
+
+def order_ready_message(customer, order) -> str:
+    if _customer_wants_hindi(customer):
+        return (
+            f"नमस्ते {customer.name}, आपका ऑर्डर {order.order_number} तैयार है — "
+            f"कृपया न्यू स्टार टेलर से ले जाएं।"
+        )
+    return (
+        f"Namaste {customer.name}, aapka order {order.order_number} taiyaar "
+        f"hai — New Star Tailor se collect kar lijiye."
+    )
+
+
+def new_enquiry_alert_message(enquiry) -> str:
+    """Shop-facing (not customer-facing) — always Hinglish, since this reaches
+    the shop's own phone regardless of any customer's language choice."""
+    text = f"Nayi enquiry aayi hai: {enquiry.name} ({enquiry.mobile})."
+    if enquiry.message:
+        text += f" Message: {enquiry.message}"
+    return text
+
+
+def payment_reminder_message(customer, order, balance) -> str:
+    if _customer_wants_hindi(customer):
+        return (
+            f"नमस्ते {customer.name}, आपके ऑर्डर {order.order_number} पर ₹{balance} "
+            f"बकाया है। कृपया न्यू स्टार टेलर आकर भुगतान करें।"
+        )
+    return (
+        f"Namaste {customer.name}, aapke order {order.order_number} par Rs. "
+        f"{balance} baaki hai. Kripya New Star Tailor aakar payment kar dein."
+    )
 
 
 def queue_notification(
     *,
-    customer,
+    customer=None,
     order=None,
     type_: str,
     body: str,
-    channel: NotificationChannel = NotificationChannel.WHATSAPP,
+    channel: NotificationChannel = NotificationChannel.SMS,
     scheduled_at=None,
     dedupe_key: str | None = None,
+    to_address: str | None = None,
 ) -> Notification | None:
     """Write a SCHEDULED notification row. Returns None (no-op) if
-    ``dedupe_key`` already exists — never queue the same reminder twice."""
+    ``dedupe_key`` already exists — never queue the same reminder twice.
+
+    ``to_address`` overrides the customer's mobile — used for shop-facing
+    alerts (e.g. a new enquiry) that have no Customer record at all yet."""
     if dedupe_key and Notification.query.filter_by(dedupe_key=dedupe_key).first():
         return None
 
@@ -35,7 +101,7 @@ def queue_notification(
         channel=channel,
         type=NotificationType(type_),
         status=NotificationStatus.SCHEDULED,
-        to_address=customer.mobile if customer else None,
+        to_address=to_address or (customer.mobile if customer else None),
         body=body,
         scheduled_at=scheduled_at,
         dedupe_key=dedupe_key,
@@ -73,11 +139,11 @@ def dispatch_pending() -> dict:
 
 
 def _send_via_provider(notification: Notification) -> None:
-    """Placeholder for the real WhatsApp Business API call once
-    WHATSAPP_API_KEY / WHATSAPP_PHONE_ID are configured. Deliberately unused
-    while messaging_configured() is False."""
+    """Placeholder for the real SMS gateway call once SMS_API_KEY /
+    SMS_SENDER_ID are configured. Deliberately unused while
+    messaging_configured() is False."""
     raise NotImplementedError(
-        "WhatsApp sending is not implemented yet — only the queueing "
+        "SMS sending is not implemented yet — only the queueing "
         "architecture exists."
     )
 
@@ -125,11 +191,7 @@ def queue_payment_reminders(*, days_after_delivery: int = 7) -> int:
             customer=order.customer,
             order=order,
             type_="PAYMENT_REMINDER",
-            body=(
-                f"Namaste {order.customer.name}, a balance of Rs. {balance} is "
-                f"pending for your order {order.order_number}. Please visit "
-                f"New Star Tailor to clear it."
-            ),
+            body=payment_reminder_message(order.customer, order, balance),
             dedupe_key=f"payment_reminder:{order.id}:{today_key}",
         )
         if result is not None:

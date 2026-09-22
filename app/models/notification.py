@@ -1,4 +1,4 @@
-"""Outbound customer notifications (WhatsApp-first, SMS/email possible).
+"""Outbound customer notifications (plain SMS — never WhatsApp; email possible).
 
 Phase 2 only defines the record. Scheduling and dispatch arrive in Phase 13.
 Nothing is ever marked SENT unless a provider confirmed delivery.
@@ -25,7 +25,7 @@ class Notification(PkMixin, db.Model):
     channel: Mapped[NotificationChannel] = mapped_column(
         sa.Enum(NotificationChannel, native_enum=False, length=10),
         nullable=False,
-        default=NotificationChannel.WHATSAPP,
+        default=NotificationChannel.SMS,
     )
     type: Mapped[NotificationType] = mapped_column(
         sa.Enum(NotificationType, native_enum=False, length=24), nullable=False

@@ -32,6 +32,11 @@ class User(PkMixin, TimestampMixin, UserMixin, db.Model):
     )
     is_active: Mapped[bool] = mapped_column(sa.Boolean, nullable=False, default=True)
     last_login_at: Mapped[datetime | None] = mapped_column(sa.DateTime)
+    # Persisted (not just session) so a customer's SMS notifications are
+    # sent in their chosen language even when queued outside their own
+    # request — an admin marking an order READY, or the reminders CLI cron.
+    # NULL/"en" both mean "no Hindi preference recorded" (see notification_service).
+    preferred_locale: Mapped[str | None] = mapped_column(sa.String(5))
 
     customers = db.relationship("Customer", back_populates="user", lazy="selectin")
 

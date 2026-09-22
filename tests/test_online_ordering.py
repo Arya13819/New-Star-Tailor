@@ -65,6 +65,130 @@ def test_admin_enquiries_requires_admin(client):
     assert client.get("/admin/enquiries").status_code == 302
 
 
+def test_new_enquiry_alerts_the_shop_number(client, db):
+    from app.config import Config
+    from app.models.enums import NotificationType
+    from app.models.notification import Notification
+
+    client.post(
+        "/enquiry",
+        data={"name": "Test Enquirer", "mobile": "9444444444", "message": "need 2 shirts"},
+    )
+    alert = Notification.query.filter_by(type=NotificationType.NEW_ENQUIRY).one()
+    assert alert.customer_id is None
+    assert alert.to_address == Config.SHOP_PHONE
+    assert "Test Enquirer" in alert.body
+    assert "need 2 shirts" in alert.body
+
+
+# --- Enquiry -> order conversion ----------------------------------------
+
+
+def test_convert_creates_a_new_customer_and_redirects_to_order_form(client, db):
+    _login_admin(client, db)
+    client.post("/enquiry", data={"name": "Ramesh", "mobile": "9444444444", "message": "2 shirts"})
+    enq = Enquiry.query.filter_by(mobile="9444444444").one()
+
+    resp = client.post(f"/admin/enquiries/{enq.id}/convert")
+    assert resp.status_code == 302
+    assert "/admin/orders/new?customer_id=" in resp.headers["Location"]
+    assert f"enquiry_id={enq.id}" in resp.headers["Location"]
+
+    from app.models.customer import Customer
+
+    customer = Customer.query.filter_by(mobile="9444444444").one()
+    assert customer.name == "Ramesh"
+
+
+def test_completing_the_order_marks_the_enquiry_converted(client, db):
+    _login_admin(client, db)
+    _service(db)
+    client.post("/enquiry", data={"name": "Ramesh", "mobile": "9444444444"})
+    enq = Enquiry.query.filter_by(mobile="9444444444").one()
+
+    convert_resp = client.post(f"/admin/enquiries/{enq.id}/convert")
+    location = convert_resp.headers["Location"]
+
+    service = Service.query.filter_by(code="SHIRT_PANT_COMBO").one()
+    resp = client.post(
+        location,
+        data={
+            "items-0-service_id": str(service.id),
+            "items-0-quantity": "1",
+            "items-0-stitching_price": "550.00",
+            "items-0-material_price": "0",
+            "fabric_source": "CUSTOMER",
+            "priority": "NORMAL",
+        },
+        follow_redirects=False,
+    )
+    assert resp.status_code == 302
+
+    db.session.refresh(enq)
+    assert enq.status == EnquiryStatus.CONVERTED
+    assert enq.converted_order_id is not None
+
+    order = db.session.get(Order, enq.converted_order_id)
+    assert order.customer.mobile == "9444444444"
+
+
+def test_converted_enquiry_shows_no_convert_button_and_links_the_order(client, db):
+    _login_admin(client, db)
+    _service(db)
+    client.post("/enquiry", data={"name": "Ramesh", "mobile": "9444444444"})
+    enq = Enquiry.query.filter_by(mobile="9444444444").one()
+    convert_resp = client.post(f"/admin/enquiries/{enq.id}/convert")
+    service = Service.query.filter_by(code="SHIRT_PANT_COMBO").one()
+    client.post(
+        convert_resp.headers["Location"],
+        data={
+            "items-0-service_id": str(service.id),
+            "items-0-quantity": "1",
+            "items-0-stitching_price": "550.00",
+            "items-0-material_price": "0",
+            "fabric_source": "CUSTOMER",
+            "priority": "NORMAL",
+        },
+    )
+
+    resp = client.get("/admin/enquiries")
+    assert b"Converted" in resp.data
+    assert b"Convert to order" not in resp.data
+
+
+def test_re_converting_an_already_converted_enquiry_goes_to_its_order(client, db):
+    _login_admin(client, db)
+    _service(db)
+    client.post("/enquiry", data={"name": "Ramesh", "mobile": "9444444444"})
+    enq = Enquiry.query.filter_by(mobile="9444444444").one()
+    convert_resp = client.post(f"/admin/enquiries/{enq.id}/convert")
+    service = Service.query.filter_by(code="SHIRT_PANT_COMBO").one()
+    client.post(
+        convert_resp.headers["Location"],
+        data={
+            "items-0-service_id": str(service.id),
+            "items-0-quantity": "1",
+            "items-0-stitching_price": "550.00",
+            "items-0-material_price": "0",
+            "fabric_source": "CUSTOMER",
+            "priority": "NORMAL",
+        },
+    )
+    db.session.refresh(enq)
+
+    resp = client.post(f"/admin/enquiries/{enq.id}/convert")
+    assert resp.status_code == 302
+    assert resp.headers["Location"] == f"/admin/orders/{enq.converted_order_id}"
+
+
+def test_unconverted_enquiry_never_appears_in_the_orders_list(client, db):
+    _login_admin(client, db)
+    client.post("/enquiry", data={"name": "Ramesh", "mobile": "9444444444"})
+
+    resp = client.get("/admin/orders")
+    assert b"Ramesh" not in resp.data
+
+
 # --- Complete online order -----------------------------------------------
 
 

@@ -33,8 +33,10 @@ Browser ──HTTPS──> Nginx ──proxy──> Gunicorn (wsgi:app) ──> 
    cookies, HSTS, and the canonical/Open Graph URLs silently regress to
    `http://` even though the site is actually on HTTPS.
 10. Cron: `flask nst notifications process` and `flask nst reminders run`
-    (only fire once `WHATSAPP_API_KEY`/`WHATSAPP_PHONE_ID` are set — see
-    `Config.messaging_configured()`).
+    (only fire once `SMS_API_KEY`/`SMS_SENDER_ID` are set — see
+    `Config.messaging_configured()`). Plain SMS only, never WhatsApp — an
+    Indian SMS gateway needs a DLT-registered sender ID and templates
+    before sending works.
 11. Verify the PWA + SEO surface once live: `/static/manifest.webmanifest`
     and `/sw.js` (both must resolve, `sw.js` at the site root, not under
     `/static/`, so its scope covers the whole site), `/robots.txt` and
@@ -47,4 +49,4 @@ Browser ──HTTPS──> Nginx ──proxy──> Gunicorn (wsgi:app) ──> 
 ## Secrets
 Never in the repo. Environment file or a secrets manager only:
 `SECRET_KEY`, `DATABASE_URL`, `PAYMENT_PROVIDER_KEY/SECRET`,
-`WHATSAPP_API_KEY/PHONE_ID`.
+`SMS_API_KEY`/`SMS_SENDER_ID`.

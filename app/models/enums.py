@@ -78,6 +78,7 @@ class NotificationType(StrEnum):
     ORDER_READY = "ORDER_READY"
     DELIVERY_REMINDER = "DELIVERY_REMINDER"
     PAYMENT_REMINDER = "PAYMENT_REMINDER"
+    NEW_ENQUIRY = "NEW_ENQUIRY"
 
 
 class NotificationStatus(StrEnum):
@@ -90,4 +91,5 @@ class NotificationStatus(StrEnum):
 class EnquiryStatus(StrEnum):
     NEW = "NEW"
     CONTACTED = "CONTACTED"
+    CONVERTED = "CONVERTED"
     CLOSED = "CLOSED"

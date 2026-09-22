@@ -1586,3 +1586,43 @@ msgstr "यह फ़ाइल सही फोटो नहीं लगती�
 msgid "Unsupported image type."
 msgstr "यह फोटो का प्रकार समर्थित नहीं है।"
 
+msgid "Converted"
+msgstr "बदल गया"
+
+msgid "View order"
+msgstr "ऑर्डर देखें"
+
+msgid "Convert to order"
+msgstr "ऑर्डर में बदलें"
+
+#, python-brace-format
+msgid "Converting enquiry from {name} ({mobile}). Saving this order will mark that enquiry as converted."
+msgstr "{name} ({mobile}) की पूछताछ को ऑर्डर में बदला जा रहा है। यह ऑर्डर सेव करते ही वह पूछताछ बदली हुई मानी जाएगी।"
+
+msgid "SMS is not configured yet — messages below are queued but not sent. Set SMS_API_KEY and SMS_SENDER_ID to enable sending."
+msgstr "SMS अभी सेट नहीं है — नीचे दिए संदेश लाइन में हैं पर भेजे नहीं गए हैं। भेजने के लिए SMS_API_KEY और SMS_SENDER_ID सेट करें।"
+
+msgid "Order Receipt"
+msgstr "ऑर्डर रसीद"
+
+msgid "Paid in full"
+msgstr "पूरा भुगतान हो गया"
+
+msgid "Showing urgent orders that are still open."
+msgstr "जल्दी वाले (अर्जेंट) ऑर्डर दिखाए जा रहे हैं जो अभी बाकी हैं।"
+
+msgid "Showing today's deliveries."
+msgstr "आज की डिलीवरी वाले ऑर्डर दिखाए जा रहे हैं।"
+
+msgid "Showing overdue orders."
+msgstr "जिन ऑर्डर का समय निकल गया है वे दिखाए जा रहे हैं।"
+
+msgid "Clear filter"
+msgstr "फ़िल्टर हटाएं"
+
+msgid "Showing your open orders only."
+msgstr "सिर्फ आपके चालू ऑर्डर दिखाए जा रहे हैं।"
+
+msgid "No open orders right now."
+msgstr "अभी कोई चालू ऑर्डर नहीं है।"
+

@@ -95,8 +95,10 @@ Stitching charges + Material charges = Final total
 - Validated by extension **and** content (Pillow), size-capped, stored with a random filename outside the web root, served only to authorised users.
 
 ## Notifications (architecture now, sending later)
-Types: Order Confirmation, Order Ready, Delivery Reminder, Payment Reminder.
-- Primary channel: **WhatsApp** (Business API, connected later). SMS / email possible.
+Types: Order Confirmation, Order Ready, Delivery Reminder, Payment Reminder, New Enquiry (shop-facing).
+- Channel: **plain SMS only** (owner's explicit choice, 2026-09-21) — never WhatsApp, to avoid the Meta Business verification process. An Indian SMS gateway still needs a DLT-registered sender ID and pre-approved templates before sending works.
+- Customer-facing messages (order confirmation, order ready, payment reminder) go in Hinglish by default, or Hindi if the customer's own portal account has set that language preference — never the admin's UI language at the moment the message happens to be queued.
+- A new public enquiry also queues a message to the shop's own number, so it isn't missed by only checking `/admin/enquiries`.
 - **Payment reminders** start **7 days after delivery** if a balance remains, then follow a configurable policy until paid. Duplicates prevented via a unique dedupe key.
 - The system never claims a message was sent unless the provider confirmed it. If messaging is not configured, that state is shown plainly.
 

@@ -1,4 +1,4 @@
-"""Phase 13: WhatsApp-ready notification architecture."""
+"""Phase 13: SMS-ready notification architecture (never WhatsApp)."""
 from __future__ import annotations
 
 from datetime import timedelta
@@ -192,6 +192,86 @@ def test_cli_notifications_process(app, db):
     result = runner.invoke(args=["nst", "notifications", "process"])
     assert result.exit_code == 0
     assert "not configured" in result.output.lower()
+
+
+# --- notification language (Hinglish default, Hindi when the customer's
+# portal account has chosen it) --------------------------------------------
+
+
+def test_walk_in_customer_notification_is_hinglish_by_default(app, db):
+    order = _order(db)  # no linked portal login at all
+    note = Notification.query.filter_by(order_id=order.id).one()
+    assert "Namaste" in note.body
+    assert "आपका" not in note.body
+
+
+def test_portal_customer_without_hindi_preference_gets_hinglish(app, db):
+    c = Customer(name="Ramesh", mobile="9000000011")
+    u = User(name="Ramesh", mobile="9000000011", role=UserRole.CUSTOMER)
+    u.set_password("supersecret1")
+    c.user = u
+    db.session.add_all([c, u])
+    db.session.commit()
+
+    s = Service(code="SVC2", name_en="Service", category=ServiceCategory.SHIRT,
+                default_stitching_price=Decimal("550.00"))
+    db.session.add(s)
+    db.session.commit()
+    order = create_order(
+        customer=c,
+        items=[{"service_id": s.id, "service_name": s.name_en, "category": s.category,
+                 "quantity": 1, "stitching_price": Decimal("550.00")}],
+        fabric_source=FabricSource.CUSTOMER, priority=OrderPriority.NORMAL,
+        notes=None, actor_id=None,
+    )
+    note = Notification.query.filter_by(order_id=order.id).one()
+    assert "Namaste" in note.body
+
+
+def test_portal_customer_with_hindi_preference_gets_hindi(app, db):
+    c = Customer(name="Ramesh", mobile="9000000012")
+    u = User(name="Ramesh", mobile="9000000012", role=UserRole.CUSTOMER, preferred_locale="hi")
+    u.set_password("supersecret1")
+    c.user = u
+    db.session.add_all([c, u])
+    db.session.commit()
+
+    s = Service(code="SVC3", name_en="Service", category=ServiceCategory.SHIRT,
+                default_stitching_price=Decimal("550.00"))
+    db.session.add(s)
+    db.session.commit()
+    order = create_order(
+        customer=c,
+        items=[{"service_id": s.id, "service_name": s.name_en, "category": s.category,
+                 "quantity": 1, "stitching_price": Decimal("550.00")}],
+        fabric_source=FabricSource.CUSTOMER, priority=OrderPriority.NORMAL,
+        notes=None, actor_id=None,
+    )
+    note = Notification.query.filter_by(order_id=order.id).one()
+    assert "नमस्ते" in note.body
+    assert "आपका ऑर्डर" in note.body
+
+    update_status(order, OrderStatus.READY, actor_id=None)
+    ready_note = Notification.query.filter_by(
+        order_id=order.id, type=NotificationType.ORDER_READY
+    ).one()
+    assert "तैयार है" in ready_note.body
+
+
+def test_language_switch_persists_to_the_customer_account(client, db):
+    c = Customer(name="Ramesh", mobile="9000000013")
+    u = User(name="Ramesh", mobile="9000000013", role=UserRole.CUSTOMER)
+    u.set_password("supersecret1")
+    c.user = u
+    db.session.add_all([c, u])
+    db.session.commit()
+
+    client.post("/customer/login", data={"mobile": "9000000013", "password": "supersecret1"})
+    assert u.preferred_locale is None
+
+    client.get("/set-language/hi")
+    db.session.refresh(u)
+    assert u.preferred_locale == "hi"
 
 
 def test_cli_reminders_run(app, db):

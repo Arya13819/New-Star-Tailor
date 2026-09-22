@@ -7,7 +7,7 @@
 
 {% if not messaging_configured %}
   <div class="alert alert-warning">
-    {{ _('WhatsApp/SMS is not configured yet — messages below are queued but not sent. Set WHATSAPP_API_KEY and WHATSAPP_PHONE_ID to enable sending.') }}
+    {{ _('SMS is not configured yet — messages below are queued but not sent. Set SMS_API_KEY and SMS_SENDER_ID to enable sending.') }}
   </div>
 {% endif %}
 

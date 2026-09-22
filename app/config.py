@@ -89,13 +89,15 @@ class Config:
     PAYMENT_PROVIDER_KEY = os.environ.get("PAYMENT_PROVIDER_KEY", "")
     PAYMENT_PROVIDER_SECRET = os.environ.get("PAYMENT_PROVIDER_SECRET", "")
 
-    # --- WhatsApp / messaging (connected later) ---
-    WHATSAPP_API_KEY = os.environ.get("WHATSAPP_API_KEY", "")
-    WHATSAPP_PHONE_ID = os.environ.get("WHATSAPP_PHONE_ID", "")
+    # --- SMS messaging (connected later) ---
+    # Plain SMS only — never WhatsApp. India requires DLT-registered
+    # sender IDs/templates for transactional SMS regardless of provider.
+    SMS_API_KEY = os.environ.get("SMS_API_KEY", "")
+    SMS_SENDER_ID = os.environ.get("SMS_SENDER_ID", "")
 
     @staticmethod
     def messaging_configured() -> bool:
-        return bool(os.environ.get("WHATSAPP_API_KEY") and os.environ.get("WHATSAPP_PHONE_ID"))
+        return bool(os.environ.get("SMS_API_KEY") and os.environ.get("SMS_SENDER_ID"))
 
     @staticmethod
     def payments_configured() -> bool:

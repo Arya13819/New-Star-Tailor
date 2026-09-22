@@ -122,8 +122,7 @@ def create_order(
         customer=customer,
         order=order,
         type_="ORDER_CONFIRMATION",
-        body=f"Namaste {customer.name}, your order {order.order_number} has been "
-        f"received at New Star Tailor. Total: Rs. {grand_total}.",
+        body=notification_service.order_confirmation_message(customer, order, grand_total),
     )
     db.session.commit()
     return order
@@ -142,8 +141,7 @@ def update_status(order: Order, new_status: OrderStatus, *, actor_id: int | None
             customer=order.customer,
             order=order,
             type_="ORDER_READY",
-            body=f"Namaste {order.customer.name}, your order {order.order_number} "
-            f"is ready for pickup at New Star Tailor.",
+            body=notification_service.order_ready_message(order.customer, order),
         )
 
     db.session.add(

@@ -41,7 +41,7 @@ def register_cli(app: Flask) -> None:
             click.echo("  -> see docs/DATABASE_SETUP.md")
 
         click.echo(f"Payments wired   : {cfg['PAYMENT_PROVIDER'] != 'manual' and bool(cfg['PAYMENT_PROVIDER_KEY'])}")
-        click.echo(f"Messaging wired  : {bool(cfg['WHATSAPP_API_KEY'] and cfg['WHATSAPP_PHONE_ID'])}")
+        click.echo(f"Messaging wired  : {bool(cfg['SMS_API_KEY'] and cfg['SMS_SENDER_ID'])}")
 
     @nst.command("create-admin")
     @click.option("--name", prompt=True)
@@ -103,7 +103,7 @@ def register_cli(app: Flask) -> None:
     def notifications_process():
         """Attempt to dispatch every SCHEDULED notification.
 
-        With no WhatsApp/SMS provider configured this touches nothing and
+        With no SMS provider configured this touches nothing and
         says so plainly — it never marks a message SENT that wasn't.
         """
         from .services import notification_service
@@ -112,7 +112,7 @@ def register_cli(app: Flask) -> None:
         if not result["configured"]:
             click.secho(
                 f"Messaging is not configured — {result['pending']} notification(s) "
-                "remain SCHEDULED. Set WHATSAPP_API_KEY and WHATSAPP_PHONE_ID to send.",
+                "remain SCHEDULED. Set SMS_API_KEY and SMS_SENDER_ID to send.",
                 fg="yellow",
             )
         else:
