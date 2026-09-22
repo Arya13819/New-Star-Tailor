@@ -123,3 +123,146 @@ footer.site-footer {
   body { background: #fff; }
   .print-area .card { border: none !important; box-shadow: none !important; }
 }
+
+/* Receipts — a small letterhead-style layout shared by order and payment
+   receipts. print-color-adjust keeps the navy/gold bands from being
+   stripped to plain white by a printer's default "save ink" behaviour. */
+.receipt-card {
+  overflow: hidden;
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+}
+
+.receipt-header {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 1.5rem 1.5rem 1rem;
+}
+
+.receipt-logo {
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+}
+
+.receipt-shop-name {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--nst-navy);
+  line-height: 1.15;
+}
+
+.receipt-shop-meta {
+  font-size: 0.78rem;
+  color: var(--nst-muted);
+  line-height: 1.4;
+}
+
+.receipt-band {
+  background: var(--nst-navy);
+  color: #fff;
+  padding: 0.55rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.receipt-band .receipt-band-value {
+  color: var(--nst-gold-soft);
+  letter-spacing: 0.03em;
+}
+
+.receipt-body {
+  padding: 1.25rem 1.5rem 1.5rem;
+}
+
+.receipt-meta-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.1rem;
+}
+
+.receipt-meta-row .label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--nst-muted);
+  margin-bottom: 0.15rem;
+}
+
+.receipt-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+
+.receipt-table th {
+  text-align: left;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--nst-gold);
+  border-bottom: 2px solid var(--nst-gold-soft);
+  padding: 0.4rem 0.3rem;
+}
+
+.receipt-table td {
+  padding: 0.5rem 0.3rem;
+  border-bottom: 1px solid var(--nst-border);
+}
+
+.receipt-table .text-end { text-align: right; }
+
+.receipt-totals {
+  margin-top: 1rem;
+  padding-top: 0.25rem;
+}
+
+.receipt-totals .row-line {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.3rem 0;
+  font-size: 0.92rem;
+}
+
+.receipt-totals .row-line.grand {
+  border-top: 2px dashed rgba(197, 153, 58, 0.55);
+  margin-top: 0.4rem;
+  padding-top: 0.6rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--nst-navy);
+}
+
+.receipt-totals .row-line.paid { color: #1e7d4b; }
+.receipt-totals .row-line.balance { font-weight: 700; }
+
+.receipt-stamp {
+  display: inline-block;
+  border: 2px solid;
+  border-radius: 0.5rem;
+  padding: 0.3rem 0.9rem;
+  font-weight: 800;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  transform: rotate(-4deg);
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+}
+
+.receipt-stamp.is-paid { color: #1e7d4b; border-color: #1e7d4b; }
+.receipt-stamp.is-due { color: #a3401a; border-color: #a3401a; }
+
+.receipt-footer-note {
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--nst-muted);
+  padding: 1rem 1.5rem 1.5rem;
+}

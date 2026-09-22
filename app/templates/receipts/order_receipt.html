@@ -2,29 +2,36 @@
 {% block title %}{{ _('Receipt') }} {{ order.order_number }} — {{ SHOP.name }}{% endblock %}
 
 {% block content %}
-<div class="print-area mx-auto" style="max-width: 40rem;">
-  <div class="card">
-    <div class="card-body">
-      <div class="text-center mb-4">
-        <h1 class="h3 mb-0">{{ SHOP.name }}</h1>
-        <p class="small text-secondary mb-0">{{ SHOP.address }}</p>
-        <p class="small text-secondary">{{ _('Phone') }}: {{ SHOP.phone }}</p>
+<div class="print-area mx-auto" style="max-width: 34rem;">
+  <div class="card receipt-card">
+    <div class="receipt-header">
+      <img src="{{ url_for('static', filename='img/logo.png') }}" alt="" class="receipt-logo">
+      <div>
+        <div class="receipt-shop-name">{{ SHOP.name }}</div>
+        <div class="receipt-shop-meta">{{ SHOP.address }}</div>
+        <div class="receipt-shop-meta">{{ _('Phone') }}: {{ SHOP.phone }}</div>
+      </div>
+    </div>
+
+    <div class="receipt-band">
+      <span>{{ _('Order Receipt') }}</span>
+      <span class="receipt-band-value">{{ order.order_number }}</span>
+    </div>
+
+    <div class="receipt-body">
+      <div class="receipt-meta-row">
+        <div>
+          <div class="label">{{ _('Date') }}</div>
+          <div>{{ order.created_at.strftime('%d %b %Y') }}</div>
+        </div>
+        <div class="text-end">
+          <div class="label">{{ _('Customer') }}</div>
+          <div>{{ order.customer.name }}</div>
+          <div class="receipt-shop-meta">{{ order.customer.mobile }}</div>
+        </div>
       </div>
 
-      <hr class="stitch-divider">
-
-      <div class="row mb-3">
-        <div class="col-6">
-          <p class="mb-0"><strong>{{ _('Order No') }}:</strong> {{ order.order_number }}</p>
-          <p class="mb-0 small text-secondary">{{ order.created_at.strftime('%d %b %Y') }}</p>
-        </div>
-        <div class="col-6 text-end">
-          <p class="mb-0"><strong>{{ order.customer.name }}</strong></p>
-          <p class="mb-0 small text-secondary">{{ order.customer.mobile }}</p>
-        </div>
-      </div>
-
-      <table class="table table-sm">
+      <table class="receipt-table">
         <thead>
           <tr>
             <th>{{ _('Item') }}</th>
@@ -47,30 +54,46 @@
         </tbody>
       </table>
 
-      <hr class="stitch-divider">
+      <div class="receipt-totals">
+        <div class="row-line">
+          <span>{{ _('Stitching total') }}</span>
+          <span>₹{{ '%.2f'|format(order.subtotal_stitching) }}</span>
+        </div>
+        <div class="row-line">
+          <span>{{ _('Cloth total') }}</span>
+          <span>₹{{ '%.2f'|format(order.subtotal_material) }}</span>
+        </div>
+        <div class="row-line grand">
+          <span>{{ _('Grand total') }}</span>
+          <span>₹{{ '%.2f'|format(order.grand_total) }}</span>
+        </div>
+        <div class="row-line paid">
+          <span>{{ _('Paid') }}</span>
+          <span>₹{{ '%.2f'|format(paid) }}</span>
+        </div>
+        <div class="row-line balance">
+          <span>{{ _('Remaining') }}</span>
+          <span>₹{{ '%.2f'|format(balance) }}</span>
+        </div>
+      </div>
 
-      <dl class="row mb-0">
-        <dt class="col-8">{{ _('Stitching total') }}</dt>
-        <dd class="col-4 text-end">₹{{ '%.2f'|format(order.subtotal_stitching) }}</dd>
-        <dt class="col-8">{{ _('Cloth total') }}</dt>
-        <dd class="col-4 text-end">₹{{ '%.2f'|format(order.subtotal_material) }}</dd>
-        <dt class="col-8 fw-bold fs-5">{{ _('Grand total') }}</dt>
-        <dd class="col-4 text-end fw-bold fs-5">₹{{ '%.2f'|format(order.grand_total) }}</dd>
-        <dt class="col-8 text-success">{{ _('Paid') }}</dt>
-        <dd class="col-4 text-end text-success">₹{{ '%.2f'|format(paid) }}</dd>
-        <dt class="col-8 fw-bold">{{ _('Remaining') }}</dt>
-        <dd class="col-4 text-end fw-bold">₹{{ '%.2f'|format(balance) }}</dd>
-      </dl>
+      <div class="text-center mt-3">
+        {% if balance <= 0 %}
+          <span class="receipt-stamp is-paid">{{ _('Paid in full') }}</span>
+        {% else %}
+          <span class="receipt-stamp is-due">{{ _('Balance due') }}</span>
+        {% endif %}
+      </div>
 
       {% if order.notes %}
         <hr class="stitch-divider">
         <p class="small text-secondary mb-0"><strong>{{ _('Notes') }}:</strong> {{ order.notes }}</p>
       {% endif %}
-
-      <p class="text-center small text-secondary mt-4 mb-0">
-        {{ _('Thank you for choosing {shop}.').format(shop=SHOP.name) }}
-      </p>
     </div>
+
+    <p class="receipt-footer-note mb-0">
+      {{ _('Thank you for choosing {shop}.').format(shop=SHOP.name) }}
+    </p>
   </div>
 
   <div class="text-center mt-3 no-print">
