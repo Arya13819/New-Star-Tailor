@@ -58,22 +58,28 @@
 
 <div class="row g-3 mb-4">
   <div class="col-12 col-md-6 col-lg-3">
-    <div class="card h-100 border-danger-subtle"><div class="card-body">
-      <p class="section-label mb-1">{{ _('Urgent, still open') }}</p>
-      <p class="h3 mb-0 text-danger">{{ urgent_open|length }}</p>
-    </div></div>
+    <a class="text-decoration-none" href="{{ url_for('admin.order_list', view='urgent') }}">
+      <div class="card h-100 border-danger-subtle"><div class="card-body">
+        <p class="section-label mb-1">{{ _('Urgent, still open') }}</p>
+        <p class="h3 mb-0 text-danger">{{ urgent_open|length }}</p>
+      </div></div>
+    </a>
   </div>
   <div class="col-12 col-md-6 col-lg-3">
-    <div class="card h-100"><div class="card-body">
-      <p class="section-label mb-1">{{ _("Today's deliveries") }}</p>
-      <p class="h3 mb-0">{{ todays_deliveries|length }}</p>
-    </div></div>
+    <a class="text-decoration-none" href="{{ url_for('admin.order_list', view='today') }}">
+      <div class="card h-100"><div class="card-body">
+        <p class="section-label mb-1">{{ _("Today's deliveries") }}</p>
+        <p class="h3 mb-0">{{ todays_deliveries|length }}</p>
+      </div></div>
+    </a>
   </div>
   <div class="col-12 col-md-6 col-lg-3">
-    <div class="card h-100 border-warning-subtle"><div class="card-body">
-      <p class="section-label mb-1">{{ _('Overdue') }}</p>
-      <p class="h3 mb-0 text-warning">{{ overdue|length }}</p>
-    </div></div>
+    <a class="text-decoration-none" href="{{ url_for('admin.order_list', view='overdue') }}">
+      <div class="card h-100 border-warning-subtle"><div class="card-body">
+        <p class="section-label mb-1">{{ _('Overdue') }}</p>
+        <p class="h3 mb-0 text-warning">{{ overdue|length }}</p>
+      </div></div>
+    </a>
   </div>
   <div class="col-12 col-md-6 col-lg-3">
     <a class="text-decoration-none" href="{{ url_for('admin.payment_list', status='PENDING') }}">

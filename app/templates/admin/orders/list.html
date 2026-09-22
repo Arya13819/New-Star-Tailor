@@ -8,20 +8,32 @@
   <a class="btn btn-primary" href="{{ url_for('admin.order_new') }}">{{ _('+ New order') }}</a>
 </div>
 
-<ul class="nav nav-pills mb-3 flex-wrap">
-  {% for key, label in [(None, _('All')), ('NEW', _('New')), ('MEASUREMENT', _('Measurement')), ('READY', _('Ready')), ('DELIVERED', _('Delivered'))] %}
-    <li class="nav-item">
-      <a class="nav-link {{ 'active' if status == key else '' }}"
-         href="{{ url_for('admin.order_list', status=key, q=term) }}">
-        {{ label }}
-        <span class="badge text-bg-light ms-1">{{ counts.get(key, counts['TOTAL']) if key else counts['TOTAL'] }}</span>
-      </a>
-    </li>
-  {% endfor %}
-</ul>
+{% if view %}
+  <div class="alert alert-info d-flex justify-content-between align-items-center">
+    <span>
+      {% if view == 'urgent' %}{{ _('Showing urgent orders that are still open.') }}
+      {% elif view == 'today' %}{{ _("Showing today's deliveries.") }}
+      {% else %}{{ _('Showing overdue orders.') }}{% endif %}
+    </span>
+    <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('admin.order_list') }}">{{ _('Clear filter') }}</a>
+  </div>
+{% else %}
+  <ul class="nav nav-pills mb-3 flex-wrap">
+    {% for key, label in [(None, _('All')), ('NEW', _('New')), ('MEASUREMENT', _('Measurement')), ('READY', _('Ready')), ('DELIVERED', _('Delivered'))] %}
+      <li class="nav-item">
+        <a class="nav-link {{ 'active' if status == key else '' }}"
+           href="{{ url_for('admin.order_list', status=key, q=term) }}">
+          {{ label }}
+          <span class="badge text-bg-light ms-1">{{ counts.get(key, counts['TOTAL']) if key else counts['TOTAL'] }}</span>
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endif %}
 
 <form method="get" class="mb-4">
   <input type="hidden" name="status" value="{{ status or '' }}">
+  <input type="hidden" name="view" value="{{ view or '' }}">
   <div class="input-group">
     <input type="text" name="q" class="form-control" value="{{ term }}"
            placeholder="{{ _('Search by order number, customer name or mobile') }}">
@@ -66,7 +78,7 @@
         {% for p in pagination.iter_pages() %}
           <li class="page-item {{ 'active' if p == pagination.page else '' }} {{ 'disabled' if not p else '' }}">
             {% if p %}
-              <a class="page-link" href="{{ url_for('admin.order_list', status=status, q=term, page=p) }}">{{ p }}</a>
+              <a class="page-link" href="{{ url_for('admin.order_list', status=status, view=view, q=term, page=p) }}">{{ p }}</a>
             {% else %}
               <span class="page-link">…</span>
             {% endif %}

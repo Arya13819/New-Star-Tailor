@@ -7,7 +7,7 @@ confirm it exists (master prompt §35/§64/§76: no cross-customer data leaks).
 """
 from __future__ import annotations
 
-from flask import Blueprint, abort, current_app, render_template, send_from_directory
+from flask import Blueprint, abort, current_app, render_template, request, send_from_directory
 from flask_login import current_user
 
 from ..extensions import db
@@ -57,8 +57,13 @@ def orders():
         if owned
         else []
     )
+    view = request.args.get("view", "").lower() or None
+    if view == "open":
+        rows = [o for o in rows if o.status.value != "DELIVERED"]
+    else:
+        view = None
     with_balance = [(o, payment_service.balance_for_order(o)) for o in rows]
-    return render_template("customer/orders.html", orders=with_balance)
+    return render_template("customer/orders.html", orders=with_balance, view=view)
 
 
 @bp.get("/orders/<int:order_id>")

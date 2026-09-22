@@ -2,7 +2,7 @@
 // Caches the static shell and read-only public pages only. Never caches
 // anything under /admin, /customer, /api, or any POST/mutating request —
 // order/payment data must always come fresh from the server.
-const CACHE_VERSION = "nst-v1";
+const CACHE_VERSION = "nst-v3";
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const PAGE_CACHE = `${CACHE_VERSION}-pages`;
 
@@ -16,8 +16,8 @@ const PRECACHE_URLS = [
   "/static/css/theme.css",
   "/static/vendor/bootstrap/bootstrap.min.css",
   "/static/vendor/bootstrap/bootstrap.bundle.min.js",
-  "/static/img/logo.svg",
-  "/static/img/favicon.svg",
+  "/static/img/logo.png",
+  "/static/img/favicon.png",
   "/static/manifest.webmanifest",
 ];
 
@@ -68,12 +68,18 @@ self.addEventListener("fetch", (event) => {
   }
 
   if (url.pathname.startsWith("/static/")) {
+    // Network-first, same as the page shell below: these are plain
+    // filenames that change in place (no content hash), so cache-first
+    // would keep serving a stale CSS/JS/image file indefinitely after a
+    // deploy — only fall back to the cache when actually offline.
     event.respondWith(
-      caches.match(request).then((cached) => cached || fetch(request).then((res) => {
-        const copy = res.clone();
-        caches.open(STATIC_CACHE).then((cache) => cache.put(request, copy));
-        return res;
-      }))
+      fetch(request)
+        .then((res) => {
+          const copy = res.clone();
+          caches.open(STATIC_CACHE).then((cache) => cache.put(request, copy));
+          return res;
+        })
+        .catch(() => caches.match(request))
     );
     return;
   }

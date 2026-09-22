@@ -66,6 +66,30 @@ def test_customer_sees_own_order(client, db):
     assert order.order_number.encode() in resp.data
 
 
+def test_dashboard_cards_link_to_working_filtered_views(client, db):
+    _register(client, "Customer A", "9333333331")
+    profile = Customer.query.filter_by(mobile="9333333331").one()
+    s = _service(db)
+    open_order = create_order(
+        customer=profile,
+        items=[{"service_id": s.id, "service_name": s.name_en, "category": s.category,
+                 "quantity": 1, "stitching_price": Decimal("550.00")}],
+        fabric_source=FabricSource.CUSTOMER, priority=OrderPriority.NORMAL,
+        notes=None, actor_id=None,
+    )
+
+    dash = client.get("/customer/dashboard")
+    assert b'href="/customer/orders?view=open"' in dash.data
+    assert b'href="/customer/payments"' in dash.data
+
+    resp = client.get("/customer/orders?view=open")
+    assert resp.status_code == 200
+    assert open_order.order_number.encode() in resp.data
+
+    resp = client.get("/customer/payments")
+    assert resp.status_code == 200
+
+
 def test_customer_cannot_see_another_customers_order(client, db):
     # Customer A has an order.
     profile_a = Customer(name="Customer A", mobile="9333333331")

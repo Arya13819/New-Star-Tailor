@@ -3,10 +3,22 @@
 {% block title %}{{ _('My orders') }} — {{ SHOP.name }}{% endblock %}
 
 {% block customer_content %}
-<h1 class="h3 mb-4">{{ _('My orders') }}</h1>
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+  <h1 class="h3 mb-0">{{ _('My orders') }}</h1>
+  <a class="btn btn-primary" href="{{ url_for('public.order') }}">{{ _('+ New order') }}</a>
+</div>
+
+{% if view == 'open' %}
+  <div class="alert alert-info d-flex justify-content-between align-items-center">
+    <span>{{ _('Showing your open orders only.') }}</span>
+    <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('customer.orders') }}">{{ _('Clear filter') }}</a>
+  </div>
+{% endif %}
 
 {% if not orders %}
-  <p class="text-secondary">{{ _('No orders yet.') }}</p>
+  <p class="text-secondary">
+    {% if view == 'open' %}{{ _('No open orders right now.') }}{% else %}{{ _('No orders yet.') }}{% endif %}
+  </p>
 {% else %}
   <div class="table-responsive">
     <table class="table align-middle">

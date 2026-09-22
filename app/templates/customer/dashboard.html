@@ -12,16 +12,20 @@
 
 <div class="row g-3 mb-4">
   <div class="col-6 col-md-4">
-    <div class="card h-100"><div class="card-body">
-      <p class="section-label mb-1">{{ _('Open orders') }}</p>
-      <p class="h3 mb-0">{{ open_count }}</p>
-    </div></div>
+    <a class="text-decoration-none" href="{{ url_for('customer.orders', view='open') }}">
+      <div class="card h-100"><div class="card-body">
+        <p class="section-label mb-1">{{ _('Open orders') }}</p>
+        <p class="h3 mb-0">{{ open_count }}</p>
+      </div></div>
+    </a>
   </div>
   <div class="col-6 col-md-4">
-    <div class="card h-100"><div class="card-body">
-      <p class="section-label mb-1">{{ _('Balance due') }}</p>
-      <p class="h3 mb-0">₹{{ '%.2f'|format(outstanding) }}</p>
-    </div></div>
+    <a class="text-decoration-none" href="{{ url_for('customer.payments') }}">
+      <div class="card h-100"><div class="card-body">
+        <p class="section-label mb-1">{{ _('Balance due') }}</p>
+        <p class="h3 mb-0">₹{{ '%.2f'|format(outstanding) }}</p>
+      </div></div>
+    </a>
   </div>
 </div>
 
