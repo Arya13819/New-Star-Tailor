@@ -68,7 +68,7 @@
         {% for row in data.category_breakdown %}
           <div class="mb-3">
             <div class="d-flex justify-content-between small mb-1">
-              <span>{{ _(row.category|title) }}</span>
+              <span>{{ row.category }}</span>
               <span>{{ row.order_count }} {{ _('orders') }} · ₹{{ '%.2f'|format(row.amount) }}</span>
             </div>
             <div class="progress" style="height: 8px;">

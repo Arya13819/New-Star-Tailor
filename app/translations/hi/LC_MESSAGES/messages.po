@@ -1629,3 +1629,19 @@ msgstr "अभी कोई चालू ऑर्डर नहीं है।"
 msgid "Get directions"
 msgstr "रास्ता दिखाएं"
 
+msgid "Amount you paid (₹)"
+msgstr "आपने कितना भुगतान किया (₹)"
+
+msgid "Please enter the amount you paid, so we can match it to your reference."
+msgstr "कृपया बताएं आपने कितना भुगतान किया, ताकि हम इसे आपके रेफरेंस से मिला सकें।"
+
+msgid "That date is in the past."
+msgstr "यह तारीख बीत चुकी है।"
+
+msgid "Please check the highlighted fields and try again."
+msgstr "कृपया हाइलाइट किए गए फ़ील्ड देखें और दोबारा कोशिश करें।"
+
+#, python-brace-format
+msgid "This order still has a balance of {balance} due. Mark it Delivered anyway?"
+msgstr "इस ऑर्डर पर अभी {balance} बकाया है। फिर भी इसे डिलीवर मार्क करें?"
+

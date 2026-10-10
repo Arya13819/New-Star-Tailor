@@ -14,6 +14,8 @@ from wtforms import (
 )
 from wtforms.validators import DataRequired, NumberRange, Optional
 
+from .validators import not_in_the_past
+
 
 class OrderItemForm(FlaskForm):
     class Meta:
@@ -46,6 +48,10 @@ class OrderForm(FlaskForm):
         default="NORMAL",
         validators=[DataRequired()],
     )
-    requested_delivery_date = DateField(_l("Customer requested date"), validators=[Optional()])
-    confirmed_delivery_date = DateField(_l("Confirmed delivery date"), validators=[Optional()])
+    requested_delivery_date = DateField(
+        _l("Customer requested date"), validators=[Optional(), not_in_the_past]
+    )
+    confirmed_delivery_date = DateField(
+        _l("Confirmed delivery date"), validators=[Optional(), not_in_the_past]
+    )
     notes = TextAreaField(_l("Notes"), validators=[Optional()])

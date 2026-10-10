@@ -6,7 +6,8 @@
 <div class="row g-2 align-items-end item-row mb-2 border-bottom pb-2">
   <div class="col-8">
     <label class="form-label small mb-1">{{ _('Service') }}</label>
-    <select name="items-{{ index }}-service_id" class="form-select">
+    <select name="items-{{ index }}-service_id"
+            class="form-select{{ ' is-invalid' if item_form and item_form.service_id.errors else '' }}">
       <option value="">—</option>
       {% for s in services %}
         <option value="{{ s.id }}" {{ 'selected' if item_form and item_form.service_id.data|string == s.id|string else '' }}>
@@ -14,12 +15,14 @@
         </option>
       {% endfor %}
     </select>
+    {% if item_form %}{% for err in item_form.service_id.errors %}<div class="invalid-feedback d-block">{{ err }}</div>{% endfor %}{% endif %}
   </div>
   <div class="col-3">
     <label class="form-label small mb-1">{{ _('Qty') }}</label>
     <input type="number" min="1" max="99" name="items-{{ index }}-quantity"
            value="{{ item_form.quantity.data if item_form and item_form.quantity.data else 1 }}"
-           class="form-control">
+           class="form-control{{ ' is-invalid' if item_form and item_form.quantity.errors else '' }}">
+    {% if item_form %}{% for err in item_form.quantity.errors %}<div class="invalid-feedback d-block">{{ err }}</div>{% endfor %}{% endif %}
   </div>
   <div class="col-1">
     <button type="button" class="btn btn-outline-danger btn-sm remove-item-row">✕</button>
@@ -100,6 +103,7 @@
 
             <h2 class="h6 section-label mt-4">{{ _('Payment') }}</h2>
             {{ field(form.payment_reference) }}
+            {{ field(form.payment_amount) }}
 
             <button type="submit" class="btn btn-primary btn-lg w-100 mt-3">{{ _('Place order') }}</button>
           </form>

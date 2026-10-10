@@ -180,6 +180,30 @@ def test_dashboard_today_and_overdue_cards_filter_correctly(client, db):
     assert today_order.order_number.encode() not in resp.data
 
 
+def test_overdue_falls_back_to_requested_date_when_unconfirmed(client, db):
+    _login_admin(client, db)
+    c = Customer(name="Ramesh", mobile="9000000001")
+    db.session.add(c)
+    db.session.commit()
+    s = _service(db)
+
+    # No confirmed_delivery_date at all — only a requested date, long past.
+    unconfirmed_overdue = create_order(
+        customer=c,
+        items=[{"service_id": s.id, "service_name": s.name_en, "category": s.category,
+                 "quantity": 1, "stitching_price": Decimal("550.00")}],
+        fabric_source=FabricSource.CUSTOMER, priority=OrderPriority.NORMAL,
+        requested_delivery_date=date(2020, 1, 1),
+        notes=None, actor_id=None,
+    )
+
+    dash = client.get("/admin/dashboard")
+    assert b'href="/admin/orders?view=overdue"' in dash.data
+
+    resp = client.get("/admin/orders?view=overdue")
+    assert unconfirmed_overdue.order_number.encode() in resp.data
+
+
 def test_order_list_ignores_unknown_view(client, db):
     _login_admin(client, db)
     resp = client.get("/admin/orders?view=made-up")

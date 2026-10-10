@@ -32,7 +32,8 @@ def dashboard():
     overdue = [
         o
         for o in open_orders
-        if o.confirmed_delivery_date and o.confirmed_delivery_date < today
+        if (o.confirmed_delivery_date or o.requested_delivery_date)
+        and (o.confirmed_delivery_date or o.requested_delivery_date) < today
     ]
     urgent_open = [o for o in open_orders if o.priority == OrderPriority.URGENT]
 

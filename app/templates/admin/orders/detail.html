@@ -130,11 +130,12 @@
             </li>
           {% endfor %}
         </ol>
-        <form method="post" action="{{ url_for('admin.order_status', order_id=order.id) }}" class="d-flex gap-2 flex-wrap">
+        <form method="post" action="{{ url_for('admin.order_status', order_id=order.id) }}" class="d-flex gap-2 flex-wrap" id="status-form">
           <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
           {% for s in ['NEW', 'MEASUREMENT', 'READY', 'DELIVERED'] %}
             {% if s != order.status.value %}
-              <button type="submit" name="status" value="{{ s }}" class="btn btn-sm btn-outline-secondary">
+              <button type="submit" name="status" value="{{ s }}" class="btn btn-sm btn-outline-secondary"
+                      {% if s == 'DELIVERED' and balance > 0 %}data-confirm-balance="₹{{ '%.2f'|format(balance) }}"{% endif %}>
                 {{ _('Move to {status}').format(status=s|title) }}
               </button>
             {% endif %}
@@ -229,4 +230,18 @@
     </div>
   </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script nonce="{{ csp_nonce }}">
+  document.getElementById('status-form').addEventListener('submit', function (e) {
+    var btn = e.submitter;
+    var balance = btn && btn.dataset.confirmBalance;
+    if (balance && !confirm(
+      {{ _('This order still has a balance of {balance} due. Mark it Delivered anyway?')|tojson }}.replace('{balance}', balance)
+    )) {
+      e.preventDefault();
+    }
+  });
+</script>
 {% endblock %}

@@ -127,6 +127,8 @@ def order_new():
                 _("Order {number} created.").format(number=order.order_number), "success"
             )
             return redirect(url_for("admin.order_detail", order_id=order.id))
+    elif request.method == "POST":
+        flash(_("Please check the highlighted fields and try again."), "error")
 
     return render_template(
         "admin/orders/form.html", form=form, customer=customer, services=services, enquiry=enquiry

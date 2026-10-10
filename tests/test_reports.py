@@ -113,6 +113,16 @@ def test_reports_page_renders_with_data(client, db):
     assert b"350.00" in resp.data
 
 
+def test_reports_page_shows_crpf_not_title_cased(client, db):
+    _login_admin(client, db)
+    _order(db, category=ServiceCategory.CRPF, price="700.00")
+
+    resp = client.get("/admin/reports?range=today")
+    assert resp.status_code == 200
+    assert b"CRPF" in resp.data
+    assert b"Crpf" not in resp.data
+
+
 def test_reports_custom_range(client, db):
     _login_admin(client, db)
     from datetime import date

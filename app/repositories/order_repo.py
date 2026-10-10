@@ -34,7 +34,13 @@ def search(
         elif view == "today":
             query = query.filter(Order.confirmed_delivery_date == date.today())
         elif view == "overdue":
-            query = query.filter(Order.confirmed_delivery_date < date.today())
+            # Falls back to the customer's requested date when nothing has
+            # been confirmed yet — an unconfirmed order sitting past its
+            # requested date still needs staff attention.
+            effective_date = db.func.coalesce(
+                Order.confirmed_delivery_date, Order.requested_delivery_date
+            )
+            query = query.filter(effective_date.isnot(None), effective_date < date.today())
     elif status and status in OrderStatus.__members__:
         query = query.filter(Order.status == OrderStatus[status])
 

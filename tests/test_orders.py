@@ -298,6 +298,51 @@ def test_order_creation_needs_a_priced_service(client, db):
     assert resp.status_code == 200
 
 
+def test_invalid_item_submission_shows_field_errors_not_silence(client, db):
+    _login_admin(client, db)
+    c = _customer(db)
+    _service(db)
+
+    resp = client.post(
+        f"/admin/orders/new?customer_id={c.id}",
+        data={
+            "items-0-service_id": "",
+            "items-0-quantity": "-3",
+            "items-0-stitching_price": "",
+            "fabric_source": "CUSTOMER",
+            "priority": "NORMAL",
+        },
+    )
+    assert resp.status_code == 200
+    assert Order.query.count() == 0
+    # The field itself must show something wrong, and a top-level flash too —
+    # not a silent re-render with no explanation.
+    assert b"is-invalid" in resp.data
+    assert b"Please check the highlighted fields" in resp.data
+
+
+def test_past_delivery_date_is_rejected(client, db):
+    _login_admin(client, db)
+    c = _customer(db)
+    s = _service(db)
+
+    resp = client.post(
+        f"/admin/orders/new?customer_id={c.id}",
+        data={
+            "items-0-service_id": str(s.id),
+            "items-0-quantity": "1",
+            "items-0-stitching_price": "550",
+            "items-0-material_price": "0",
+            "fabric_source": "CUSTOMER",
+            "priority": "NORMAL",
+            "confirmed_delivery_date": "2020-01-01",
+        },
+    )
+    assert resp.status_code == 200
+    assert Order.query.count() == 0
+    assert b"is in the past" in resp.data
+
+
 def test_order_detail_shows_advance_warning_when_unpaid(client, db):
     _login_admin(client, db)
     c = _customer(db)
@@ -331,6 +376,41 @@ def test_status_change_via_http(client, db):
     assert resp.status_code == 200
     db.session.refresh(order)
     assert order.status == OrderStatus.READY
+
+
+def test_delivered_button_warns_about_outstanding_balance(client, db):
+    _login_admin(client, db)
+    c = _customer(db)
+    s = _service(db)
+    order = create_order(
+        customer=c,
+        items=[{"service_id": s.id, "service_name": s.name_en, "category": s.category,
+                 "quantity": 1, "stitching_price": Decimal("550.00")}],
+        fabric_source=FabricSource.CUSTOMER, priority=OrderPriority.NORMAL,
+        notes=None, actor_id=None,
+    )
+    resp = client.get(f"/admin/orders/{order.id}")
+    assert b'data-confirm-balance="' in resp.data
+
+
+def test_delivered_button_has_no_warning_once_fully_paid(client, db):
+    from app.models.enums import PaymentMethod
+    from app.services.payment_service import record_payment
+
+    _login_admin(client, db)
+    c = _customer(db)
+    s = _service(db)
+    order = create_order(
+        customer=c,
+        items=[{"service_id": s.id, "service_name": s.name_en, "category": s.category,
+                 "quantity": 1, "stitching_price": Decimal("550.00")}],
+        fabric_source=FabricSource.CUSTOMER, priority=OrderPriority.NORMAL,
+        notes=None, actor_id=None,
+    )
+    record_payment(order=order, amount=Decimal("550.00"), method=PaymentMethod.CASH,
+                    transaction_reference=None, note=None, actor_id=None)
+    resp = client.get(f"/admin/orders/{order.id}")
+    assert b'data-confirm-balance="' not in resp.data
 
 
 def test_order_search_by_number_and_customer(client, db):

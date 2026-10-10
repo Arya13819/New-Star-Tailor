@@ -285,7 +285,7 @@ def test_online_order_with_acknowledged_self_measurements(client, db):
     assert order.items[0].measurement_version.shirt_chest == Decimal("40.00")
 
 
-def test_online_order_payment_reference_creates_pending_payment(client, db):
+def test_online_order_payment_reference_and_amount_creates_pending_payment(client, db):
     s = _service(db)
     client.post(
         "/order",
@@ -296,12 +296,13 @@ def test_online_order_payment_reference_creates_pending_payment(client, db):
             "items-0-quantity": "1",
             "fabric_source": "CUSTOMER",
             "payment_reference": "upi_ref_999",
+            "payment_amount": "275.00",
         },
     )
     order = Order.query.filter_by(order_number="NST-0001").one()
     payment = Payment.query.filter_by(order_id=order.id).one()
     assert payment.status == PaymentStatus.PENDING  # never fabricated as verified
-    assert payment.amount == order.required_advance
+    assert payment.amount == Decimal("275.00")  # exactly what the customer said, not a guess
     assert payment.transaction_reference == "upi_ref_999"
 
 
@@ -368,3 +369,209 @@ def test_track_order_unknown_number(client, db):
     )
     assert resp.status_code == 200
     assert b"We could not find" in resp.data
+
+
+# --- payment fabrication fix ------------------------------------------------
+
+
+def test_payment_reference_alone_never_creates_a_fabricated_payment(client, db):
+    """A UPI reference with no stated amount must not be turned into a
+    payment of the full required advance — that was never actually
+    confirmed by the customer."""
+    s = _service(db)
+    client.post(
+        "/order",
+        data={
+            "name": "Online Customer",
+            "mobile": "9555555555",
+            "items-0-service_id": str(s.id),
+            "items-0-quantity": "1",
+            "fabric_source": "CUSTOMER",
+            "payment_reference": "UPI123456",
+            # payment_amount intentionally omitted
+        },
+    )
+    order = Order.query.filter_by(order_number="NST-0001").one()
+    assert Payment.query.filter_by(order_id=order.id).count() == 0
+
+
+def test_payment_reference_with_amount_records_exactly_that_amount(client, db):
+    s = _service(db, price="1000.00")
+    client.post(
+        "/order",
+        data={
+            "name": "Online Customer",
+            "mobile": "9555555555",
+            "items-0-service_id": str(s.id),
+            "items-0-quantity": "1",
+            "fabric_source": "CUSTOMER",
+            "payment_reference": "UPI123456",
+            "payment_amount": "200.00",
+        },
+    )
+    order = Order.query.filter_by(order_number="NST-0001").one()
+    payment = Payment.query.filter_by(order_id=order.id).one()
+    assert payment.amount == Decimal("200.00")
+    # Required advance for customer-cloth is 50% of 1000 = 500, not 200 —
+    # confirms the amount came from the customer, not a system guess.
+    assert order.required_advance == Decimal("500.00")
+
+
+def test_payment_amount_over_balance_does_not_crash_order_success(client, db):
+    s = _service(db, price="200.00")
+    resp = client.post(
+        "/order",
+        data={
+            "name": "Online Customer",
+            "mobile": "9555555555",
+            "items-0-service_id": str(s.id),
+            "items-0-quantity": "1",
+            "fabric_source": "CUSTOMER",
+            "payment_reference": "UPI123456",
+            "payment_amount": "99999.00",  # absurdly over the balance
+        },
+    )
+    assert resp.status_code == 200
+    order = Order.query.filter_by(order_number="NST-0001").one()
+    # Order itself still succeeded; the bad self-reported amount was just
+    # never recorded, instead of crashing the success page.
+    assert Payment.query.filter_by(order_id=order.id).count() == 0
+
+
+# --- duplicate customer fix --------------------------------------------------
+
+
+def test_same_name_and_mobile_reuses_the_existing_customer_profile(client, db):
+    from app.models.customer import Customer
+
+    s = _service(db)
+    client.post(
+        "/order",
+        data={
+            "name": "Repeat Customer",
+            "mobile": "9555555555",
+            "items-0-service_id": str(s.id),
+            "items-0-quantity": "1",
+            "fabric_source": "CUSTOMER",
+        },
+    )
+    client.post(
+        "/order",
+        data={
+            "name": "Repeat Customer",
+            "mobile": "9555555555",
+            "items-0-service_id": str(s.id),
+            "items-0-quantity": "1",
+            "fabric_source": "CUSTOMER",
+        },
+    )
+    assert Customer.query.filter_by(mobile="9555555555").count() == 1
+    assert Order.query.count() == 2
+
+
+def test_different_name_same_mobile_still_gets_a_separate_profile(client, db):
+    """Family members sharing one mobile number must still each get their
+    own customer profile — this isn't the bug being fixed."""
+    from app.models.customer import Customer
+
+    s = _service(db)
+    client.post(
+        "/order",
+        data={
+            "name": "Husband",
+            "mobile": "9555555555",
+            "items-0-service_id": str(s.id),
+            "items-0-quantity": "1",
+            "fabric_source": "CUSTOMER",
+        },
+    )
+    client.post(
+        "/order",
+        data={
+            "name": "Wife",
+            "mobile": "9555555555",
+            "items-0-service_id": str(s.id),
+            "items-0-quantity": "1",
+            "fabric_source": "CUSTOMER",
+        },
+    )
+    assert Customer.query.filter_by(mobile="9555555555").count() == 2
+
+
+# --- order-form validation visibility ---------------------------------------
+
+
+def test_missing_service_shows_a_visible_error_not_silence(client, db):
+    _service(db)
+    resp = client.post(
+        "/order",
+        data={
+            "name": "Online Customer",
+            "mobile": "9555555555",
+            "items-0-service_id": "",
+            "items-0-quantity": "1",
+            "fabric_source": "CUSTOMER",
+        },
+    )
+    assert resp.status_code == 200
+    assert Order.query.count() == 0
+    assert b"is-invalid" in resp.data
+    assert b"Please check the highlighted fields" in resp.data
+
+
+def test_negative_quantity_is_rejected(client, db):
+    s = _service(db)
+    resp = client.post(
+        "/order",
+        data={
+            "name": "Online Customer",
+            "mobile": "9555555555",
+            "items-0-service_id": str(s.id),
+            "items-0-quantity": "-3",
+            "fabric_source": "CUSTOMER",
+        },
+    )
+    assert resp.status_code == 200
+    assert Order.query.count() == 0
+
+
+def test_past_requested_delivery_date_is_rejected(client, db):
+    s = _service(db)
+    resp = client.post(
+        "/order",
+        data={
+            "name": "Online Customer",
+            "mobile": "9555555555",
+            "items-0-service_id": str(s.id),
+            "items-0-quantity": "1",
+            "fabric_source": "CUSTOMER",
+            "requested_delivery_date": "2020-01-01",
+        },
+    )
+    assert resp.status_code == 200
+    assert Order.query.count() == 0
+    assert b"is in the past" in resp.data
+
+
+# --- logged-in customer pre-fill --------------------------------------------
+
+
+def test_online_order_form_prefills_name_and_mobile_for_logged_in_customer(client, db):
+    from app.models.customer import Customer
+
+    _service(db)
+    client.post(
+        "/customer/register",
+        data={
+            "name": "Portal Customer",
+            "mobile": "9444444499",
+            "password": "supersecret1",
+            "confirm_password": "supersecret1",
+        },
+    )
+    resp = client.get("/order")
+    assert resp.status_code == 200
+    assert b"Portal Customer" in resp.data
+    assert b"9444444499" in resp.data
+    # Sanity: the registration really did create the profile being matched.
+    assert Customer.query.filter_by(mobile="9444444499").count() == 1

@@ -18,7 +18,7 @@ from wtforms import (
 )
 from wtforms.validators import DataRequired, Length, NumberRange, Optional, ValidationError
 
-from .validators import valid_mobile
+from .validators import not_in_the_past, valid_mobile
 
 
 class EnquiryForm(FlaskForm):
@@ -58,7 +58,9 @@ class OnlineOrderForm(FlaskForm):
         ],
         validators=[DataRequired()],
     )
-    requested_delivery_date = DateField(_l("Preferred delivery date"), validators=[Optional()])
+    requested_delivery_date = DateField(
+        _l("Preferred delivery date"), validators=[Optional(), not_in_the_past]
+    )
     notes = TextAreaField(_l("Notes"), validators=[Optional(), Length(max=2000)])
 
     provide_measurements = BooleanField(_l("I want to submit my own measurements"))
@@ -92,6 +94,17 @@ class OnlineOrderForm(FlaskForm):
         _l("UPI/payment reference, if you've already paid the advance"),
         validators=[Optional(), Length(max=190)],
     )
+    payment_amount = DecimalField(
+        _l("Amount you paid (₹)"),
+        places=2, rounding=None,
+        validators=[Optional(), NumberRange(min=0.01)],
+    )
+
+    def validate_payment_amount(self, field) -> None:  # noqa: ANN001
+        if self.payment_reference.data and field.data is None:
+            raise ValidationError(
+                gettext("Please enter the amount you paid, so we can match it to your reference.")
+            )
 
     def validate_measurement_ack(self, field) -> None:  # noqa: ANN001
         if self.provide_measurements.data and not field.data:
