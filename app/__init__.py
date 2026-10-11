@@ -130,6 +130,8 @@ def _register_context(app: Flask) -> None:
                 "name": app.config["SHOP_NAME"],
                 "address": app.config["SHOP_ADDRESS"],
                 "phone": app.config["SHOP_PHONE"],
+                "latitude": app.config["SHOP_LATITUDE"],
+                "longitude": app.config["SHOP_LONGITUDE"],
                 "city": app.config["SHOP_CITY"],
                 "region": app.config["SHOP_REGION"],
                 "postal_code": app.config["SHOP_POSTAL_CODE"],

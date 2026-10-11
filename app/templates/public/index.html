@@ -11,7 +11,7 @@
   <div class="d-flex flex-wrap justify-content-center gap-2 mt-4">
     <a class="btn btn-gold btn-lg" href="tel:{{ SHOP.phone }}">{{ _('Call the shop') }}</a>
     <a class="btn btn-outline-primary btn-lg" target="_blank" rel="noopener"
-       href="https://www.google.com/maps/dir/?api=1&destination={{ (SHOP.name ~ ', ' ~ SHOP.address)|urlencode }}">
+       href="https://www.google.com/maps/dir/?api=1&destination={{ SHOP.latitude }},{{ SHOP.longitude }}">
       {{ _('Get directions') }}
     </a>
     <a class="btn btn-outline-primary btn-lg" href="{{ url_for('public.track_order') }}">{{ _('Track your order') }}</a>

@@ -50,6 +50,11 @@
       "postalCode": {{ SHOP.postal_code|tojson }},
       "addressCountry": {{ SHOP.country|tojson }}
     },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": {{ SHOP.latitude|tojson }},
+      "longitude": {{ SHOP.longitude|tojson }}
+    },
     "openingHoursSpecification": {
       "@type": "OpeningHoursSpecification",
       "dayOfWeek": [
