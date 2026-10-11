@@ -6,6 +6,9 @@
   <div class="col-12 col-md-8 text-center">
     <p class="section-label mb-2">{{ _('About us') }}</p>
     <h1 class="h3 mb-3">{{ SHOP.name }}</h1>
+    <img src="{{ url_for('static', filename='img/shop-storefront.jpg') }}"
+         class="img-fluid rounded mb-3" loading="lazy"
+         alt="{{ SHOP.name }} — {{ SHOP.address }}">
     <p class="text-secondary">
       {{ _('Men\'s tailoring and uniform specialists in Neemuch, Madhya Pradesh — shirts, trousers, and regulation Police, CRPF and Army uniforms.') }}
     </p>

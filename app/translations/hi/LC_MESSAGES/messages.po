@@ -1645,3 +1645,24 @@ msgstr "कृपया हाइलाइट किए गए फ़ील्�
 msgid "This order still has a balance of {balance} due. Mark it Delivered anyway?"
 msgstr "इस ऑर्डर पर अभी {balance} बकाया है। फिर भी इसे डिलीवर मार्क करें?"
 
+msgid "Shirt + Pant Combo"
+msgstr "शर्ट + पैंट सेट"
+
+msgid "Police Khaaki"
+msgstr "पुलिस खाकी"
+
+msgid "CRPF Khaaki"
+msgstr "सीआरपीएफ खाकी"
+
+msgid "CRPF Khaaki Dangri"
+msgstr "सीआरपीएफ खाकी डांगरी"
+
+msgid "CRPF Cheetah"
+msgstr "सीआरपीएफ चीता"
+
+msgid "Cheetah US Pattern"
+msgstr "चीता यूएस पैटर्न"
+
+msgid "Army Pattern"
+msgstr "आर्मी पैटर्न"
+
