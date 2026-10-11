@@ -3,6 +3,8 @@
 Tailoring management website + PWA for **New Star Tailor**, Old UCO Bank Gully,
 Near Patel Plaza, Tagore Marg, Neemuch, Madhya Pradesh — phone **9352672795**.
 
+**Live:** https://new-star-tailor.onrender.com
+
 It replaces the shop's paper diary: customers, measurements (versioned), orders,
 payments, receipts, reports, a customer portal and (later) SMS
 notifications. Scope is **men's tailoring only**.
@@ -35,7 +37,7 @@ the whole thing — app + Postgres — as a Render Blueprint).
 | ✔ | Phase 15 | Full Hindi translation — every form label, flash message and template string wrapped for i18n, 351-string `hi` catalogue, `?lang=hi` switch remembered in session |
 | ✔ | Phase 16 | PWA — installable manifest + icon set, service worker caching only the static shell and read-only public pages (never admin/customer/API), `/sw.js` served at root scope |
 | ✔ | Phase 17 | SEO + hardening — canonical/OG/Twitter tags, JSON-LD `ClothingStore` listing, `robots.txt` + `sitemap.xml` (public pages only), CSP with per-request nonce, HSTS, `X-Frame-Options`, `Permissions-Policy`, `ProxyFix` for correct HTTPS detection behind Nginx |
-| ✔ | Phase 18 | Final hardening pass — 161 tests passing, `DEPLOYMENT.md`/`BACKUP.md` finalised for production |
+| ✔ | Phase 18 | Final hardening pass — 191 tests passing, `DEPLOYMENT.md`/`BACKUP.md` finalised for production |
 
 > **Local DB:** running on real **MariaDB 11.8** (`nst_dev` / `nst_test`) as of
 > 2026-09-18 — see `docs/DATABASE_SETUP.md`. The SQLite fallback used during
