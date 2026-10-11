@@ -10,9 +10,11 @@ notifications. Scope is **men's tailoring only**.
 > Business logic is authoritative in **[docs/BUSINESS_RULES.md](docs/BUSINESS_RULES.md)** — read it first.
 
 ## Stack
-Flask · SQLAlchemy + Flask-Migrate · MySQL/MariaDB · Bootstrap 5 · Flask-Babel
+Flask · SQLAlchemy + Flask-Migrate · PostgreSQL (production, on Render) /
+MySQL-MariaDB or SQLite (local dev) · Bootstrap 5 · Flask-Babel
 (English + Hindi) · Flask-Login · pytest. Server-rendered, mobile-first,
-installable PWA.
+installable PWA. Deployment: see `docs/DEPLOYMENT.md` (`render.yaml` deploys
+the whole thing — app + Postgres — as a Render Blueprint).
 
 ## Status — Phase 18 of 18 complete
 

@@ -17,6 +17,17 @@ def _bool(name: str, default: bool = False) -> bool:
     return os.environ.get(name, str(default)).strip().lower() in {"1", "true", "yes", "on"}
 
 
+def _normalized_db_url(env_var: str, default: str = "") -> str:
+    """Render (and Heroku, and most managed-Postgres providers) hand out
+    connection strings starting ``postgres://`` — a scheme SQLAlchemy 1.4+
+    rejects outright. Rewritten to ``postgresql://`` so the same env var
+    works whether it came from Render or was typed by hand."""
+    url = os.environ.get(env_var, default)
+    if url.startswith("postgres://"):
+        url = "postgresql://" + url[len("postgres://") :]
+    return url
+
+
 class Config:
     # --- Core ---
     SECRET_KEY = os.environ.get("SECRET_KEY", "dev-insecure-change-me")
@@ -25,8 +36,9 @@ class Config:
     TESTING = False
 
     # --- Database ---
-    # e.g. mysql+pymysql://nst_user:password@127.0.0.1:3306/nst_dev?charset=utf8mb4
-    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL", "")
+    # e.g. postgresql+psycopg2://user:password@host:5432/nst_prod
+    # (MySQL/MariaDB also still works locally: mysql+pymysql://...)
+    SQLALCHEMY_DATABASE_URI = _normalized_db_url("DATABASE_URL")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ENGINE_OPTIONS = {
         "pool_pre_ping": True,
@@ -110,10 +122,10 @@ class Config:
 class DevelopmentConfig(Config):
     ENV = "development"
     DEBUG = True
-    # Prefer a real MySQL/MariaDB via DATABASE_URL. Until that database is
-    # provisioned (see docs/DATABASE_SETUP.md) fall back to a local SQLite
-    # file so development is not blocked. Models are written MySQL-first.
-    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL") or (
+    # Prefer a real Postgres/MySQL via DATABASE_URL. Until that database is
+    # provisioned fall back to a local SQLite file so development is never
+    # blocked.
+    SQLALCHEMY_DATABASE_URI = _normalized_db_url("DATABASE_URL") or (
         "sqlite:///" + os.path.join(_INSTANCE, "nst_dev.sqlite")
     )
 
@@ -123,9 +135,9 @@ class TestingConfig(Config):
     TESTING = True
     DEBUG = True
     WTF_CSRF_ENABLED = False
-    # Set TEST_DATABASE_URL to a MySQL/MariaDB database to run the suite on the
-    # real dialect; otherwise an in-memory SQLite DB keeps tests runnable.
-    SQLALCHEMY_DATABASE_URI = os.environ.get(
+    # Set TEST_DATABASE_URL to a Postgres/MySQL database to run the suite on
+    # the real dialect; otherwise an in-memory SQLite DB keeps tests runnable.
+    SQLALCHEMY_DATABASE_URI = _normalized_db_url(
         "TEST_DATABASE_URL", "sqlite+pysqlite:///:memory:"
     )
     RATELIMIT_ENABLED = False
