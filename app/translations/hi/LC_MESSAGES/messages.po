@@ -1666,3 +1666,9 @@ msgstr "चीता यूएस पैटर्न"
 msgid "Army Pattern"
 msgstr "आर्मी पैटर्न"
 
+msgid "About"
+msgstr "हमारे बारे में"
+
+msgid "Contact"
+msgstr "संपर्क करें"
+
