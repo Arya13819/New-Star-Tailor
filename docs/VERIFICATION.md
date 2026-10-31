@@ -50,3 +50,25 @@ upstream commit `3ed62554f1156763ed9bd81fecb464d490b99720`. The local repository
 contains an original-source import commit and the redesign on branch `shyam`.
 A ZIP does not include upstream Git history. No deployment was requested; this
 handoff is source code and MySQL setup for the user's hosting environment.
+
+## Premium visual update — 31 October 2026
+
+Added a dark forest-green hero, layered product photography, gold accents,
+raised collection cards, a craftsmanship section and optional pointer-driven
+CSS perspective. The effect script is 1,490 bytes, runs only on pointer input
+through requestAnimationFrame, and skips touch devices and reduced-motion users.
+No 3D libraries, WebGL, remote fonts or animation dependencies were added.
+
+Responsive WebP product copies (320px/640px) use picture/srcset with JPEG fallbacks.
+The nine original photos total 625,281 bytes; their 640px WebP copies total
+266,324 bytes (57.4% smaller). Original photos are retained; regenerate the copies
+with `.venv/bin/python scripts/optimize_images.py`. The hero loads eagerly and
+other product photos load lazily. Styles and the enhancement script are versioned;
+the PWA cache version was updated to v5.
+
+Verification: 197 tests passed on SQLite. Chromium checks passed at 320, 390, 768,
+1024 and 1440 pixels with no horizontal overflow or JavaScript errors. Confirmed
+WebP selection, desktop pointer depth, mobile menu navigation, reduced-motion
+behavior, the primary CTA with JavaScript disabled, public services/gallery,
+login/tracking pages and the Hindi homepage. These are local checks, not a
+production performance score or a hosting deployment.

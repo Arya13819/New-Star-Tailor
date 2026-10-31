@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "partials/_product_image.html" import product_image %}
 {% block title %}{{ _('Services & pricing') }} — {{ SHOP.name }}{% endblock %}
 
 {% block content %}
@@ -17,12 +18,10 @@
     <div class="row g-3 mb-4">
       {% for s in rows %}
         <div class="col-12 col-md-6 col-lg-4">
-          <div class="card h-100">
+          <div class="card h-100 service-card">
             {% set img = service_images.get(s.code) %}
             {% if img %}
-              <img src="{{ url_for('static', filename='img/services/' ~ img) }}"
-                   class="card-img-top" loading="lazy"
-                   alt="{{ s.name_en }}{% if s.name_hi %} · {{ s.name_hi }}{% endif %}">
+              {{ product_image(img, s.name_en, class_name='card-img-top') }}
             {% endif %}
             <div class="card-body">
               <h3 class="h6">{{ s.name_en }}{% if s.name_hi %} <span class="text-secondary">· {{ s.name_hi }}</span>{% endif %}</h3>

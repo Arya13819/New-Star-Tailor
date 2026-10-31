@@ -13,8 +13,10 @@ notifications. Scope is **men's tailoring only**.
 
 ## Redesign and MySQL handoff (`shyam`)
 
-The refreshed site uses warm ivory, forest green, editorial typography and the
-original product photography. It includes a responsive storefront, clear mobile
+The refreshed site uses warm ivory, a dark forest-green hero, layered product
+photography, subtle 3D depth, gold accents and raised collection cards. Optional
+desktop pointer effects respect reduced-motion preferences. Responsive WebP
+photographs reduce the 640px image set by 57% while retaining JPEG fallbacks. It includes a responsive storefront, clear mobile
 navigation, customer/staff login screens, styled management views and a shared
 order progress indicator on tracking and customer order details. Homepage prices
 come from the active database catalogue instead of hardcoded rates.

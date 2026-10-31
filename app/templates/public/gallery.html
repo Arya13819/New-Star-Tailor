@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "partials/_product_image.html" import product_image %}
 {% block title %}{{ _('Gallery') }} — {{ SHOP.name }}{% endblock %}
 
 {% block content %}
@@ -10,8 +11,7 @@
   {% for filename, caption in photos %}
     <div class="col-6 col-md-4 col-lg-3">
       <div class="card h-100">
-        <img src="{{ url_for('static', filename='img/services/' ~ filename) }}"
-             class="card-img-top" loading="lazy" alt="{{ caption }}">
+        {{ product_image(filename, caption, class_name='card-img-top', sizes='(max-width: 767px) 45vw, 290px') }}
         <div class="card-body py-2 text-center">
           <p class="small mb-0">{{ caption }}</p>
         </div>

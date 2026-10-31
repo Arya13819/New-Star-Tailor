@@ -2,7 +2,7 @@
 // Caches the static shell and read-only public pages only. Never caches
 // anything under /admin, /customer, /api, or any POST/mutating request —
 // order/payment data must always come fresh from the server.
-const CACHE_VERSION = "nst-v4";
+const CACHE_VERSION = "nst-v5";
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const PAGE_CACHE = `${CACHE_VERSION}-pages`;
 
@@ -13,7 +13,9 @@ const PRECACHE_URLS = [
   "/gallery",
   "/contact",
   "/track-order",
-  "/static/css/theme.css",
+  "/static/css/theme.css?v=5",
+  "/static/css/premium.css?v=5",
+  "/static/js/premium.js?v=5",
   "/static/vendor/bootstrap/bootstrap.min.css",
   "/static/vendor/bootstrap/bootstrap.bundle.min.js",
   "/static/img/logo.png",

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-31 14:24+0530\n"
+"POT-Creation-Date: 2026-10-31 14:56+0530\n"
 "PO-Revision-Date: 2026-09-19 16:21+0530\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi\n"
@@ -175,7 +175,7 @@ msgstr "यह बकाया रकम (₹%(balance)s) से ज़्या
 msgid "Expert men's tailoring and uniform specialists in Neemuch, Madhya Pradesh."
 msgstr "नीमच, मध्य प्रदेश में माहिर सिलाई और वर्दी के विशेषज्ञ।"
 
-#: app/templates/base.html:71
+#: app/templates/base.html:72
 msgid "Skip to content"
 msgstr "मुख्य सामग्री पर जाएँ"
 
@@ -475,7 +475,7 @@ msgstr ""
 "सभी नाप इंच में हैं। सेव करने पर एक नया वर्ज़न बनेगा — ग्राहक के पुराने ऑर्डर उसी नाप पर रहेंगे "
 "जिस पर वे सिले गए थे।"
 
-#: app/templates/admin/customers/measurement_form.html:16
+#: app/templates/admin/customers/measurement_form.html:16 app/templates/public/index.html:25
 msgid "Shirt"
 msgstr "शर्ट"
 
@@ -910,7 +910,7 @@ msgid "Code cannot be changed after creation."
 msgstr "बनने के बाद कोड बदला नहीं जा सकता।"
 
 #: app/templates/admin/services/list.html:7 app/templates/partials/_footer.html:3
-#: app/templates/public/services.html:2 app/templates/public/services.html:7
+#: app/templates/public/services.html:3 app/templates/public/services.html:8
 msgid "Services & pricing"
 msgstr "सेवाएं और रेट"
 
@@ -1095,7 +1095,7 @@ msgid "Explore"
 msgstr "जानें"
 
 #: app/templates/partials/_footer.html:3 app/templates/partials/_nav.html:8
-#: app/templates/public/gallery.html:7
+#: app/templates/public/gallery.html:8
 msgid "Our work"
 msgstr "हमारा काम"
 
@@ -1108,7 +1108,7 @@ msgstr "ऑनलाइन ऑर्डर करें"
 msgid "Send us an enquiry"
 msgstr "हमें पूछताछ भेजें"
 
-#: app/templates/partials/_footer.html:3 app/templates/public/index.html:11
+#: app/templates/partials/_footer.html:3 app/templates/public/index.html:29
 #: app/templates/public/track_order.html:8
 msgid "Track your order"
 msgstr "अपना ऑर्डर देखें"
@@ -1182,6 +1182,7 @@ msgid "Current status"
 msgstr "वर्तमान स्थिति"
 
 #: app/templates/public/about.html:2 app/templates/public/about.html:7
+#: app/templates/public/index.html:26
 msgid "About us"
 msgstr "हमारे बारे में"
 
@@ -1242,7 +1243,7 @@ msgstr "पूछताछ भेजें"
 msgid "Prefer to place a full order online instead?"
 msgstr "इसकी जगह पूरा ऑर्डर ऑनलाइन देना चाहेंगे?"
 
-#: app/templates/public/gallery.html:2 app/templates/public/gallery.html:6
+#: app/templates/public/gallery.html:3 app/templates/public/gallery.html:7
 msgid "Gallery"
 msgstr "गैलरी"
 
@@ -1250,19 +1251,19 @@ msgstr "गैलरी"
 msgid "Tailored for the way you live"
 msgstr "आपके अंदाज़ के लिए सिलाई"
 
-#: app/templates/public/index.html:5
+#: app/templates/public/index.html:8
 msgid "MEN’S TAILORING · NEEMUCH"
 msgstr "पुरुषों की सिलाई · नीमच"
 
-#: app/templates/public/index.html:5
+#: app/templates/public/index.html:8
 msgid "A better fit."
 msgstr "बेहतर फिटिंग।"
 
-#: app/templates/public/index.html:5
+#: app/templates/public/index.html:8
 msgid "A better you."
 msgstr "बेहतर अंदाज़।"
 
-#: app/templates/public/index.html:5
+#: app/templates/public/index.html:8
 msgid ""
 "From your everyday shirt to the uniform you wear with pride. Discover clothing made to your "
 "measurements, with care in every stitch."
@@ -1270,151 +1271,171 @@ msgstr ""
 "रोज़मर्रा की शर्ट से लेकर गर्व से पहनी जाने वाली वर्दी तक। आपके नाप के कपड़े, हर टाँके में पूरा "
 "ध्यान।"
 
-#: app/templates/public/index.html:5
+#: app/templates/public/index.html:8
 msgid "Start your order"
 msgstr "ऑर्डर शुरू करें"
 
-#: app/templates/public/index.html:5
+#: app/templates/public/index.html:8
 msgid "Explore services"
 msgstr "सेवाएँ देखें"
 
-#: app/templates/public/index.html:5
+#: app/templates/public/index.html:8 app/templates/public/index.html:26
 msgid "Your measurements. Your fit."
 msgstr "आपका नाप। आपकी फिटिंग।"
 
-#: app/templates/public/index.html:5
+#: app/templates/public/index.html:8
 msgid "Shirts, trousers & Police, CRPF and Army uniforms"
 msgstr "शर्ट, पैंट और पुलिस, सीआरपीएफ व सेना की वर्दियाँ"
 
-#: app/templates/public/index.html:6
+#: app/templates/public/index.html:12
 msgid "Blue shirt and navy trousers, neatly folded"
 msgstr "सलीके से रखी नीली शर्ट और गहरे नीले रंग की पैंट"
 
-#: app/templates/public/index.html:6
+#: app/templates/public/index.html:13
 msgid "THE EVERYDAY COLLECTION"
 msgstr "रोज़मर्रा का कलेक्शन"
 
-#: app/templates/public/index.html:6
+#: app/templates/public/index.html:15
 msgid "Cut to fit."
 msgstr "आपके नाप की कटिंग।"
 
-#: app/templates/public/index.html:6
+#: app/templates/public/index.html:15
 msgid "Stitched to last."
 msgstr "टिकाऊ सिलाई।"
 
-#: app/templates/public/index.html:6
-msgid "EVERYDAY ESSENTIALS"
-msgstr "रोज़मर्रा के कपड़े"
-
-#: app/templates/public/index.html:6
-msgid "View our work"
-msgstr "हमारा काम देखें"
-
-#: app/templates/public/index.html:8
-msgid "Our approach"
-msgstr "हमारा तरीका"
-
-#: app/templates/public/index.html:8
+#: app/templates/public/index.html:16 app/templates/public/index.html:22
 msgid "Made to measure"
 msgstr "आपके नाप से सिलाई"
 
-#: app/templates/public/index.html:8
+#: app/templates/public/index.html:16 app/templates/public/index.html:22
 msgid "A fit that feels like you."
 msgstr "आपके अंदाज़ की फिटिंग।"
 
-#: app/templates/public/index.html:8
+#: app/templates/public/index.html:19
+msgid "EVERYDAY ESSENTIALS"
+msgstr "रोज़मर्रा के कपड़े"
+
+#: app/templates/public/index.html:19
+msgid "View our work"
+msgstr "हमारा काम देखें"
+
+#: app/templates/public/index.html:22
+msgid "Our approach"
+msgstr "हमारा तरीका"
+
+#: app/templates/public/index.html:22
 msgid "Clear pricing"
 msgstr "स्पष्ट कीमतें"
 
-#: app/templates/public/index.html:8
+#: app/templates/public/index.html:22 app/templates/public/index.html:26
 msgid "Stitching and cloth, billed separately."
 msgstr "सिलाई और कपड़े के शुल्क अलग-अलग।"
 
-#: app/templates/public/index.html:8
+#: app/templates/public/index.html:22
 msgid "Stay in the loop"
 msgstr "स्थिति की जानकारी रखें"
 
-#: app/templates/public/index.html:8
+#: app/templates/public/index.html:22
 msgid "Track your order, anytime."
 msgstr "कभी भी अपना ऑर्डर ट्रैक करें।"
 
-#: app/templates/public/index.html:9
+#: app/templates/public/index.html:23
 msgid "THE RIGHT FIT FOR EVERY DAY"
 msgstr "हर दिन के लिए सही फिटिंग"
 
-#: app/templates/public/index.html:9
+#: app/templates/public/index.html:23
 msgid "What can we stitch for you?"
 msgstr "आपके लिए क्या सिलें?"
 
-#: app/templates/public/index.html:9
+#: app/templates/public/index.html:23
 msgid "All services & pricing"
 msgstr "सभी सेवाएँ और कीमतें"
 
-#: app/templates/public/index.html:9
+#: app/templates/public/index.html:23
 msgid "Everyday essentials"
 msgstr "रोज़मर्रा के कपड़े"
 
-#: app/templates/public/index.html:9
+#: app/templates/public/index.html:23
 msgid "Shirts & trousers, made your way."
 msgstr "आपकी पसंद की शर्ट और पैंट।"
 
-#: app/templates/public/index.html:9
+#: app/templates/public/index.html:23
 msgid "Police uniforms"
 msgstr "पुलिस की वर्दियाँ"
 
-#: app/templates/public/index.html:9
+#: app/templates/public/index.html:23
 msgid "A sharp fit for the line of duty."
 msgstr "ड्यूटी के लिए सटीक फिटिंग।"
 
-#: app/templates/public/index.html:9
+#: app/templates/public/index.html:23
 msgid "CRPF uniforms"
 msgstr "सीआरपीएफ की वर्दियाँ"
 
-#: app/templates/public/index.html:9
+#: app/templates/public/index.html:23
 msgid "Precision in every detail."
 msgstr "हर बारीकी पर ध्यान।"
 
-#: app/templates/public/index.html:9
+#: app/templates/public/index.html:23
 msgid "Prices shown are for stitching only. Cloth is billed separately."
 msgstr "दी गई कीमतें केवल सिलाई की हैं। कपड़े का शुल्क अलग है।"
 
-#: app/templates/public/index.html:10
+#: app/templates/public/index.html:26
+msgid "CRAFTED AROUND YOU"
+msgstr "आपके लिए, आपके नाप से"
+
+#: app/templates/public/index.html:26
+msgid "The details make"
+msgstr "बारीकियों से बनती है"
+
+#: app/templates/public/index.html:26
+msgid "the difference."
+msgstr "अलग पहचान।"
+
+#: app/templates/public/index.html:26
+msgid ""
+"Your measurements, your fabric, your personal style. We bring them together with thoughtful "
+"cutting and careful stitching."
+msgstr ""
+"आपका नाप, आपका कपड़ा और आपका अपना अंदाज़। ध्यान से की गई कटिंग और सिलाई से हम इन्हें एक साथ लाते "
+"हैं।"
+
+#: app/templates/public/index.html:28
 msgid "SIMPLE FROM START TO FINISH"
 msgstr "शुरू से अंत तक आसान"
 
-#: app/templates/public/index.html:10
+#: app/templates/public/index.html:28
 msgid "Your next favourite fit,"
 msgstr "आपकी पसंद की फिटिंग,"
 
-#: app/templates/public/index.html:10
+#: app/templates/public/index.html:28
 msgid "in three easy steps."
 msgstr "तीन आसान चरणों में।"
 
-#: app/templates/public/index.html:10
+#: app/templates/public/index.html:28
 msgid "Have a question? Let’s talk"
 msgstr "कोई सवाल है? हमसे बात करें"
 
-#: app/templates/public/index.html:10
+#: app/templates/public/index.html:28
 msgid "Choose your style"
 msgstr "अपना अंदाज़ चुनें"
 
-#: app/templates/public/index.html:10
+#: app/templates/public/index.html:28
 msgid "Pick everyday clothing or a uniform. Bring your fabric, or ask about cloth at the shop."
 msgstr "रोज़मर्रा के कपड़े या वर्दी चुनें। अपना कपड़ा लाएँ या दुकान पर कपड़े के बारे में पूछें।"
 
-#: app/templates/public/index.html:10
+#: app/templates/public/index.html:28
 msgid "Make it yours"
 msgstr "अपने नाप से बनवाएँ"
 
-#: app/templates/public/index.html:10
+#: app/templates/public/index.html:28
 msgid "Visit us for measurements, or submit your measurements with your online order."
 msgstr "नाप के लिए दुकान पर आएँ या ऑनलाइन ऑर्डर के साथ अपना नाप भेजें।"
 
-#: app/templates/public/index.html:10
+#: app/templates/public/index.html:28
 msgid "Leave the rest to us"
 msgstr "बाकी हम सँभालेंगे"
 
-#: app/templates/public/index.html:10
+#: app/templates/public/index.html:28
 msgid ""
 "Track your order online. Normal delivery is 10–15 days after confirmation; the shop confirms your"
 " date."
@@ -1422,15 +1443,15 @@ msgstr ""
 "ऑर्डर ऑनलाइन ट्रैक करें। पुष्टि के बाद सामान्य डिलीवरी में 10–15 दिन लगते हैं; अंतिम तारीख दुकान "
 "तय करती है।"
 
-#: app/templates/public/index.html:11
+#: app/templates/public/index.html:29
 msgid "ALREADY ORDERED?"
 msgstr "ऑर्डर दे चुके हैं?"
 
-#: app/templates/public/index.html:11
+#: app/templates/public/index.html:29
 msgid "Good things are taking shape."
 msgstr "आपकी पसंद तैयार हो रही है।"
 
-#: app/templates/public/index.html:11
+#: app/templates/public/index.html:29
 msgid "Check your latest order status with your order number and mobile number."
 msgstr "ऑर्डर नंबर और मोबाइल नंबर से अपने ऑर्डर की ताज़ा स्थिति देखें।"
 
@@ -1486,17 +1507,17 @@ msgstr "हमारा स्टाफ आपका ऑर्डर और न�
 msgid "Track this order"
 msgstr "यह ऑर्डर देखें"
 
-#: app/templates/public/services.html:6
+#: app/templates/public/services.html:7
 msgid "Our services"
 msgstr "हमारी सेवाएं"
 
-#: app/templates/public/services.html:9
+#: app/templates/public/services.html:10
 msgid ""
 "Stitching charges only — cloth is billed separately, whether you bring your own or the shop "
 "provides it."
 msgstr "सिर्फ सिलाई का चार्ज — कपड़े का बिल अलग से लगेगा, चाहे आप अपना कपड़ा लाएं या दुकान से लें।"
 
-#: app/templates/public/services.html:33
+#: app/templates/public/services.html:32
 msgid "Please call for pricing"
 msgstr "रेट जानने के लिए कॉल करें"
 
