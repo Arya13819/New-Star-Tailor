@@ -1,0 +1,16 @@
+{% macro field(f, autofocus=False) %}
+  <div class="mb-3">
+    {% if f.type == 'BooleanField' %}
+      <div class="form-check">
+        {{ f(class=("form-check-input is-invalid" if f.errors else "form-check-input")) }}
+        {{ f.label(class="form-check-label") }}
+      </div>
+    {% else %}
+      {{ f.label(class="form-label fw-semibold") }}
+      {{ f(class=("form-control is-invalid" if f.errors else "form-control"), autofocus=autofocus) }}
+    {% endif %}
+    {% for err in f.errors %}
+      <div class="invalid-feedback d-block">{{ err }}</div>
+    {% endfor %}
+  </div>
+{% endmacro %}

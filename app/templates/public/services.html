@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}{{ _('Services & pricing') }} — {{ SHOP.name }}{% endblock %}
+
+{% block content %}
+<div class="text-center mb-4">
+  <p class="section-label mb-2">{{ _('Our services') }}</p>
+  <h1 class="display-6">{{ _('Services & pricing') }}</h1>
+  <p class="text-secondary mx-auto" style="max-width: 40rem;">
+    {{ _('Stitching charges only — cloth is billed separately, whether you bring your own or the shop provides it.') }}
+  </p>
+</div>
+
+{% for category, rows in by_category.items() %}
+  {% if rows %}
+    <hr class="stitch-divider">
+    <h2 class="h4 mb-3">{{ category_labels[category] }}</h2>
+    <div class="row g-3 mb-4">
+      {% for s in rows %}
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="card h-100">
+            {% set img = service_images.get(s.code) %}
+            {% if img %}
+              <img src="{{ url_for('static', filename='img/services/' ~ img) }}"
+                   class="card-img-top" loading="lazy"
+                   alt="{{ s.name_en }}{% if s.name_hi %} · {{ s.name_hi }}{% endif %}">
+            {% endif %}
+            <div class="card-body">
+              <h3 class="h6">{{ s.name_en }}{% if s.name_hi %} <span class="text-secondary">· {{ s.name_hi }}</span>{% endif %}</h3>
+              {% if s.description %}<p class="small text-secondary">{{ s.description }}</p>{% endif %}
+              {% if s.price_is_set %}
+                <p class="h5 text-gold mb-0">₹{{ '%.2f'|format(s.default_stitching_price) }}</p>
+              {% else %}
+                <p class="small text-secondary mb-0">{{ _('Please call for pricing') }}</p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endfor %}
+{% endblock %}

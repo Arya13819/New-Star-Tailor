@@ -1,0 +1,52 @@
+{% extends "customer/_layout.html" %}
+{% set active = 'dashboard' %}
+{% block title %}{{ _('My account') }} — {{ SHOP.name }}{% endblock %}
+
+{% block customer_content %}
+<h1 class="h3 mb-1">{{ _('Welcome, {name}').format(name=user.name) }}</h1>
+<p class="text-secondary mb-4">
+  {% if profiles|length > 1 %}
+    {{ _('You are managing {count} profiles.').format(count=profiles|length) }}
+  {% endif %}
+</p>
+
+<div class="row g-3 mb-4">
+  <div class="col-6 col-md-4">
+    <a class="text-decoration-none" href="{{ url_for('customer.orders', view='open') }}">
+      <div class="card h-100"><div class="card-body">
+        <p class="section-label mb-1">{{ _('Open orders') }}</p>
+        <p class="h3 mb-0">{{ open_count }}</p>
+      </div></div>
+    </a>
+  </div>
+  <div class="col-6 col-md-4">
+    <a class="text-decoration-none" href="{{ url_for('customer.payments') }}">
+      <div class="card h-100"><div class="card-body">
+        <p class="section-label mb-1">{{ _('Balance due') }}</p>
+        <p class="h3 mb-0">₹{{ '%.2f'|format(outstanding) }}</p>
+      </div></div>
+    </a>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <h2 class="h5 mb-3">{{ _('Recent orders') }}</h2>
+    {% if recent_orders %}
+      <ul class="list-unstyled mb-0">
+        {% for o in recent_orders %}
+          <li class="border-bottom py-2 d-flex justify-content-between">
+            <a href="{{ url_for('customer.order_detail', order_id=o.id) }}">{{ o.order_number }}</a>
+            <span class="badge text-bg-secondary">{{ o.status.value|title }}</span>
+          </li>
+        {% endfor %}
+      </ul>
+      <a class="btn btn-sm btn-outline-primary mt-3" href="{{ url_for('customer.orders') }}">
+        {{ _('View all orders') }}
+      </a>
+    {% else %}
+      <p class="text-secondary mb-0">{{ _('No orders yet.') }}</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

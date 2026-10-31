@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="{{ CURRENT_LOCALE }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{{ SHOP.name }}{% endblock %}</title>
+  <meta name="description" content="{% block meta_description %}{{ _('Expert men\'s tailoring and uniform specialists in Neemuch, Madhya Pradesh.') }}{% endblock %}">
+  <link rel="canonical" href="{{ request.url_root.rstrip('/') }}{{ request.path }}">
+  <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}" type="image/png">
+  <link rel="manifest" href="{{ url_for('static', filename='manifest.webmanifest') }}">
+  <link rel="apple-touch-icon" href="{{ url_for('static', filename='img/icons/apple-touch-icon.png') }}">
+  <meta name="theme-color" content="#1B2A4A">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="NS Tailor">
+
+  {% set og_image = request.url_root.rstrip('/') + url_for('static', filename='img/icons/icon-512.png') %}
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="{{ SHOP.name }}">
+  <meta property="og:title" content="{% block og_title %}{{ self.title() }}{% endblock %}">
+  <meta property="og:description" content="{% block og_description %}{{ self.meta_description() }}{% endblock %}">
+  <meta property="og:url" content="{{ request.url_root.rstrip('/') }}{{ request.path }}">
+  <meta property="og:image" content="{{ og_image }}">
+  <meta property="og:locale" content="{{ 'hi_IN' if CURRENT_LOCALE == 'hi' else 'en_IN' }}">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="{{ self.og_title() }}">
+  <meta name="twitter:description" content="{{ self.og_description() }}">
+  <meta name="twitter:image" content="{{ og_image }}">
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='vendor/bootstrap/bootstrap.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/theme.css') }}">
+  {% block head_extra %}{% endblock %}
+
+  {% block structured_data %}
+  <script type="application/ld+json" nonce="{{ csp_nonce }}">
+  {
+    "@context": "https://schema.org",
+    "@type": "ClothingStore",
+    "name": {{ SHOP.name|tojson }},
+    "image": {{ og_image|tojson }},
+    "telephone": {{ SHOP.phone|tojson }},
+    "priceRange": "₹₹",
+    "url": {{ request.url_root|tojson }},
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": {{ SHOP.address|tojson }},
+      "addressLocality": {{ SHOP.city|tojson }},
+      "addressRegion": {{ SHOP.region|tojson }},
+      "postalCode": {{ SHOP.postal_code|tojson }},
+      "addressCountry": {{ SHOP.country|tojson }}
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": {{ SHOP.latitude|tojson }},
+      "longitude": {{ SHOP.longitude|tojson }}
+    },
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
+      ],
+      "opens": {{ SHOP.hours_opens|tojson }},
+      "closes": {{ SHOP.hours_closes|tojson }}
+    }
+  }
+  </script>
+  {% endblock %}
+</head>
+<body>
+  {% include "partials/_nav.html" %}
+
+  <main class="py-4">
+    <div class="container">
+      {% include "partials/_flash.html" %}
+      {% block content %}{% endblock %}
+    </div>
+  </main>
+
+  {% include "partials/_footer.html" %}
+
+  <script src="{{ url_for('static', filename='vendor/bootstrap/bootstrap.bundle.min.js') }}"></script>
+  <script nonce="{{ csp_nonce }}">
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("/sw.js").catch(() => {});
+      });
+    }
+  </script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

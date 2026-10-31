@@ -1,0 +1,152 @@
+{% extends "admin/_layout.html" %}
+{% set active = 'dashboard' %}
+{% block title %}{{ _('Dashboard') }} — {{ SHOP.name }}{% endblock %}
+
+{% block admin_content %}
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+  <div>
+    <p class="section-label mb-1">{{ _('Shop dashboard') }}</p>
+    <h1 class="h3 mb-0">{{ _('Welcome, {name}').format(name=user.name) }}</h1>
+  </div>
+  <form method="post" action="{{ url_for('auth.admin_logout') }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <button type="submit" class="btn btn-outline-primary">{{ _('Sign out') }}</button>
+  </form>
+</div>
+
+<form method="get" action="{{ url_for('admin.global_search') }}" class="mb-4" role="search">
+  <div class="input-group input-group-lg">
+    <input type="text" name="q" class="form-control" placeholder="{{ _('Search customer, mobile or order number…') }}">
+    <button class="btn btn-primary" type="submit">{{ _('Search') }}</button>
+  </div>
+</form>
+
+<div class="row g-3 mb-4">
+  <div class="col-6 col-md-3">
+    <a class="text-decoration-none" href="{{ url_for('admin.order_list', status='NEW') }}">
+      <div class="card h-100"><div class="card-body">
+        <p class="section-label mb-1">{{ _('New') }}</p>
+        <p class="h3 mb-0">{{ counts.NEW }}</p>
+      </div></div>
+    </a>
+  </div>
+  <div class="col-6 col-md-3">
+    <a class="text-decoration-none" href="{{ url_for('admin.order_list', status='MEASUREMENT') }}">
+      <div class="card h-100"><div class="card-body">
+        <p class="section-label mb-1">{{ _('Measurement') }}</p>
+        <p class="h3 mb-0">{{ counts.MEASUREMENT }}</p>
+      </div></div>
+    </a>
+  </div>
+  <div class="col-6 col-md-3">
+    <a class="text-decoration-none" href="{{ url_for('admin.order_list', status='READY') }}">
+      <div class="card h-100"><div class="card-body">
+        <p class="section-label mb-1">{{ _('Ready') }}</p>
+        <p class="h3 mb-0">{{ counts.READY }}</p>
+      </div></div>
+    </a>
+  </div>
+  <div class="col-6 col-md-3">
+    <a class="text-decoration-none" href="{{ url_for('admin.order_list', status='DELIVERED') }}">
+      <div class="card h-100"><div class="card-body">
+        <p class="section-label mb-1">{{ _('Delivered') }}</p>
+        <p class="h3 mb-0">{{ counts.DELIVERED }}</p>
+      </div></div>
+    </a>
+  </div>
+</div>
+
+<div class="row g-3 mb-4">
+  <div class="col-12 col-md-6 col-lg-3">
+    <a class="text-decoration-none" href="{{ url_for('admin.order_list', view='urgent') }}">
+      <div class="card h-100 border-danger-subtle"><div class="card-body">
+        <p class="section-label mb-1">{{ _('Urgent, still open') }}</p>
+        <p class="h3 mb-0 text-danger">{{ urgent_open|length }}</p>
+      </div></div>
+    </a>
+  </div>
+  <div class="col-12 col-md-6 col-lg-3">
+    <a class="text-decoration-none" href="{{ url_for('admin.order_list', view='today') }}">
+      <div class="card h-100"><div class="card-body">
+        <p class="section-label mb-1">{{ _("Today's deliveries") }}</p>
+        <p class="h3 mb-0">{{ todays_deliveries|length }}</p>
+      </div></div>
+    </a>
+  </div>
+  <div class="col-12 col-md-6 col-lg-3">
+    <a class="text-decoration-none" href="{{ url_for('admin.order_list', view='overdue') }}">
+      <div class="card h-100 border-warning-subtle"><div class="card-body">
+        <p class="section-label mb-1">{{ _('Overdue') }}</p>
+        <p class="h3 mb-0 text-warning">{{ overdue|length }}</p>
+      </div></div>
+    </a>
+  </div>
+  <div class="col-12 col-md-6 col-lg-3">
+    <a class="text-decoration-none" href="{{ url_for('admin.payment_list', status='PENDING') }}">
+      <div class="card h-100"><div class="card-body">
+        <p class="section-label mb-1">{{ _('Outstanding balance') }}</p>
+        <p class="h3 mb-0">₹{{ '%.2f'|format(outstanding_total) }}</p>
+        <p class="small text-secondary mb-0">{{ _('{count} orders').format(count=pending_payments_count) }}</p>
+      </div></div>
+    </a>
+  </div>
+</div>
+
+<div class="row g-3 mb-4">
+  <div class="col-12 col-md-3">
+    <a class="btn btn-primary w-100 py-3" href="{{ url_for('admin.order_new') }}">{{ _('New order') }}</a>
+  </div>
+  <div class="col-12 col-md-3">
+    <a class="btn btn-outline-primary w-100 py-3" href="{{ url_for('admin.customer_new') }}">{{ _('New customer') }}</a>
+  </div>
+  <div class="col-12 col-md-3">
+    <a class="btn btn-outline-primary w-100 py-3" href="{{ url_for('admin.order_list') }}">{{ _('Record a payment') }}</a>
+  </div>
+  <div class="col-12 col-md-3">
+    <a class="btn btn-outline-secondary w-100 py-3" href="{{ url_for('admin.global_search') }}">{{ _('Search') }}</a>
+  </div>
+</div>
+
+<div class="row g-4">
+  <div class="col-12 col-lg-7">
+    <div class="card">
+      <div class="card-body">
+        <h2 class="h5 mb-3">{{ _('Recent orders') }}</h2>
+        {% if recent_orders %}
+          <ul class="list-unstyled mb-0">
+            {% for o in recent_orders %}
+              <li class="border-bottom py-2 d-flex justify-content-between">
+                <a href="{{ url_for('admin.order_detail', order_id=o.id) }}">{{ o.order_number }}</a>
+                <span class="text-secondary">{{ o.customer.name }}</span>
+                <span class="badge text-bg-secondary">{{ o.status.value|title }}</span>
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p class="text-secondary mb-0">{{ _('No orders yet. Create your first order to get started.') }}</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-lg-5">
+    <div class="card">
+      <div class="card-body">
+        <h2 class="h5 mb-3">{{ _('Pending payments') }}</h2>
+        {% if pending_payments %}
+          <ul class="list-unstyled mb-0">
+            {% for o, bal in pending_payments %}
+              <li class="border-bottom py-2 d-flex justify-content-between">
+                <a href="{{ url_for('admin.order_detail', order_id=o.id) }}">{{ o.order_number }}</a>
+                <span>₹{{ '%.2f'|format(bal) }}</span>
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p class="text-secondary mb-0">{{ _('Nothing outstanding right now.') }}</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

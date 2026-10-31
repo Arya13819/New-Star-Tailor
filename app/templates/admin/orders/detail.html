@@ -1,0 +1,247 @@
+{% extends "admin/_layout.html" %}
+{% set active = 'orders' %}
+{% block title %}{{ order.order_number }} — {{ SHOP.name }}{% endblock %}
+
+{% block admin_content %}
+<div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4">
+  <div>
+    <p class="section-label mb-1">{{ _('Order') }}</p>
+    <h1 class="h3 mb-1">{{ order.order_number }}
+      {% if order.priority.value == 'URGENT' %}<span class="badge text-bg-danger">{{ _('Urgent') }}</span>{% endif %}
+    </h1>
+    <p class="mb-0">
+      <a href="{{ url_for('admin.customer_detail', customer_id=order.customer.id) }}">{{ order.customer.name }}</a>
+      <span class="text-secondary">· {{ order.customer.mobile }}</span>
+    </p>
+  </div>
+  <div class="text-end">
+    <span class="badge text-bg-secondary fs-6 d-block mb-2">{{ order.status.value|title }}</span>
+    <a class="btn btn-sm btn-outline-primary" href="{{ url_for('admin.order_receipt', order_id=order.id) }}" target="_blank">
+      {{ _('Print receipt') }}
+    </a>
+  </div>
+</div>
+
+{% if not order.advance_satisfied %}
+  <div class="alert alert-warning">
+    {{ _('Advance not fully received yet — required ₹{req}, paid ₹{paid}.').format(req='%.2f'|format(order.required_advance), paid='%.2f'|format(paid)) }}
+    {{ _('The order still proceeds; this is a reminder only.') }}
+  </div>
+{% endif %}
+
+<div class="row g-4">
+  <div class="col-12 col-lg-7">
+    <div class="card mb-4">
+      <div class="card-body">
+        <h2 class="h5 mb-3">{{ _('Items') }}</h2>
+        <div class="table-responsive">
+          <table class="table table-sm align-middle">
+            <thead>
+              <tr>
+                <th>{{ _('Service') }}</th>
+                <th class="text-end">{{ _('Qty') }}</th>
+                <th class="text-end">{{ _('Stitching') }}</th>
+                <th class="text-end">{{ _('Cloth') }}</th>
+                <th class="text-end">{{ _('Line total') }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for it in order.items %}
+                <tr>
+                  <td>{{ it.service_name_snapshot }}</td>
+                  <td class="text-end">{{ it.quantity }}</td>
+                  <td class="text-end">₹{{ '%.2f'|format(it.stitching_price) }}</td>
+                  <td class="text-end">{{ '₹%.2f'|format(it.material_price) if it.material_price > 0 else '—' }}</td>
+                  <td class="text-end">₹{{ '%.2f'|format(it.line_total) }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <h2 class="h5 mb-3">{{ _('Order details') }}</h2>
+        <form method="post" action="{{ url_for('admin.order_update_details', order_id=order.id) }}">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <div class="row">
+            <div class="col-6 col-md-4 mb-3">
+              <label class="form-label small">{{ _('Priority') }}</label>
+              <select name="priority" class="form-select">
+                <option value="NORMAL" {{ 'selected' if order.priority.value == 'NORMAL' }}>{{ _('Normal') }}</option>
+                <option value="URGENT" {{ 'selected' if order.priority.value == 'URGENT' }}>{{ _('Urgent') }}</option>
+              </select>
+            </div>
+            <div class="col-6 col-md-4 mb-3">
+              <label class="form-label small">{{ _('Requested date') }}</label>
+              <input type="text" class="form-control" value="{{ order.requested_delivery_date or '—' }}" disabled>
+            </div>
+            <div class="col-6 col-md-4 mb-3">
+              <label class="form-label small">{{ _('Confirmed delivery date') }}</label>
+              <input type="date" name="confirmed_delivery_date" class="form-control"
+                     value="{{ order.confirmed_delivery_date.isoformat() if order.confirmed_delivery_date else '' }}">
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label small">{{ _('Notes') }}</label>
+            <textarea name="notes" class="form-control" rows="2">{{ order.notes or '' }}</textarea>
+          </div>
+          <button type="submit" class="btn btn-outline-primary">{{ _('Save details') }}</button>
+        </form>
+
+        {% set mv = order.items[0].measurement_version if order.items else None %}
+        <p class="small text-secondary mt-3 mb-0">
+          {% if mv %}
+            {{ _('Cut to measurement version {n} (taken {date}).').format(n=mv.version_number, date=mv.created_at.strftime('%d %b %Y')) }}
+          {% else %}
+            {{ _('No measurement version was on file when this order was created.') }}
+          {% endif %}
+        </p>
+      </div>
+    </div>
+
+    {% if order.reference_images %}
+      <div class="card mt-4">
+        <div class="card-body">
+          <h2 class="h5 mb-3">{{ _('Reference photos') }}</h2>
+          <div class="d-flex flex-wrap gap-2">
+            {% for img in order.reference_images %}
+              <a href="{{ url_for('admin.order_image', order_id=order.id, image_id=img.id) }}" target="_blank">
+                <img src="{{ url_for('admin.order_image', order_id=order.id, image_id=img.id) }}"
+                     alt="{{ _('Reference photo') }}" style="width:120px;height:120px;object-fit:cover;border-radius:.5rem;">
+              </a>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="col-12 col-lg-5">
+    <div class="card mb-4">
+      <div class="card-body">
+        <h2 class="h5 mb-3">{{ _('Status') }}</h2>
+        <ol class="d-flex list-unstyled justify-content-between small mb-3">
+          {% for s in ['NEW', 'MEASUREMENT', 'READY', 'DELIVERED'] %}
+            <li class="text-center flex-fill {{ 'fw-bold text-primary' if order.status.value == s else 'text-secondary' }}">
+              {{ s|title }}
+            </li>
+          {% endfor %}
+        </ol>
+        <form method="post" action="{{ url_for('admin.order_status', order_id=order.id) }}" class="d-flex gap-2 flex-wrap" id="status-form">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          {% for s in ['NEW', 'MEASUREMENT', 'READY', 'DELIVERED'] %}
+            {% if s != order.status.value %}
+              <button type="submit" name="status" value="{{ s }}" class="btn btn-sm btn-outline-secondary"
+                      {% if s == 'DELIVERED' and balance > 0 %}data-confirm-balance="₹{{ '%.2f'|format(balance) }}"{% endif %}>
+                {{ _('Move to {status}').format(status=s|title) }}
+              </button>
+            {% endif %}
+          {% endfor %}
+        </form>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <h2 class="h5 mb-3">{{ _('Financial summary') }}</h2>
+        <dl class="row mb-0 small">
+          <dt class="col-7">{{ _('Stitching total') }}</dt>
+          <dd class="col-5 text-end">₹{{ '%.2f'|format(order.subtotal_stitching) }}</dd>
+          <dt class="col-7">{{ _('Cloth total') }}</dt>
+          <dd class="col-5 text-end">₹{{ '%.2f'|format(order.subtotal_material) }}</dd>
+          <dt class="col-7 fw-bold">{{ _('Grand total') }}</dt>
+          <dd class="col-5 text-end fw-bold">₹{{ '%.2f'|format(order.grand_total) }}</dd>
+          <dt class="col-7">{{ _('Required advance') }}</dt>
+          <dd class="col-5 text-end">₹{{ '%.2f'|format(order.required_advance) }}</dd>
+          <dt class="col-7 text-success">{{ _('Paid (verified)') }}</dt>
+          <dd class="col-5 text-end text-success">₹{{ '%.2f'|format(paid) }}</dd>
+          {% if pending > 0 %}
+            <dt class="col-7 text-warning">{{ _('Pending verification') }}</dt>
+            <dd class="col-5 text-end text-warning">₹{{ '%.2f'|format(pending) }}</dd>
+          {% endif %}
+          <dt class="col-7 fw-bold">{{ _('Balance due') }}</dt>
+          <dd class="col-5 text-end fw-bold">₹{{ '%.2f'|format(balance) }}</dd>
+        </dl>
+      </div>
+    </div>
+
+    {% if balance > 0 %}
+      <div class="card mt-4">
+        <div class="card-body">
+          <h2 class="h5 mb-3">{{ _('Record a payment') }}</h2>
+          <form method="post" action="{{ url_for('admin.payment_record', order_id=order.id) }}" novalidate>
+            {{ payment_form.hidden_tag() }}
+            <div class="mb-3">
+              {{ payment_form.amount.label(class="form-label small") }}
+              {{ payment_form.amount(class="form-control", value=('%.2f'|format(balance))) }}
+            </div>
+            <div class="mb-3">
+              {{ payment_form.method.label(class="form-label small") }}
+              {{ payment_form.method(class="form-select") }}
+            </div>
+            <div class="mb-3">
+              {{ payment_form.transaction_reference.label(class="form-label small") }}
+              {{ payment_form.transaction_reference(class="form-control", placeholder=_("UPI ref / transaction ID")) }}
+            </div>
+            <div class="mb-3">
+              {{ payment_form.note.label(class="form-label small") }}
+              {{ payment_form.note(class="form-control") }}
+            </div>
+            <button type="submit" class="btn btn-primary">{{ _('Add payment') }}</button>
+          </form>
+        </div>
+      </div>
+    {% endif %}
+
+    <div class="card mt-4">
+      <div class="card-body">
+        <h2 class="h5 mb-3">{{ _('Payment history') }}</h2>
+        {% if order.payments %}
+          <ul class="list-unstyled mb-0">
+            {% for p in order.payments|sort(attribute='created_at', reverse=True) %}
+              <li class="border-bottom py-2 d-flex justify-content-between align-items-center">
+                <div>
+                  <strong>₹{{ '%.2f'|format(p.amount) }}</strong>
+                  <span class="text-secondary small">· {{ p.method.value }} · {{ p.created_at.strftime('%d %b %Y') }}</span>
+                  {% if p.transaction_reference %}<div class="small text-secondary">{{ p.transaction_reference }}</div>{% endif %}
+                </div>
+                <div>
+                  {% if p.status.value == 'VERIFIED' %}
+                    <span class="badge text-bg-success">{{ _('Verified') }}</span>
+                    <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('admin.payment_receipt', payment_id=p.id) }}" target="_blank">{{ _('Receipt') }}</a>
+                  {% else %}
+                    <span class="badge text-bg-warning">{{ _('Pending') }}</span>
+                    <form method="post" action="{{ url_for('admin.payment_verify', payment_id=p.id) }}" class="d-inline">
+                      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                      <button type="submit" class="btn btn-sm btn-outline-success">{{ _('Verify') }}</button>
+                    </form>
+                  {% endif %}
+                </div>
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p class="text-secondary mb-0">{{ _('No payments recorded yet.') }}</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script nonce="{{ csp_nonce }}">
+  document.getElementById('status-form').addEventListener('submit', function (e) {
+    var btn = e.submitter;
+    var balance = btn && btn.dataset.confirmBalance;
+    if (balance && !confirm(
+      {{ _('This order still has a balance of {balance} due. Mark it Delivered anyway?')|tojson }}.replace('{balance}', balance)
+    )) {
+      e.preventDefault();
+    }
+  });
+</script>
+{% endblock %}

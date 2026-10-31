@@ -1,0 +1,45 @@
+<nav class="navbar navbar-expand-lg navbar-nst no-print" data-bs-theme="dark">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center gap-2" href="{{ url_for('public.home') }}">
+      <img src="{{ url_for('static', filename='img/logo.png') }}" alt="" class="brand-mark">
+      <span class="fw-semibold">{{ SHOP.name }}</span>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nstNav"
+            aria-controls="nstNav" aria-expanded="false" aria-label="Menu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="nstNav">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('public.home') }}">{{ _('Home') }}</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('public.services') }}">{{ _('Services') }}</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('public.gallery') }}">{{ _('Gallery') }}</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('public.order') }}">{{ _('Order online') }}</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('public.enquiry') }}">{{ _('Enquiry') }}</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('public.track_order') }}">{{ _('Track order') }}</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('public.about') }}">{{ _('About') }}</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('public.contact') }}">{{ _('Contact') }}</a></li>
+      </ul>
+
+      <div class="d-flex align-items-center gap-3">
+        <a class="btn btn-gold btn-sm" href="tel:{{ SHOP.phone }}">{{ _('Call') }} {{ SHOP.phone }}</a>
+        {% if current_user.is_authenticated %}
+          {% if current_user.role.value == 'ADMIN' %}
+            <a class="btn btn-outline-light btn-sm" href="{{ url_for('admin.dashboard') }}">{{ _('Dashboard') }}</a>
+          {% else %}
+            <a class="btn btn-outline-light btn-sm" href="{{ url_for('customer.dashboard') }}">{{ _('My account') }}</a>
+          {% endif %}
+        {% else %}
+          <a class="btn btn-outline-light btn-sm" href="{{ url_for('auth.customer_login') }}">{{ _('Sign in') }}</a>
+        {% endif %}
+        <div class="btn-group lang-switch" role="group" aria-label="{{ _('Language') }}">
+          {% for code, label in LANGUAGES.items() %}
+            <a class="btn btn-sm {{ 'btn-light' if code == CURRENT_LOCALE else 'btn-outline-light' }}"
+               href="{{ url_for('public.set_language', lang=code) }}">{{ label }}</a>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

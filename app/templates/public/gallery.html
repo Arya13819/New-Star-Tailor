@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}{{ _('Gallery') }} — {{ SHOP.name }}{% endblock %}
+
+{% block content %}
+<div class="text-center mb-4">
+  <p class="section-label mb-2">{{ _('Gallery') }}</p>
+  <h1 class="h3 mb-3">{{ _('Our work') }}</h1>
+</div>
+<div class="row g-3">
+  {% for filename, caption in photos %}
+    <div class="col-6 col-md-4 col-lg-3">
+      <div class="card h-100">
+        <img src="{{ url_for('static', filename='img/services/' ~ filename) }}"
+             class="card-img-top" loading="lazy" alt="{{ caption }}">
+        <div class="card-body py-2 text-center">
+          <p class="small mb-0">{{ caption }}</p>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}

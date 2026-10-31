@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% block title %}{{ _('Payment receipt') }} — {{ SHOP.name }}{% endblock %}
+
+{% block content %}
+<div class="print-area mx-auto" style="max-width: 30rem;">
+  <div class="card receipt-card">
+    <div class="receipt-header">
+      <img src="{{ url_for('static', filename='img/logo.png') }}" alt="" class="receipt-logo">
+      <div>
+        <div class="receipt-shop-name">{{ SHOP.name }}</div>
+        <div class="receipt-shop-meta">{{ SHOP.address }}</div>
+        <div class="receipt-shop-meta">{{ _('Phone') }}: {{ SHOP.phone }}</div>
+      </div>
+    </div>
+
+    <div class="receipt-band">
+      <span>{{ _('Payment receipt') }}</span>
+      <span class="receipt-band-value">{{ payment.order.order_number }}</span>
+    </div>
+
+    <div class="receipt-body">
+      <div class="receipt-meta-row">
+        <div>
+          <div class="label">{{ _('Date') }}</div>
+          <div>{{ payment.created_at.strftime('%d %b %Y') }}</div>
+        </div>
+        <div class="text-end">
+          <div class="label">{{ _('Customer') }}</div>
+          <div>{{ payment.customer.name }}</div>
+        </div>
+      </div>
+
+      <table class="receipt-table">
+        <tbody>
+          <tr>
+            <td>{{ _('Method') }}</td>
+            <td class="text-end">{{ payment.method.value }}</td>
+          </tr>
+          {% if payment.transaction_reference %}
+            <tr>
+              <td>{{ _('Reference') }}</td>
+              <td class="text-end">{{ payment.transaction_reference }}</td>
+            </tr>
+          {% endif %}
+          <tr>
+            <td>{{ _('Status') }}</td>
+            <td class="text-end">
+              {% if payment.status.value == 'VERIFIED' %}{{ _('Verified') }}{% else %}{{ _('Pending') }}{% endif %}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="receipt-totals">
+        <div class="row-line grand">
+          <span>{{ _('Amount paid') }}</span>
+          <span>₹{{ '%.2f'|format(payment.amount) }}</span>
+        </div>
+        <div class="row-line">
+          <span>{{ _('Order total') }}</span>
+          <span>₹{{ '%.2f'|format(payment.order.grand_total) }}</span>
+        </div>
+        <div class="row-line paid">
+          <span>{{ _('Total paid so far') }}</span>
+          <span>₹{{ '%.2f'|format(total_paid) }}</span>
+        </div>
+        <div class="row-line balance">
+          <span>{{ _('Balance due') }}</span>
+          <span>₹{{ '%.2f'|format(balance) }}</span>
+        </div>
+      </div>
+
+      <div class="text-center mt-3">
+        {% if balance <= 0 %}
+          <span class="receipt-stamp is-paid">{{ _('Paid in full') }}</span>
+        {% elif payment.status.value != 'VERIFIED' %}
+          <span class="receipt-stamp is-due">{{ _('Pending') }}</span>
+        {% else %}
+          <span class="receipt-stamp is-due">{{ _('Balance due') }}</span>
+        {% endif %}
+      </div>
+    </div>
+
+    <p class="receipt-footer-note mb-0">
+      {{ _('Thank you for choosing {shop}.').format(shop=SHOP.name) }}
+    </p>
+  </div>
+
+  <div class="text-center mt-3 no-print">
+    <button type="button" id="print-btn" class="btn btn-primary">{{ _('Print') }}</button>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script nonce="{{ csp_nonce }}">
+  document.getElementById('print-btn').addEventListener('click', function () { window.print(); });
+</script>
+{% endblock %}

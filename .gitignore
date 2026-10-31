@@ -1,0 +1,53 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# Virtualenv
+.venv/
+venv/
+env/
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# Flask / instance
+instance/
+*.sqlite
+*.sqlite3
+*.db
+
+# Uploads (private customer data — never commit)
+app/static/uploads/
+uploads/
+media/
+
+# Babel compiled catalogs are built during deploy
+# (keep .po, ignore .mo)
+*.mo
+
+# Tests / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+coverage.xml
+
+# Editors / OS
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+*.swp
+
+# Logs
+*.log
+logs/
+
+# Stray tool caches
+.vite/
+node_modules/

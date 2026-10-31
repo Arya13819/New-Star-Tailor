@@ -1,0 +1,86 @@
+{% extends "admin/_layout.html" %}
+{% set active = 'payments' %}
+{% block title %}{{ _('Payments') }} — {{ SHOP.name }}{% endblock %}
+
+{% block admin_content %}
+<h1 class="h3 mb-4">{{ _('Payments') }}</h1>
+
+<div class="row g-3 mb-4">
+  <div class="col-6 col-md-4">
+    <div class="card"><div class="card-body">
+      <p class="section-label mb-1">{{ _('Verified') }}</p>
+      <p class="h4 mb-0 text-success">₹{{ '%.2f'|format(verified_total) }}</p>
+    </div></div>
+  </div>
+  <div class="col-6 col-md-4">
+    <div class="card"><div class="card-body">
+      <p class="section-label mb-1">{{ _('Pending verification') }}</p>
+      <p class="h4 mb-0 text-warning">₹{{ '%.2f'|format(pending_total) }}</p>
+    </div></div>
+  </div>
+</div>
+
+<ul class="nav nav-pills mb-3">
+  {% for key, label in [(None, _('All')), ('VERIFIED', _('Verified')), ('PENDING', _('Pending'))] %}
+    <li class="nav-item">
+      <a class="nav-link {{ 'active' if status == key else '' }}" href="{{ url_for('admin.payment_list', status=key) }}">
+        {{ label }}
+      </a>
+    </li>
+  {% endfor %}
+</ul>
+
+{% if not payments %}
+  <p class="text-secondary">{{ _('No payments to show.') }}</p>
+{% else %}
+  <div class="table-responsive">
+    <table class="table align-middle">
+      <thead>
+        <tr>
+          <th>{{ _('Date') }}</th>
+          <th>{{ _('Order') }}</th>
+          <th>{{ _('Customer') }}</th>
+          <th>{{ _('Method') }}</th>
+          <th class="text-end">{{ _('Amount') }}</th>
+          <th>{{ _('Status') }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for p in payments %}
+          <tr>
+            <td>{{ p.created_at.strftime('%d %b %Y') }}</td>
+            <td><a href="{{ url_for('admin.order_detail', order_id=p.order_id) }}">{{ p.order.order_number }}</a></td>
+            <td>{{ p.customer.name }}</td>
+            <td>{{ p.method.value }}</td>
+            <td class="text-end">₹{{ '%.2f'|format(p.amount) }}</td>
+            <td>
+              {% if p.status.value == 'VERIFIED' %}
+                <span class="badge text-bg-success">{{ _('Verified') }}</span>
+                <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('admin.payment_receipt', payment_id=p.id) }}" target="_blank">{{ _('Receipt') }}</a>
+              {% else %}
+                <span class="badge text-bg-warning">{{ _('Pending') }}</span>
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {% if pagination.pages > 1 %}
+    <nav aria-label="{{ _('Pagination') }}">
+      <ul class="pagination">
+        {% for p in pagination.iter_pages() %}
+          <li class="page-item {{ 'active' if p == pagination.page else '' }} {{ 'disabled' if not p else '' }}">
+            {% if p %}
+              <a class="page-link" href="{{ url_for('admin.payment_list', status=status, page=p) }}">{{ p }}</a>
+            {% else %}
+              <span class="page-link">…</span>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    </nav>
+  {% endif %}
+{% endif %}
+{% endblock %}

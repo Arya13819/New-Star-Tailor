@@ -1,0 +1,20 @@
+<footer class="site-footer py-4 mt-5 no-print">
+  <div class="container">
+    <div class="row gy-3">
+      <div class="col-md-6">
+        <div class="fw-semibold text-white">{{ SHOP.name }}</div>
+        <div class="small">{{ SHOP.address }}</div>
+        <div class="small">{{ _('Phone') }}: <a class="link-light" href="tel:{{ SHOP.phone }}">{{ SHOP.phone }}</a></div>
+      </div>
+      <div class="col-md-6 text-md-end small">
+        <div>{{ _('Men\'s tailoring · Police · CRPF · Army uniforms') }}</div>
+        <div class="text-white-50">&copy; {{ now_year }} {{ SHOP.name }}. {{ _('All rights reserved.') }}</div>
+        {% if not (current_user.is_authenticated and current_user.role.value == 'ADMIN') %}
+          <div class="mt-1">
+            <a class="text-white-50" href="{{ url_for('auth.admin_login') }}" style="font-size: 0.75rem;">{{ _('Staff sign in') }}</a>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</footer>

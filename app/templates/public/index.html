@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}{{ SHOP.name }} — {{ _('Neemuch') }}{% endblock %}
+
+{% block content %}
+<div class="text-center py-4">
+  <p class="section-label mb-2">{{ _('Neemuch, Madhya Pradesh') }}</p>
+  <h1 class="display-6 mb-3">{{ _("Expert men's tailoring & uniform specialists") }}</h1>
+  <p class="lead text-secondary mx-auto" style="max-width: 40rem;">
+    {{ _('Shirts, trousers and regulation Police, CRPF and Army uniforms — stitched to your measurements, priced clearly with stitching and cloth kept separate.') }}
+  </p>
+  <div class="d-flex flex-wrap justify-content-center gap-2 mt-4">
+    <a class="btn btn-gold btn-lg" href="tel:{{ SHOP.phone }}">{{ _('Call the shop') }}</a>
+    <a class="btn btn-outline-primary btn-lg" target="_blank" rel="noopener"
+       href="https://www.google.com/maps/dir/?api=1&destination={{ SHOP.latitude }},{{ SHOP.longitude }}">
+      {{ _('Get directions') }}
+    </a>
+    <a class="btn btn-outline-primary btn-lg" href="{{ url_for('public.track_order') }}">{{ _('Track your order') }}</a>
+  </div>
+</div>
+
+<hr class="stitch-divider">
+
+<div class="row g-3 text-center">
+  <div class="col-6 col-md-3">
+    <div class="card h-100"><div class="card-body">
+      <div class="h3 text-gold mb-1">₹550</div>
+      <div class="small text-secondary">{{ _('Shirt + Pant stitching (cloth separate)') }}</div>
+    </div></div>
+  </div>
+  <div class="col-6 col-md-3">
+    <div class="card h-100"><div class="card-body">
+      <div class="h3 text-gold mb-1">₹700</div>
+      <div class="small text-secondary">{{ _('Khaaki / Cheetah full dress stitching') }}</div>
+    </div></div>
+  </div>
+  <div class="col-6 col-md-3">
+    <div class="card h-100"><div class="card-body">
+      <div class="h3 text-gold mb-1">₹850</div>
+      <div class="small text-secondary">{{ _('Cheetah US pattern full dress stitching') }}</div>
+    </div></div>
+  </div>
+  <div class="col-6 col-md-3">
+    <div class="card h-100"><div class="card-body">
+      <div class="h3 text-gold mb-1">10–15</div>
+      <div class="small text-secondary">{{ _('days normal delivery after confirmation') }}</div>
+    </div></div>
+  </div>
+</div>
+
+{% endblock %}
