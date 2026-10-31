@@ -1,20 +1,6 @@
-<footer class="site-footer py-4 mt-5 no-print">
-  <div class="container">
-    <div class="row gy-3">
-      <div class="col-md-6">
-        <div class="fw-semibold text-white">{{ SHOP.name }}</div>
-        <div class="small">{{ SHOP.address }}</div>
-        <div class="small">{{ _('Phone') }}: <a class="link-light" href="tel:{{ SHOP.phone }}">{{ SHOP.phone }}</a></div>
-      </div>
-      <div class="col-md-6 text-md-end small">
-        <div>{{ _('Men\'s tailoring · Police · CRPF · Army uniforms') }}</div>
-        <div class="text-white-50">&copy; {{ now_year }} {{ SHOP.name }}. {{ _('All rights reserved.') }}</div>
-        {% if not (current_user.is_authenticated and current_user.role.value == 'ADMIN') %}
-          <div class="mt-1">
-            <a class="text-white-50" href="{{ url_for('auth.admin_login') }}" style="font-size: 0.75rem;">{{ _('Staff sign in') }}</a>
-          </div>
-        {% endif %}
-      </div>
-    </div>
-  </div>
-</footer>
+<footer class="site-footer no-print"><div class="container">
+  <div class="row gy-4 footer-main"><div class="col-lg-5"><p class="footer-brand">{{ SHOP.name }}<span>✦</span></p><p class="footer-description">{{ _("Everyday essentials. Duty-ready uniforms. Thoughtfully stitched, just for you.") }}</p><a href="tel:{{ SHOP.phone }}" class="footer-phone">+91 {{ SHOP.phone }} ↗</a></div>
+  <div class="col-6 col-lg-3"><p class="footer-label">{{ _('Explore') }}</p><a href="{{ url_for('public.services') }}">{{ _('Services & pricing') }}</a><a href="{{ url_for('public.gallery') }}">{{ _('Our work') }}</a><a href="{{ url_for('public.order') }}">{{ _('Order online') }}</a><a href="{{ url_for('public.enquiry') }}">{{ _('Send us an enquiry') }}</a><a href="{{ url_for('public.track_order') }}">{{ _('Track your order') }}</a></div>
+  <div class="col-6 col-lg-4"><p class="footer-label">{{ _('Visit the shop') }}</p><p>{{ SHOP.address }}</p><p>{{ _('Monday to Saturday, 10:00 AM – 8:00 PM') }}</p><a target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination={{ SHOP.latitude }},{{ SHOP.longitude }}">{{ _('Get directions') }} ↗</a></div></div>
+  <div class="footer-bottom d-flex flex-wrap justify-content-between gap-3"><span>&copy; {{ now_year }} {{ SHOP.name }}. {{ _('All rights reserved.') }}</span><a href="{{ url_for('auth.admin_login') }}">{{ _('Staff sign in') }} ↗</a></div>
+</div></footer>

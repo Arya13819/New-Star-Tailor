@@ -5,8 +5,8 @@
 {% macro item_row(index, services, item_form=None) %}
 <div class="row g-2 align-items-end item-row mb-2 border-bottom pb-2">
   <div class="col-8">
-    <label class="form-label small mb-1">{{ _('Service') }}</label>
-    <select name="items-{{ index }}-service_id"
+    <label for="service-{{ index }}" class="form-label small mb-1">{{ _('Service') }}</label>
+    <select id="service-{{ index }}" name="items-{{ index }}-service_id"
             class="form-select{{ ' is-invalid' if item_form and item_form.service_id.errors else '' }}">
       <option value="">—</option>
       {% for s in services %}
@@ -18,14 +18,14 @@
     {% if item_form %}{% for err in item_form.service_id.errors %}<div class="invalid-feedback d-block">{{ err }}</div>{% endfor %}{% endif %}
   </div>
   <div class="col-3">
-    <label class="form-label small mb-1">{{ _('Qty') }}</label>
-    <input type="number" min="1" max="99" name="items-{{ index }}-quantity"
+    <label for="quantity-{{ index }}" class="form-label small mb-1">{{ _('Qty') }}</label>
+    <input id="quantity-{{ index }}" type="number" min="1" max="99" name="items-{{ index }}-quantity"
            value="{{ item_form.quantity.data if item_form and item_form.quantity.data else 1 }}"
            class="form-control{{ ' is-invalid' if item_form and item_form.quantity.errors else '' }}">
     {% if item_form %}{% for err in item_form.quantity.errors %}<div class="invalid-feedback d-block">{{ err }}</div>{% endfor %}{% endif %}
   </div>
   <div class="col-1">
-    <button type="button" class="btn btn-outline-danger btn-sm remove-item-row">✕</button>
+    <button type="button" class="btn btn-outline-danger btn-sm remove-item-row" aria-label="{{ _('Remove service') }}">✕</button>
   </div>
 </div>
 {% endmacro %}
@@ -120,6 +120,7 @@
   var container = document.getElementById('item-rows');
   var addBtn = document.getElementById('add-item-row');
   var tpl = document.getElementById('item-row-template');
+  if (!container || !addBtn || !tpl) return;
   var nextIndex = container.children.length;
 
   function attachRow(row) {

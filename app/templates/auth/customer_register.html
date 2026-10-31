@@ -3,11 +3,11 @@
 {% block title %}{{ _('Create account') }} — {{ SHOP.name }}{% endblock %}
 
 {% block content %}
-<div class="row justify-content-center">
+<div class="auth-shell row justify-content-center">
   <div class="col-12 col-sm-8 col-md-6">
-    <div class="card">
+    <div class="card auth-card">
       <div class="card-body p-4">
-        <h1 class="h4 mb-3">{{ _('Create your account') }}</h1>
+        <p class="section-label">{{ _('WELCOME TO NEW STAR TAILOR') }}</p><h1 class="h3 mb-4">{{ _('Create your account') }}</h1>
         <form method="post" novalidate>
           {{ form.hidden_tag() }}
           {{ field(form.name, autofocus=True) }}

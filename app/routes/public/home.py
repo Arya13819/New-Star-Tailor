@@ -11,6 +11,7 @@ from flask import (
     url_for,
 )
 from flask_login import current_user
+from sqlalchemy.exc import SQLAlchemyError
 
 from ...config import Config
 from ...extensions import db
@@ -20,7 +21,23 @@ from . import bp
 
 @bp.get("/")
 def home():
-    return render_template("public/index.html")
+    from ...models.service import Service
+
+    # The public storefront remains available before database provisioning.
+    # Never show guessed or stale prices when the catalogue cannot be read.
+    try:
+        featured = Service.query.filter(
+            Service.is_active.is_(True),
+            Service.code.in_(["SHIRT_PANT_COMBO", "POLICE_KHAAKI", "CRPF_CHEETAH"]),
+        ).all()
+    except SQLAlchemyError:
+        db.session.rollback()
+        current_app.logger.warning("Homepage catalogue unavailable; prices omitted")
+        featured = []
+    return render_template(
+        "public/index.html",
+        featured_prices={s.code: s.default_stitching_price for s in featured},
+    )
 
 
 @bp.get("/sw.js")

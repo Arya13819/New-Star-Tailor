@@ -1,10 +1,9 @@
 # Database setup (MySQL / MariaDB)
 
-The app targets **MySQL 8**. **MariaDB 10.6+ / 11.x** is a supported drop-in
-(the SQLAlchemy `mysql+pymysql` driver treats them the same for everything this
-app uses). This machine runs **MariaDB 11.8** on `127.0.0.1:3306`, and as of
-2026-09-18 the app is provisioned against it (`nst_dev` / `nst_test`,
-credentials in the local `.env`, not committed).
+Use MySQL 8 or MariaDB 10.6+. This project includes a ready-to-import SQL file
+and optional MySQL Docker service: start with [database/README.md](../database/README.md).
+No database passwords are shipped. The setup below is for an existing server;
+its examples do not imply this machine already has a configured database.
 
 ## 1. Create the database and user
 
@@ -50,7 +49,7 @@ TEST_DATABASE_URL=mysql+pymysql://nst_user:choose-a-password@127.0.0.1:3306/nst_
 .venv/bin/flask --app wsgi nst check
 ```
 
-Expect `Database : reachable`. Migrations (`flask db upgrade`) arrive in Phase 2.
+Expect `Database : reachable`. Run `flask db upgrade` to apply the included migrations.
 
 ## Running without MySQL (temporary)
 
@@ -70,35 +69,3 @@ models are written MySQL-first, so switching later is just a matter of setting
 - `utf8mb4` is required for Hindi (Devanagari) text.
 - Prefer setting `TEST_DATABASE_URL` to `nst_test` on MySQL so tests run on the
   real engine before release.
-
-## Troubleshooting: `sudo mysql` says "Access denied for user 'root'@'localhost'"
-
-On some installs (this machine included) MariaDB's `root` account has a real
-password set instead of the usual `unix_socket`/`auth_socket` plugin, so
-`sudo mysql` does **not** auto-authenticate. `sudo mysql --defaults-file=/etc/mysql/debian.cnf`
-(the Debian maintenance account) may also fail if that account was removed.
-
-Fix used here — reset access without knowing the old root password, without
-touching root's password permanently:
-
-```bash
-sudo systemctl stop mariadb
-sudo mkdir -p /run/mysqld && sudo chown mysql:mysql /run/mysqld   # recreated each stop
-# Run AS the mysql user directly — avoids the setuid/setgid AppArmor denies
-# you get from `sudo mysqld_safe ...` (mariadbd can't drop root->mysql under
-# the default AppArmor profile when started that way):
-sudo -u mysql /usr/sbin/mariadbd --skip-grant-tables --skip-networking &
-sleep 5
-sudo mysql -e "SELECT 1;"   # should succeed with no auth
-# ... run your CREATE DATABASE / CREATE USER / GRANT statements here ...
-sudo pkill -9 mariadbd      # `mysqladmin shutdown` also hit the access-denied
-sleep 3
-sudo systemctl start mariadb
-sudo systemctl status mariadb --no-pager   # expect active (running)
-```
-
-A stray still-running `--skip-grant-tables` instance colliding with a fresh
-`systemctl start` produces `Plugin 'InnoDB' registration ... failed` /
-`Unknown storage engine 'Aria'` — harmless (InnoDB crash-recovers on the next
-clean start), but always confirm `pgrep -a mariadbd` is empty before starting
-the service again.

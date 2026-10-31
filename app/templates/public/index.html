@@ -1,50 +1,12 @@
 {% extends "base.html" %}
-{% block title %}{{ SHOP.name }} — {{ _('Neemuch') }}{% endblock %}
-
+{% block title %}{{ SHOP.name }} — {{ _("Tailored for the way you live") }}{% endblock %}
 {% block content %}
-<div class="text-center py-4">
-  <p class="section-label mb-2">{{ _('Neemuch, Madhya Pradesh') }}</p>
-  <h1 class="display-6 mb-3">{{ _("Expert men's tailoring & uniform specialists") }}</h1>
-  <p class="lead text-secondary mx-auto" style="max-width: 40rem;">
-    {{ _('Shirts, trousers and regulation Police, CRPF and Army uniforms — stitched to your measurements, priced clearly with stitching and cloth kept separate.') }}
-  </p>
-  <div class="d-flex flex-wrap justify-content-center gap-2 mt-4">
-    <a class="btn btn-gold btn-lg" href="tel:{{ SHOP.phone }}">{{ _('Call the shop') }}</a>
-    <a class="btn btn-outline-primary btn-lg" target="_blank" rel="noopener"
-       href="https://www.google.com/maps/dir/?api=1&destination={{ SHOP.latitude }},{{ SHOP.longitude }}">
-      {{ _('Get directions') }}
-    </a>
-    <a class="btn btn-outline-primary btn-lg" href="{{ url_for('public.track_order') }}">{{ _('Track your order') }}</a>
-  </div>
-</div>
-
-<hr class="stitch-divider">
-
-<div class="row g-3 text-center">
-  <div class="col-6 col-md-3">
-    <div class="card h-100"><div class="card-body">
-      <div class="h3 text-gold mb-1">₹550</div>
-      <div class="small text-secondary">{{ _('Shirt + Pant stitching (cloth separate)') }}</div>
-    </div></div>
-  </div>
-  <div class="col-6 col-md-3">
-    <div class="card h-100"><div class="card-body">
-      <div class="h3 text-gold mb-1">₹700</div>
-      <div class="small text-secondary">{{ _('Khaaki / Cheetah full dress stitching') }}</div>
-    </div></div>
-  </div>
-  <div class="col-6 col-md-3">
-    <div class="card h-100"><div class="card-body">
-      <div class="h3 text-gold mb-1">₹850</div>
-      <div class="small text-secondary">{{ _('Cheetah US pattern full dress stitching') }}</div>
-    </div></div>
-  </div>
-  <div class="col-6 col-md-3">
-    <div class="card h-100"><div class="card-body">
-      <div class="h3 text-gold mb-1">10–15</div>
-      <div class="small text-secondary">{{ _('days normal delivery after confirmation') }}</div>
-    </div></div>
-  </div>
-</div>
-
+<section class="tailor-hero" aria-labelledby="hero-title">
+  <div class="hero-copy"><p class="section-label"><span class="tiny-rule"></span>{{ _("MEN’S TAILORING · NEEMUCH") }}</p><h1 id="hero-title">{{ _('A better fit.') }}<br><em>{{ _('A better you.') }}</em></h1><p class="hero-description">{{ _("From your everyday shirt to the uniform you wear with pride. Discover clothing made to your measurements, with care in every stitch.") }}</p><div class="d-flex flex-wrap gap-3"><a class="btn btn-primary btn-lg" href="{{ url_for('public.order') }}">{{ _('Start your order') }} <span aria-hidden="true">↗</span></a><a class="btn btn-outline-primary btn-lg" href="{{ url_for('public.services') }}">{{ _('Explore services') }}</a></div><div class="hero-note"><span aria-hidden="true">✦</span><div><strong>{{ _('Your measurements. Your fit.') }}</strong><small>{{ _('Shirts, trousers & Police, CRPF and Army uniforms') }}</small></div></div></div>
+  <div class="hero-visual"><div class="hero-image-wrap"><img src="{{ url_for('static', filename='img/services/shirt_pant_combo.jpg') }}" alt="{{ _('Blue shirt and navy trousers, neatly folded') }}" width="700" height="716" fetchpriority="high"><span class="image-label">{{ _('THE EVERYDAY COLLECTION') }}</span></div><div class="hero-stamp"><span aria-hidden="true">✦</span><strong>{{ _('Cut to fit.') }}<br>{{ _('Stitched to last.') }}</strong></div><div class="hero-image-caption"><span>01 / {{ _('EVERYDAY ESSENTIALS') }}</span><a href="{{ url_for('public.gallery') }}">{{ _('View our work') }} ↗</a></div></div>
+</section>
+<section class="promise-strip" aria-label="{{ _('Our approach') }}">{% for number,title,desc in [('01', _('Made to measure'), _('A fit that feels like you.')),('02', _('Clear pricing'), _('Stitching and cloth, billed separately.')),('03', _('Stay in the loop'), _('Track your order, anytime.'))] %}<div><span class="promise-number">{{ number }}</span><div><h2>{{ title }}</h2><p>{{ desc }}</p></div></div>{% endfor %}</section>
+<section class="home-section"><div class="section-heading"><div><p class="section-label">{{ _('THE RIGHT FIT FOR EVERY DAY') }}</p><h2>{{ _('What can we stitch for you?') }}</h2></div><a class="text-link" href="{{ url_for('public.services') }}">{{ _('All services & pricing') }} ↗</a></div><div class="collection-grid">{% for photo,title,desc,code in [('shirt_pant_combo.jpg', _('Everyday essentials'), _('Shirts & trousers, made your way.'), 'SHIRT_PANT_COMBO'),('police_khaaki.jpg', _('Police uniforms'), _('A sharp fit for the line of duty.'), 'POLICE_KHAAKI'),('crpf_cheetah.jpg', _('CRPF uniforms'), _('Precision in every detail.'), 'CRPF_CHEETAH')] %}<a class="collection-card" href="{{ url_for('public.services') }}"><div class="collection-image"><img src="{{ url_for('static', filename='img/services/' ~ photo) }}" alt="{{ title }}" loading="lazy" width="700" height="716"><span aria-hidden="true">↗</span></div><div class="collection-meta"><h3>{{ title }}</h3>{% if featured_prices.get(code) is not none %}<span>₹{{ '%.2f'|format(featured_prices[code]) }}</span>{% endif %}</div><p>{{ desc }}</p></a>{% endfor %}</div><p class="pricing-note">{{ _('Prices shown are for stitching only. Cloth is billed separately.') }}</p></section>
+<section class="process-section home-section"><div><p class="section-label">{{ _('SIMPLE FROM START TO FINISH') }}</p><h2>{{ _('Your next favourite fit,') }}<br><em>{{ _('in three easy steps.') }}</em></h2><a class="text-link" href="{{ url_for('public.enquiry') }}">{{ _('Have a question? Let’s talk') }} ↗</a></div><ol class="process-list">{% for title,desc in [(_('Choose your style'), _('Pick everyday clothing or a uniform. Bring your fabric, or ask about cloth at the shop.')),(_('Make it yours'), _('Visit us for measurements, or submit your measurements with your online order.')),(_('Leave the rest to us'), _('Track your order online. Normal delivery is 10–15 days after confirmation; the shop confirms your date.'))] %}<li><span>0{{ loop.index }}</span><div><h3>{{ title }}</h3><p>{{ desc }}</p></div></li>{% endfor %}</ol></section>
+<section class="tracking-banner"><div><p class="section-label">{{ _('ALREADY ORDERED?') }}</p><h2>{{ _('Good things are taking shape.') }}</h2><p>{{ _('Check your latest order status with your order number and mobile number.') }}</p></div><a class="btn btn-gold btn-lg" href="{{ url_for('public.track_order') }}">{{ _('Track your order') }} ↗</a></section>
 {% endblock %}

@@ -9,7 +9,7 @@
   <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}" type="image/png">
   <link rel="manifest" href="{{ url_for('static', filename='manifest.webmanifest') }}">
   <link rel="apple-touch-icon" href="{{ url_for('static', filename='img/icons/apple-touch-icon.png') }}">
-  <meta name="theme-color" content="#1B2A4A">
+  <meta name="theme-color" content="#243c35">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -67,10 +67,11 @@
   </script>
   {% endblock %}
 </head>
-<body>
+<body class="{{ 'home-page' if request.endpoint == 'public.home' else 'inner-page' }}">
+  <a class="skip-link" href="#main-content">{{ _('Skip to content') }}</a>
   {% include "partials/_nav.html" %}
 
-  <main class="py-4">
+  <main id="main-content" class="py-4">
     <div class="container">
       {% include "partials/_flash.html" %}
       {% block content %}{% endblock %}

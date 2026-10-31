@@ -2,7 +2,7 @@
 // Caches the static shell and read-only public pages only. Never caches
 // anything under /admin, /customer, /api, or any POST/mutating request —
 // order/payment data must always come fresh from the server.
-const CACHE_VERSION = "nst-v3";
+const CACHE_VERSION = "nst-v4";
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const PAGE_CACHE = `${CACHE_VERSION}-pages`;
 

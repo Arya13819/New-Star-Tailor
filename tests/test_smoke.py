@@ -43,9 +43,9 @@ def test_language_switch_to_hindi(client):
     assert b'lang="hi"' in resp.data
 
 
-def test_navbar_uses_dark_theme_so_the_mobile_toggler_icon_is_visible(client):
+def test_navbar_uses_light_theme_so_the_mobile_toggler_icon_is_visible(client):
     resp = client.get("/")
-    assert b'data-bs-theme="dark"' in resp.data
+    assert b'data-bs-theme="light"' in resp.data
 
 
 def test_csrf_protection_enabled_for_forms(app):

@@ -11,6 +11,21 @@ notifications. Scope is **men's tailoring only**.
 
 > Business logic is authoritative in **[docs/BUSINESS_RULES.md](docs/BUSINESS_RULES.md)** — read it first.
 
+## Redesign and MySQL handoff (`shyam`)
+
+The refreshed site uses warm ivory, forest green, editorial typography and the
+original product photography. It includes a responsive storefront, clear mobile
+navigation, customer/staff login screens, styled management views and a shared
+order progress indicator on tracking and customer order details. Homepage prices
+come from the active database catalogue instead of hardcoded rates.
+
+**Database:** [database/new_star_tailor.sql](database/new_star_tailor.sql) can be
+imported into an empty MySQL database or phpMyAdmin. Read
+[database/README.md](database/README.md) for import, Docker, configuration and login
+setup. Existing migrations and authentication are retained. No live database,
+customer data or passwords are included in Git. See [verification](docs/VERIFICATION.md)
+for the checks performed and environment limits.
+
 ## Stack
 Flask · SQLAlchemy + Flask-Migrate · PostgreSQL (production, on Render) /
 MySQL-MariaDB or SQLite (local dev) · Bootstrap 5 · Flask-Babel
@@ -37,11 +52,9 @@ the whole thing — app + Postgres — as a Render Blueprint).
 | ✔ | Phase 15 | Full Hindi translation — every form label, flash message and template string wrapped for i18n, 351-string `hi` catalogue, `?lang=hi` switch remembered in session |
 | ✔ | Phase 16 | PWA — installable manifest + icon set, service worker caching only the static shell and read-only public pages (never admin/customer/API), `/sw.js` served at root scope |
 | ✔ | Phase 17 | SEO + hardening — canonical/OG/Twitter tags, JSON-LD `ClothingStore` listing, `robots.txt` + `sitemap.xml` (public pages only), CSP with per-request nonce, HSTS, `X-Frame-Options`, `Permissions-Policy`, `ProxyFix` for correct HTTPS detection behind Nginx |
-| ✔ | Phase 18 | Final hardening pass — 191 tests passing, `DEPLOYMENT.md`/`BACKUP.md` finalised for production |
+| ✔ | Phase 18 | Final hardening pass — 197 tests passing (redesign verification), `DEPLOYMENT.md`/`BACKUP.md` finalised for production |
 
-> **Local DB:** running on real **MariaDB 11.8** (`nst_dev` / `nst_test`) as of
-> 2026-09-18 — see `docs/DATABASE_SETUP.md`. The SQLite fallback used during
-> early phases still works out of the box if `DATABASE_URL` is ever unset.
+> MySQL setup is environment-specific; see [database/README.md](database/README.md).
 
 See the master plan for the full phase list.
 
@@ -74,7 +87,7 @@ from Phase 2 onward for migrations and the full test suite.
 ## Tests & lint
 
 ```bash
-.venv/bin/pytest
+.venv/bin/python -m pytest
 .venv/bin/ruff check .
 ```
 

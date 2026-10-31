@@ -7,7 +7,7 @@
       </div>
     {% else %}
       {{ f.label(class="form-label fw-semibold") }}
-      {{ f(class=("form-control is-invalid" if f.errors else "form-control"), autofocus=autofocus) }}
+      {{ f(class=("form-control is-invalid" if f.errors else "form-control"), autofocus=autofocus, **kwargs) }}
     {% endif %}
     {% for err in f.errors %}
       <div class="invalid-feedback d-block">{{ err }}</div>
