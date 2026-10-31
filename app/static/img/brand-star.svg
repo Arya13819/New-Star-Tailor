@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <title>New Star Tailor — shop signboard star</title>
+  <path d="M50 4 61 35 95 36 68 57 78 90 50 70 22 90 32 57 5 36 39 35Z" fill="#20252b" stroke="#20252b" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M50 8 50 52 39 36Z M92 37 50 52 62 36Z M76 87 50 52 68 57Z M24 87 50 52 50 69Z M8 37 50 52 32 57Z" fill="#d62832"/>
+  <path d="M50 8 50 52 62 36Z M92 37 50 52 68 57Z M76 87 50 52 50 69Z M24 87 50 52 32 57Z M8 37 50 52 39 36Z" fill="#20252b"/>
+  <path d="M50 8 62 36 92 37 68 57 76 87 50 69 24 87 32 57 8 37 39 36Z" stroke="#fff7e8" stroke-width="1.6" stroke-linejoin="round"/>
+  <path d="M50 8V52M92 37 50 52M76 87 50 52M24 87 50 52M8 37 50 52" stroke="#fff7e8" stroke-width="1.2"/>
+  <circle cx="50" cy="52" r="4" fill="#dedbd2" stroke="#fff7e8" stroke-width="1"/>
+</svg>

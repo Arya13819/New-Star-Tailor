@@ -72,3 +72,25 @@ WebP selection, desktop pointer depth, mobile menu navigation, reduced-motion
 behavior, the primary CTA with JavaScript disabled, public services/gallery,
 login/tracking pages and the Hindi homepage. These are local checks, not a
 production performance score or a hosting deployment.
+
+## Services catalogue and storefront identity — 31 October 2026
+
+Redesigned services with an editorial photo header, category links, search,
+result counts, pricing cards, native FAQ accordions and contextual order/call
+actions. Filtering combines category and literal case-insensitive text search;
+inactive services are excluded. Order links preselect only active priced
+services on GET and never override submitted POST data.
+
+Recreated the shop signboard's red/black faceted star as an 863-byte SVG. Updated
+navigation, footer, receipts, favicon, Apple touch and regular/maskable PWA icons.
+About now uses the real storefront with 480/960/1440px WebP sources. The 960px
+version is 114,572 bytes compared with the original JPEG's 357,387 bytes. Originals
+remain unchanged. The dedicated 13.8KB catalogue stylesheet loads only on Services
+and About. No filtering library, image-generation dependency or extra runtime
+JavaScript was introduced. The service-worker cache version is v6.
+
+Chromium checks passed at 320, 390, 768, 1024 and 1440px on Home, Services and
+About: no horizontal overflow, broken loaded images or JavaScript errors.
+Verified combined category/search, reset and empty states, service-to-order
+preselection and Hindi pages with JavaScript disabled. Automated release checks: **200 tests passed** on SQLite; Python compilation,
+service-worker syntax and Git whitespace checks passed.

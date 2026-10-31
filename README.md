@@ -28,6 +28,17 @@ setup. Existing migrations and authentication are retained. No live database,
 customer data or passwords are included in Git. See [verification](docs/VERIFICATION.md)
 for the checks performed and environment limits.
 
+## Services and shop identity
+
+The services catalogue includes category links, search, live database prices,
+clear unpriced-service call actions and links that preselect the service in the
+online order form. Filters also work without JavaScript. The About page features
+the real shop photograph with responsive WebP versions.
+
+The red/black faceted star in `app/static/img/brand-star.svg` is recreated from the
+shop signboard. The same identity is used in navigation, footer, receipts,
+favicon and PWA icons. Catalogue/About styling loads only on those two pages.
+
 ## Stack
 Flask · SQLAlchemy + Flask-Migrate · PostgreSQL (production, on Render) /
 MySQL-MariaDB or SQLite (local dev) · Bootstrap 5 · Flask-Babel

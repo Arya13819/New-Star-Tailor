@@ -165,3 +165,56 @@ def test_non_admin_cannot_manage_services(client, db):
     )
     assert client.get("/admin/services").status_code == 403
     assert client.get("/admin/services/new").status_code == 403
+
+
+def test_public_catalogue_filters_category_and_search_and_excludes_inactive(client, db):
+    seed_defaults()
+    hidden = Service(code="HIDDEN", name_en="Hidden police service", category=ServiceCategory.POLICE,
+                     default_stitching_price=Decimal("100.00"), is_active=False)
+    db.session.add(hidden)
+    db.session.commit()
+    page = client.get("/services?category=CRPF&q=cheetah")
+    assert page.status_code == 200
+    assert 'data-service="CRPF_CHEETAH"' in page.text
+    assert 'data-service="POLICE_KHAAKI"' not in page.text
+    assert 'data-service="CRPF_KHAAKI"' not in page.text
+    assert 'data-service="HIDDEN"' not in client.get("/services").text
+    empty = client.get("/services?q=does-not-exist")
+    assert "No matching services" in empty.text
+    assert "Clear filters" in empty.text
+    assert 'data-service="' not in empty.text
+    assert client.get("/services?category=NOT_REAL").status_code == 200
+
+
+def test_catalogue_search_treats_metacharacters_as_literal_text(client, db):
+    seed_defaults()
+    for search in ("%", "<script>"):
+        page = client.get("/services", query_string={"q": search})
+        assert "No matching services" in page.text
+        assert '<script>' not in page.text
+    underscore = client.get("/services?q=_")
+    assert 'data-service="SHIRT_PANT_COMBO"' in underscore.text
+    assert 'data-service="SHIRT"' not in underscore.text
+    assert 'data-service="PANT"' not in underscore.text
+
+
+def test_order_link_selects_only_an_active_priced_service_and_does_not_override_post(client, db):
+    from app.models.order import Order
+    seed_defaults()
+    combo = Service.query.filter_by(code="SHIRT_PANT_COMBO").one()
+    unset = Service.query.filter_by(code="SHIRT").one()
+    hidden = Service.query.filter_by(code="POLICE_KHAAKI").one()
+    hidden.is_active = False
+    db.session.commit()
+    valid = client.get(f"/order?service={combo.id}")
+    assert f'value="{combo.id}" selected' in valid.text
+    for value in (unset.id, hidden.id, "bad", 999999):
+        page = client.get(f"/order?service={value}")
+        assert f'value="{value}" selected' not in page.text
+    # A URL parameter must never choose the service on behalf of a POST.
+    response = client.post(f"/order?service={combo.id}", data={
+        "name": "Test customer", "mobile": "9555555511", "fabric_source": "CUSTOMER",
+        "items-0-service_id": "", "items-0-quantity": "1",
+    })
+    assert response.status_code == 200
+    assert Order.query.count() == 0

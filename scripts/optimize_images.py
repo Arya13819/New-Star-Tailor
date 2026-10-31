@@ -23,7 +23,13 @@ def main():
                     DESTINATION / f"{source.stem}-{width}.webp",
                     "WEBP", quality=78, method=6,
                 )
-    print("Responsive product photos rebuilt.")
+    with Image.open(ROOT / "app/static/img/shop-storefront.jpg") as image:
+        for width in (480, 960, 1440):
+            resized = image.copy()
+            resized.thumbnail((width, 2000))
+            resized.save(DESTINATION / f"shop-storefront-{width}.webp",
+                         "WEBP", quality=78, method=6)
+    print("Responsive product and storefront photos rebuilt.")
 
 
 if __name__ == "__main__":

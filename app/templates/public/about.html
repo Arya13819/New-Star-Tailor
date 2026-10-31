@@ -1,18 +1,12 @@
 {% extends "base.html" %}
 {% block title %}{{ _('About us') }} — {{ SHOP.name }}{% endblock %}
-
+{% block head_extra %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/catalogue.css', v='6') }}">
+{% endblock %}
 {% block content %}
-<div class="row justify-content-center">
-  <div class="col-12 col-md-8 text-center">
-    <p class="section-label mb-2">{{ _('About us') }}</p>
-    <h1 class="h3 mb-3">{{ SHOP.name }}</h1>
-    <img src="{{ url_for('static', filename='img/shop-storefront.jpg') }}"
-         class="img-fluid rounded mb-3" loading="lazy"
-         alt="{{ SHOP.name }} — {{ SHOP.address }}">
-    <p class="text-secondary">
-      {{ _('Men\'s tailoring and uniform specialists in Neemuch, Madhya Pradesh — shirts, trousers, and regulation Police, CRPF and Army uniforms.') }}
-    </p>
-    <p class="text-secondary">{{ _("Visit our shop for measurements, choose your style and fabric, and follow your order through your personal account. Stitching and cloth charges are always shown separately.") }}</p><a class="btn btn-primary" href="{{ url_for('public.contact') }}">{{ _('Visit the shop') }} ↗</a>
-  </div>
-</div>
+<section class="about-story" aria-labelledby="about-title">
+  <div class="about-photo"><picture><source type="image/webp" srcset="{{ url_for('static', filename='img/optimized/shop-storefront-480.webp') }} 480w, {{ url_for('static', filename='img/optimized/shop-storefront-960.webp') }} 960w, {{ url_for('static', filename='img/optimized/shop-storefront-1440.webp') }} 1440w" sizes="(max-width: 767px) calc(100vw - 44px), 600px"><img src="{{ url_for('static', filename='img/shop-storefront.jpg') }}" alt="{{ SHOP.name }} — {{ SHOP.address }}" width="1448" height="1086" fetchpriority="high" decoding="async"></picture><span class="shop-photo-caption">{{ _('OUR SHOP · NEEMUCH') }}</span></div>
+  <div class="about-story-copy"><p class="section-label">{{ _('About us') }}</p><img class="about-brand-star" src="{{ url_for('static', filename='img/brand-star.svg') }}" alt="" width="65" height="65"><h1 id="about-title">{{ SHOP.name }}</h1><p class="about-lead">{{ _('A familiar star. A personal fit.') }}</p><p>{{ _("Men's tailoring and uniform specialists in Neemuch, Madhya Pradesh — shirts, trousers, and regulation Police, CRPF and Army uniforms.") }}</p><p>{{ _("Visit our shop for measurements, choose your style and fabric, and follow your order through your personal account. Stitching and cloth charges are always shown separately.") }}</p><div class="d-flex flex-wrap gap-3"><a class="btn btn-primary" href="{{ url_for('public.contact') }}">{{ _('Visit the shop') }} ↗</a><a class="btn btn-outline-primary" href="{{ url_for('public.services') }}">{{ _('Explore services') }}</a></div></div>
+</section>
+<section class="about-brand-note"><img src="{{ url_for('static', filename='img/brand-star.svg') }}" alt="" width="44" height="44"><div><h2>{{ _('The star on our sign. The care in our work.') }}</h2><p>{{ _('Our red and black star comes from the shop signboard — a familiar identity, now carried into our website.') }}</p></div></section>
 {% endblock %}

@@ -91,6 +91,11 @@ def order():
     for item_form in form.items:
         item_form.service_id.choices = choices
 
+    if request.method == "GET":
+        requested_service = request.args.get("service", type=int)
+        if any(s.id == requested_service for s in services):
+            form.items[0].service_id.data = str(requested_service)
+
     if (
         request.method == "GET"
         and current_user.is_authenticated

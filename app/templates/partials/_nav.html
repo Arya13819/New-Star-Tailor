@@ -1,7 +1,7 @@
 <div class="announcement no-print"><div class="container d-flex justify-content-between gap-3"><span>{{ _("Made to measure. Made for you.") }}</span><a href="tel:{{ SHOP.phone }}">{{ _('Neemuch') }} · +91 {{ SHOP.phone }}</a></div></div>
 <nav class="navbar navbar-expand-xl navbar-nst no-print" data-bs-theme="light" aria-label="{{ _('Main navigation') }}">
   <div class="container">
-    <a class="navbar-brand brand-lockup" href="{{ url_for('public.home') }}"><span class="brand-monogram" aria-hidden="true">N<span>✦</span>S</span><span><strong>{{ SHOP.name }}</strong><small>{{ _("TAILORING & UNIFORMS") }}</small></span></a>
+    <a class="navbar-brand brand-lockup" href="{{ url_for('public.home') }}"><img class="shop-brand-mark" src="{{ url_for('static', filename='img/brand-star.svg') }}" alt="" width="48" height="48"><span><strong>{{ SHOP.name }}</strong><small>{{ _("TAILORING & UNIFORMS") }}</small></span></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nstNav" aria-controls="nstNav" aria-expanded="false" aria-label="{{ _('Menu') }}"><span class="navbar-toggler-icon"></span></button>
     <div class="collapse navbar-collapse" id="nstNav">
       <ul class="navbar-nav mx-auto mb-2 mb-xl-0">
