@@ -1,7 +1,0 @@
-{# The current milestone is authoritative; earlier milestones are not fabricated timestamps. #}
-{% set steps = [('NEW', _('Order confirmed')), ('MEASUREMENT', _('Measurement')), ('READY', _('Ready for collection')), ('DELIVERED', _('Delivered'))] %}
-{% set current = steps|map(attribute=0)|list %}
-{% set current_index = current.index(order.status.value) %}
-<ol class="order-progress" aria-label="{{ _('Order progress') }}">
-{% for value, label in steps %}<li class="{{ 'is-complete' if loop.index0 < current_index else 'is-current' if loop.index0 == current_index else '' }}" {% if loop.index0 == current_index %}aria-current="step"{% endif %}><span class="progress-dot" aria-hidden="true">{{ '✓' if loop.index0 < current_index else loop.index }}</span><span>{{ label }}{% if loop.index0 == current_index %}<small>{{ _('Current status') }}</small>{% endif %}</span></li>{% endfor %}
-</ol>

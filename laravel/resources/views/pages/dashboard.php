@@ -1,9 +1,0 @@
-<?php
-
-namespace App\Tailoring;
-
-?>
-<div class="d-flex flex-wrap gap-3 justify-content-between align-items-center mb-4"><div><p class="section-label"><?= t('Shop dashboard')?></p><h1 class="h3"><?= t('Welcome')?>, <?= e(actor()['name'])?></h1></div><a href="/admin/orders/new" class="btn btn-primary"><?= t('New order')?> ↗</a></div>
-<form action="/admin/orders" method="get" class="d-flex gap-2 mb-4" role="search"><label class="visually-hidden" for="global-search"><?= t('Search')?></label><input class="form-control" id="global-search" name="q" placeholder="<?= t('Search customer, mobile or order number…')?>"><button class="btn btn-primary"><?= t('Search')?></button></form>
-<div class="row g-3 mb-4"><?php foreach ($counts as $status => $count) { ?><div class="col-6 col-lg-3"><a class="card text-decoration-none" href="/admin/orders?status=<?= e($status)?>"><div class="card-body"><p class="section-label"><?= e($status)?></p><strong class="h2"><?= $count?></strong></div></a></div><?php } ?></div><div class="card mb-4"><div class="card-body"><p class="section-label"><?= t('Outstanding balance')?></p><strong class="h2"><?= money($outstanding)?></strong><div class="d-flex flex-wrap gap-2 mt-4"><a href="/admin/customers/new" class="btn btn-outline-primary"><?= t('New customer')?></a><a href="/admin/orders?view=today" class="btn btn-outline-primary"><?= t("Today's deliveries")?></a><a href="/admin/orders?view=overdue" class="btn btn-outline-primary"><?= t('Overdue')?></a><a href="/admin/orders?view=urgent" class="btn btn-outline-primary"><?= t('Urgent')?></a><a href="/admin/payments?status=PENDING" class="btn btn-outline-primary"><?= t('Pending payments')?></a></div></div></div><h2 class="h5 mb-3"><?= t('Recent orders')?></h2><?php $admin = true;
-require __DIR__.'/order_table.php'; ?>

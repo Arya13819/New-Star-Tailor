@@ -1,0 +1,14 @@
+DirectoryIndex index.php
+Options -Indexes -MultiViews
+RewriteEngine On
+
+# Block private Laravel code, dotfiles and development files.
+RewriteRule ^(?:app|bootstrap|config|database|resources|routes|storage|vendor|tests|deployment|node_modules|newstartailor-app)(?:/|$) - [F,L,NC]
+RewriteRule (^|/)\. - [F,L]
+RewriteRule ^(?:artisan|composer\.(?:json|lock)|package(?:-lock)?\.json|phpunit\.xml|vite\.config\.js|AGENTS\.md|README\.md|FILEZILLA_SETUP_HINDI\.md)$ - [F,L,NC]
+# Public assets stay in Laravel's standard public directory.
+RewriteRule ^(?:index\.php)?$ - [L]
+RewriteRule ^public/ - [L]
+RewriteRule ^((?:static|assets)(?:/.*)?)$ public/$1 [L]
+RewriteRule ^(sw\.js|favicon\.ico|robots\.txt)$ public/$1 [L]
+RewriteRule ^ index.php [L]

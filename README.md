@@ -1,152 +1,58 @@
-# New Star Tailor
+# New Star Tailor — Laravel + MySQL
 
-Tailoring management website + PWA for **New Star Tailor**, Old UCO Bank Gully,
-Near Patel Plaza, Tagore Marg, Neemuch, Madhya Pradesh — phone **9424035393**.
+Ek hi working/upload folder:
+`/home/shyam/Documents/Work/newstartailor`
 
-**Live:** https://new-star-tailor.onrender.com
+PHP target: **8.3.36**. Laravel 13; frontend ke liye Node/Vite build nahi chahiye.
 
-It replaces the shop's paper diary: customers, measurements (versioned), orders,
-payments, receipts, reports, a customer portal and (later) SMS
-notifications. Scope is **men's tailoring only**.
+## Code kahan milega?
 
-> Business logic is authoritative in **[docs/BUSINESS_RULES.md](docs/BUSINESS_RULES.md)** — read it first.
+| Kaam | File/folder |
+| --- | --- |
+| URL se controller mapping | `routes/web.php` |
+| Home, About, Contact, Services, tracking | `app/Http/Controllers/PublicController.php` |
+| Login, signup, first admin setup | `app/Http/Controllers/AuthController.php` |
+| New order, order details, photos, receipts | `app/Http/Controllers/OrderController.php` |
+| Customer account screens | `app/Http/Controllers/CustomerController.php` |
+| Staff management and reports | `app/Http/Controllers/AdminController.php` |
+| Shared session/error handling | `app/Http/Controllers/TailoringController.php` |
+| Order/payment calculations and validation | `app/Tailoring/services.php` |
+| Shared formatting/database/view helpers | `app/Tailoring/bootstrap.php` |
+| Shared request guards and system endpoints | `app/Tailoring/controllers.php` |
+| Header, footer, navigation | `resources/views/layouts/app.blade.php` |
+| Home/About/Contact HTML | `resources/views/pages/marketing/en/` and `hi/` |
+| Services catalogue HTML | `resources/views/pages/services.blade.php` |
+| Login/signup HTML | `resources/views/pages/auth.blade.php` |
+| Order form HTML | `resources/views/pages/order_form.blade.php` |
+| Other management HTML | `resources/views/pages/*.blade.php` |
+| CSS, JavaScript, photos, logo | `public/static/`, `public/assets/` |
+| MySQL credentials | `.env` (private; not committed) |
 
-## Hostinger shared hosting: Laravel + MySQL
+Views use Blade loops, conditions, includes and escaped output. Existing monetary
+precision, payment verification and customer isolation rules are preserved.
 
-For `newstartailor.itgurujan.com` on PHP 8.3.36, use [laravel/](laravel/).
-The complete application includes customer/staff login, order tracking, versioned
-measurements, private reference photos, payment verification, receipts, enquiries,
-reports and the notification queue, with the refreshed bilingual storefront.
+## FileZilla upload
 
-Follow [the Hindi FileZilla guide](laravel/FILEZILLA_SETUP_HINDI.md).
-Install production Composer dependencies locally, then build:
+Read [FILEZILLA_SETUP_HINDI.md](FILEZILLA_SETUP_HINDI.md).
+Upload **the contents of this folder** into
+`/domains/itgurujan.com/public_html/newstartailor/`.
+The root `index.php` loads `public/index.php`; `.htaccess` maps public assets and blocks private Laravel files.
+No extra `newstartailor-app` folder is used. Do not move view files into `public/`.
 
-```sh
-python3 scripts/build_laravel_hostinger.py
-```
+The database is already imported: **do not reimport SQL or run migrate:fresh**.
+Runtime dependencies are included in `vendor/` for upload; no server Composer step
+is needed. On later code-only updates preserve `.env` and `storage/`.
 
-`New-Star-Tailor-Laravel-Hostinger.zip` is written beside this checkout.
-It includes production dependencies and fresh private setup/encryption keys;
-keep this archive private. Upload the private application outside `public_html`
-and only the supplied public folder into the subdomain document root.
-Create/import MySQL, enter your database credentials in the private `.env`, then
-create your own administrator through `/setup`. No default login is supplied.
-The original Flask implementation below is preserved for reference.
+## Local development
 
-## Redesign and MySQL handoff (`shyam`)
+Use PHP >=8.3 with Laravel's standard extensions and PDO MySQL.
+Run `composer install` to install developer tools. Use a separate local `.env`
+with local MySQL credentials and `SESSION_SECURE_COOKIE=false`, then
+`php artisan serve`. Do not use live database credentials for development tests.
+The supplied `.env` is configured for hosting; keep it private.
 
-The refreshed site uses warm ivory, a dark forest-green hero, layered product
-photography, subtle 3D depth, gold accents and raised collection cards. Optional
-desktop pointer effects respect reduced-motion preferences. Responsive WebP
-photographs reduce the 640px image set by 57% while retaining JPEG fallbacks. It includes a responsive storefront, clear mobile
-navigation, customer/staff login screens, styled management views and a shared
-order progress indicator on tracking and customer order details. Homepage prices
-come from the active database catalogue instead of hardcoded rates.
-
-**Database:** [database/new_star_tailor.sql](database/new_star_tailor.sql) can be
-imported into an empty MySQL database or phpMyAdmin. Read
-[database/README.md](database/README.md) for import, Docker, configuration and login
-setup. Existing migrations and authentication are retained. No live database,
-customer data or passwords are included in Git. See [verification](docs/VERIFICATION.md)
-for the checks performed and environment limits.
-
-## Services and shop identity
-
-The services catalogue includes category links, search, live database prices,
-clear unpriced-service call actions and links that preselect the service in the
-online order form. Filters also work without JavaScript. The About page features
-the real shop photograph with responsive WebP versions.
-
-The red/black faceted star in `app/static/img/brand-star.svg` is recreated from the
-shop signboard. The same identity is used in navigation, footer, receipts,
-favicon and PWA icons. Catalogue/About styling loads only on those two pages.
-
-## Stack
-Flask · SQLAlchemy + Flask-Migrate · PostgreSQL (production, on Render) /
-MySQL-MariaDB or SQLite (local dev) · Bootstrap 5 · Flask-Babel
-(English + Hindi) · Flask-Login · pytest. Server-rendered, mobile-first,
-installable PWA. Deployment: see `docs/DEPLOYMENT.md` (`render.yaml` deploys
-the whole thing — app + Postgres — as a Render Blueprint).
-
-## Status — Phase 18 of 18 complete
-
-| ✔ | Phase 1 | App factory, config, extensions, health checks, base UI, error pages |
-| ✔ | Phase 2 | 14 SQLAlchemy models, initial Alembic migration, decimal money helpers, model tests |
-| ✔ | Phase 3 | Admin + customer authentication, role-gated routes, rate-limited login, `flask nst create-admin` |
-| ✔ | Phase 4 | Admin customer CRUD, search (name/mobile), duplicate-mobile warning (not a block), audit log |
-| ✔ | Phase 5 | Measurement versioning UI — inches, fitting preference, history, pre-fill from last version |
-| ✔ | Phase 6 | Service catalogue & pricing — `/admin/services`, seeded defaults, unset prices flagged not guessed |
-| ✔ | Phase 7 | Walk-in orders — `/admin/orders`, NST-0001 numbering, stitching/material split, manual urgent pricing, status lifecycle |
-| ✔ | Phase 8 | Payments — partial payments, cash/UPI auto-verified vs online pending, overpayment blocked, provider abstraction, inert webhook |
-| ✔ | Phase 9 | Admin dashboard — status counts, urgent/overdue/today's deliveries, outstanding balance, recent orders, quick actions, global search |
-| ✔ | Phase 10 | Customer portal — own orders/measurements/payments only, strict per-customer data isolation (404, not 403, on a guessed id) |
-| ✔ | Phase 11 | Online ordering — `/enquiry`, `/order` (self-measurement + ack, reference photo, pending payment intent), `/track-order`, `/admin/enquiries` |
-| ✔ | Phase 12 | Printable order + payment receipts for admin and the customer portal (own orders only) |
-| ✔ | Phase 13 | SMS-ready notifications (never WhatsApp) — order confirmation/ready hooks, `/admin/notifications`, `nst notifications process` + `nst reminders run` CLI (honest no-op until a provider is configured) |
-| ✔ | Phase 14 | Reports — today/week/month/custom, category breakdown, revenue from verified payments only, live pending-payments list |
-| ✔ | Phase 15 | Full Hindi translation — every form label, flash message and template string wrapped for i18n, 351-string `hi` catalogue, `?lang=hi` switch remembered in session |
-| ✔ | Phase 16 | PWA — installable manifest + icon set, service worker caching only the static shell and read-only public pages (never admin/customer/API), `/sw.js` served at root scope |
-| ✔ | Phase 17 | SEO + hardening — canonical/OG/Twitter tags, JSON-LD `ClothingStore` listing, `robots.txt` + `sitemap.xml` (public pages only), CSP with per-request nonce, HSTS, `X-Frame-Options`, `Permissions-Policy`, `ProxyFix` for correct HTTPS detection behind Nginx |
-| ✔ | Phase 18 | Final hardening pass — 197 tests passing (redesign verification), `DEPLOYMENT.md`/`BACKUP.md` finalised for production |
-
-> MySQL setup is environment-specific; see [database/README.md](database/README.md).
-
-See the master plan for the full phase list.
-
-## Quick start (development)
-
-```bash
-python3 -m venv .venv
-.venv/bin/pip install -r requirements-dev.txt
-
-cp .env.example .env
-# set SECRET_KEY:  python -c "import secrets; print(secrets.token_hex(32))"
-
-# Optional now / required for MySQL — see docs/DATABASE_SETUP.md, then set
-# DATABASE_URL + TEST_DATABASE_URL in .env. Leaving them blank uses SQLite.
-
-.venv/bin/flask --app wsgi db upgrade        # create the schema
-.venv/bin/flask --app wsgi nst check         # connectivity + schema revision
-.venv/bin/flask --app wsgi nst create-admin  # first shop staff login
-.venv/bin/flask --app wsgi nst seed-services # default service catalogue (idempotent)
-.venv/bin/flask --app wsgi run --debug       # http://127.0.0.1:5000
-# then: /admin/login (staff) · /admin/customers (customer + measurement management)
-#       /admin/services (pricing — some prices are intentionally unset, see BUSINESS_RULES.md)
-#       /customer/login or /customer/register (customers)
-#       /enquiry · /order · /track-order (public, no login needed)
-```
-
-The app runs **without** a database (health shows `degraded`); you need MySQL
-from Phase 2 onward for migrations and the full test suite.
-
-## Tests & lint
-
-```bash
-.venv/bin/python -m pytest
-.venv/bin/ruff check .
-```
-
-## Layout
-
-```
-wsgi.py                 gunicorn / flask run entrypoint
-gunicorn.conf.py        production server config
-app/
-  __init__.py           application factory
-  config.py             env-driven configuration
-  extensions.py         db, migrate, login, csrf, babel, limiter
-  routes/               public / auth / customer_portal / admin / api
-  services/             business logic (orders, pricing, payments, …)
-  repositories/         data access
-  models/               SQLAlchemy models
-  forms/  utils/  templates/  static/  translations/
-  cli.py                `flask nst …` commands
-docs/                   BUSINESS_RULES · DATABASE_SETUP · DEPLOYMENT · BACKUP
-tests/
-```
-
-## The old prototype
-
-An earlier React + Convex prototype is preserved on the git branch
-**`legacy/convex-prototype`** (`git show legacy/convex-prototype:README.md`).
-`main` is the Flask rewrite.
+Run `php artisan test` and `vendor/bin/pint --dirty --format agent`.
+`tests/http_edge_cases.py` is the real HTTP/MySQL suite; it only permits a guarded
+local `_test` database and URL. `NST_TEST_ENV` can select a separate QA env file.
+Before uploading, `composer install --no-dev --optimize-autoloader` keeps vendor
+free of developer tools. Production dependencies target PHP 8.3.36 in composer.lock.

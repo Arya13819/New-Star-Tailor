@@ -1,69 +1,34 @@
-# Python
-__pycache__/
-*.py[cod]
-*.egg-info/
-.eggs/
-build/
-dist/
-
-# Virtualenv
-.venv/
-venv/
-env/
-
-# Environment / secrets
-.env
-.env.*
-!.env.example
-
-# Flask / instance
-instance/
-*.sqlite
-*.sqlite3
-*.db
-
-# Uploads (private customer data — never commit)
-app/static/uploads/
-uploads/
-media/
-
-# Babel compiled catalogs are built during deploy
-# (keep .po, ignore .mo)
-*.mo
-
-# Tests / coverage
-.pytest_cache/
-.coverage
-htmlcov/
-coverage.xml
-
-# Editors / OS
-.vscode/*
-!.vscode/extensions.json
-.idea/
-.DS_Store
-*.swp
-
-# Logs
 *.log
-logs/
+.DS_Store
+.env
+.env.backup
+.env.production
+.phpactor.json
+.phpunit.result.cache
+/.codex
+/.cursor/
+/.idea
+/.nova
+/.phpunit.cache
+/.vscode
+/.zed
+/auth.json
+/node_modules
+/public/build
+/public/fonts-manifest.dev.json
+/public/hot
+/public/storage
+/storage/*.key
+/storage/pail
+/vendor
+_ide_helper.php
+Homestead.json
+Homestead.yaml
+Thumbs.db
 
-# Stray tool caches
-.vite/
-node_modules/
+/public/static/uploads/
+/storage/app/private/references/*
 
-# Shared-hosting deployment secrets and generated local assets
-hostinger/config.php
-hostinger/static
-hostinger/storage/
-
-# Laravel runtime and deployment artifacts
-laravel/vendor/
-laravel/.env
-laravel/storage/logs/*
-laravel/storage/framework/cache/data/*
-laravel/storage/framework/sessions/*
-laravel/storage/framework/views/*
-laravel/storage/app/private/references/
-laravel/bootstrap/cache/*.php
-laravel/public/static/
+# Local Python HTTP verification cache
+__pycache__/
+*.pyc
