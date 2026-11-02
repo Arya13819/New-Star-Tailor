@@ -26,7 +26,7 @@ def test_homepage_renders(client):
     resp = client.get("/")
     assert resp.status_code == 200
     assert b"New Star Tailor" in resp.data
-    assert b"9352672795" in resp.data
+    assert b"9424035393" in resp.data
 
 
 def test_unknown_page_shows_friendly_404(client):

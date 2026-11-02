@@ -6,7 +6,7 @@ If code and this document disagree, this document wins — raise it.
 ## Shop
 - **Name:** New Star Tailor
 - **Address:** Old UCO Bank Gully, Near Patel Plaza, Tagore Marg, Neemuch, Madhya Pradesh, India
-- **Phone:** 9352672795
+- **Phone:** 9424035393
 - Scope: **men's tailoring only** (the general store is out of scope).
 
 ## Services & categories

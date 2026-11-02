@@ -81,7 +81,7 @@ class Config:
         "Old UCO Bank Gully, Near Patel Plaza, Tagore Marg, "
         "Neemuch, Madhya Pradesh, India"
     )
-    SHOP_PHONE = "9352672795"
+    SHOP_PHONE = "9424035393"
     SHOP_LATITUDE = "24.4570252"
     SHOP_LONGITUDE = "74.870045"
     SHOP_CITY = "Neemuch"

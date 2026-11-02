@@ -1,7 +1,7 @@
 # New Star Tailor
 
 Tailoring management website + PWA for **New Star Tailor**, Old UCO Bank Gully,
-Near Patel Plaza, Tagore Marg, Neemuch, Madhya Pradesh — phone **9352672795**.
+Near Patel Plaza, Tagore Marg, Neemuch, Madhya Pradesh — phone **9424035393**.
 
 **Live:** https://new-star-tailor.onrender.com
 

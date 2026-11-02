@@ -87,7 +87,7 @@ def test_json_ld_local_business_present_on_homepage(client):
     body = resp.data.decode()
     assert "application/ld+json" in body
     assert '"@type": "ClothingStore"' in body
-    assert "9352672795" in body
+    assert "9424035393" in body
 
 
 def test_open_graph_tags_present(client):
