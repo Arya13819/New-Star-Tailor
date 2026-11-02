@@ -94,3 +94,18 @@ About: no horizontal overflow, broken loaded images or JavaScript errors.
 Verified combined category/search, reset and empty states, service-to-order
 preselection and Hindi pages with JavaScript disabled. Automated release checks: **200 tests passed** on SQLite; Python compilation,
 service-worker syntax and Git whitespace checks passed.
+
+## Google Maps — 2 November 2026
+
+Added the same responsive Google Maps card to About and Contact at the supplied
+coordinates 24.4570252,74.870045, zoom 17. The card includes the shop address,
+open-in-Maps and driving-directions links. Contact also has a refreshed contact
+information layout. The map iframe lazy-loads, has an accessible title and reserved
+height; location CSS loads only on these two pages. Frame permissions are scoped
+to these two routes and the two Google Maps hostnames. Cache version is v7.
+
+21 focused smoke, SEO/PWA and map tests passed, including exact coordinates,
+iframe accessibility and scoped CSP. Chromium loaded the actual Google Maps embed
+on both routes at 390px and 1440px: map tiles and the pin were visually verified,
+with no horizontal overflow or page JavaScript errors. Python compilation,
+service-worker syntax and Git whitespace checks passed.

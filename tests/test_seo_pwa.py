@@ -102,3 +102,30 @@ def test_apple_touch_icon_served(client):
     resp = client.get("/static/img/icons/apple-touch-icon.png")
     assert resp.status_code == 200
     assert resp.headers["Content-Type"] == "image/png"
+
+
+def test_maps_embed_exact_shop_location_with_scoped_frame_permission(client):
+    from html.parser import HTMLParser
+
+    class MapParser(HTMLParser):
+        frames = None
+        def __init__(self):
+            super().__init__()
+            self.frames = []
+        def handle_starttag(self, tag, attrs):
+            if tag == "iframe":
+                self.frames.append(dict(attrs))
+
+    for path in ("/about", "/contact"):
+        response = client.get(path)
+        assert response.status_code == 200
+        parser = MapParser()
+        parser.feed(response.text)
+        assert len(parser.frames) == 1
+        frame = parser.frames[0]
+        assert frame["src"].startswith("https://www.google.com/maps?")
+        assert "q=24.4570252,74.870045" in frame["src"]
+        assert "z=17" in frame["src"] and "output=embed" in frame["src"]
+        assert frame["loading"] == "lazy" and frame["title"]
+        assert "frame-src https://www.google.com https://maps.google.com;" in response.headers["Content-Security-Policy"]
+    assert "frame-src https://www.google.com" not in client.get("/").headers["Content-Security-Policy"]

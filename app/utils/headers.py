@@ -22,6 +22,11 @@ def register_security_headers(app: Flask) -> None:
     @app.after_request
     def _set_security_headers(response):
         nonce = g.get("csp_nonce", "")
+        # Only the two location pages may frame the explicitly requested map.
+        map_frames = (
+            "frame-src https://www.google.com https://maps.google.com; "
+            if request.endpoint in {"public.about", "public.contact"} else ""
+        )
         csp = (
             "default-src 'self'; "
             f"script-src 'self' 'nonce-{nonce}'; "
@@ -32,6 +37,7 @@ def register_security_headers(app: Flask) -> None:
             "img-src 'self' data:; "
             "font-src 'self'; "
             "connect-src 'self'; "
+            f"{map_frames}"
             "object-src 'none'; "
             "base-uri 'self'; "
             "form-action 'self'; "

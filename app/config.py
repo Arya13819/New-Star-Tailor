@@ -82,7 +82,7 @@ class Config:
         "Neemuch, Madhya Pradesh, India"
     )
     SHOP_PHONE = "9352672795"
-    SHOP_LATITUDE = "24.457025"
+    SHOP_LATITUDE = "24.4570252"
     SHOP_LONGITUDE = "74.870045"
     SHOP_CITY = "Neemuch"
     SHOP_REGION = "Madhya Pradesh"

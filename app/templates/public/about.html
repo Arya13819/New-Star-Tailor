@@ -2,6 +2,7 @@
 {% block title %}{{ _('About us') }} — {{ SHOP.name }}{% endblock %}
 {% block head_extra %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/catalogue.css', v='6') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/location.css', v='7') }}">
 {% endblock %}
 {% block content %}
 <section class="about-story" aria-labelledby="about-title">
@@ -9,4 +10,5 @@
   <div class="about-story-copy"><p class="section-label">{{ _('About us') }}</p><img class="about-brand-star" src="{{ url_for('static', filename='img/brand-star.svg') }}" alt="" width="65" height="65"><h1 id="about-title">{{ SHOP.name }}</h1><p class="about-lead">{{ _('A familiar star. A personal fit.') }}</p><p>{{ _("Men's tailoring and uniform specialists in Neemuch, Madhya Pradesh — shirts, trousers, and regulation Police, CRPF and Army uniforms.") }}</p><p>{{ _("Visit our shop for measurements, choose your style and fabric, and follow your order through your personal account. Stitching and cloth charges are always shown separately.") }}</p><div class="d-flex flex-wrap gap-3"><a class="btn btn-primary" href="{{ url_for('public.contact') }}">{{ _('Visit the shop') }} ↗</a><a class="btn btn-outline-primary" href="{{ url_for('public.services') }}">{{ _('Explore services') }}</a></div></div>
 </section>
 <section class="about-brand-note"><img src="{{ url_for('static', filename='img/brand-star.svg') }}" alt="" width="44" height="44"><div><h2>{{ _('The star on our sign. The care in our work.') }}</h2><p>{{ _('Our red and black star comes from the shop signboard — a familiar identity, now carried into our website.') }}</p></div></section>
+{% include "partials/_shop_map.html" %}
 {% endblock %}
