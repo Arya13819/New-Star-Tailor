@@ -1,4 +1,24 @@
-# Ek folder se FileZilla upload
+# FileZilla — New Star Tailor deployment
+
+## Existing live site: is design update ko upload karo
+
+Local folder: `/home/shyam/Documents/Work/newstartailor/`
+
+Remote folder: `/domains/itgurujan.com/public_html/newstartailor/`
+
+1. Remote `resources/views/`, `.htaccess`, `public/sw.js` aur current CSS ka backup download karo.
+2. Isi local folder se `resources/views/` ko remote `resources/views/` mein upload/overwrite karo; naya `partials/fit-guide.blade.php` bhi zaroor jayega.
+3. `public/static/css/atelier.css` ko remote ke isi relative path mein upload karo.
+4. `public/sw.js` aur root `.htaccess` ko corresponding remote paths par upload/overwrite karo.
+5. Documentation ke liye `README.md`, `AI_HANDOFF.md` aur `FILEZILLA_SETUP_HINDI.md` bhi update kar sakte ho.
+6. `.env`, `storage/`, `vendor/` aur database ko is update mein replace **nahi** karna. SQL import/migration ki zarurat nahi hai.
+7. Failed transfers zero check karo. Browser refresh karke English/Hindi homepage, Services, mobile Call/Order actions aur login check karo.
+8. Agar compiled Blade views purane dikh rahe hain, sirf `storage/framework/views/` ke compiled `.php` files clear karo; sessions/photos ko mat chhedna.
+9. Rollback ke liye step 1 ka backup wahi paths par restore karo; new CSS file rehne se data par asar nahi padta.
+
+Neeche ke complete-upload steps fresh install/layout change ke liye hain. Existing live site ke design update ke liye upar ka changed-file upload kaafi hai.
+
+
 
 ## Local folder — sirf yahi use karo
 

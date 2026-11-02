@@ -49,9 +49,11 @@ namespace App\Tailoring;
     @endif
 
     <script nonce="{{ $nonce }}" type="application/ld+json">{!! json_encode(['@context' => 'https://schema.org', '@type' => 'ClothingStore', 'name' => SHOP_NAME, 'telephone' => '+91'.SHOP_PHONE, 'address' => SHOP_ADDRESS, 'geo' => ['@type' => 'GeoCoordinates', 'latitude' => LATITUDE, 'longitude' => LONGITUDE]], JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE) !!}</script>
+    <link rel="stylesheet" href="/static/css/atelier.css?v=20261102">
 </head>
 
-<body class="{!! $path === '/' ? 'home-page' : 'inner-page' !!}">
+<body
+    class="{{ in_array($path, ['/', '/services', '/about', '/contact', '/gallery'], true) ? 'storefront-page' : '' }} {!! $path === '/' ? 'home-page' : 'inner-page' !!}">
     <a class="skip-link" href="#main-content">{{ raw_t('Skip to content') }}</a>
     <div class="announcement no-print">
         <div class="container d-flex justify-content-between gap-3">
@@ -150,6 +152,16 @@ namespace App\Tailoring;
                     href="/admin/login">{{ raw_t('Staff sign in') }} ↗</a></div>
         </div>
     </footer>
+    @if (in_array($path, ['/', '/services', '/about', '/contact', '/gallery'], true))
+        <nav class="mobile-shop-actions no-print"
+            aria-label="{{ $locale === 'hi' ? 'दुकान से संपर्क' : 'Shop shortcuts' }}">
+            <a href="tel:+91{{ SHOP_PHONE }}"><span aria-hidden="true">↗</span>
+                {{ $locale === 'hi' ? 'कॉल करें' : 'Call the tailor' }}</a>
+            <a class="mobile-order-action"
+                href="/order">{{ $locale === 'hi' ? 'ऑर्डर शुरू करें' : 'Start your order' }} <span
+                    aria-hidden="true">↗</span></a>
+        </nav>
+    @endif
     <script src="/static/vendor/bootstrap/bootstrap.bundle.min.js" defer></script>
 
     @if (str_ends_with($path, '/receipt'))

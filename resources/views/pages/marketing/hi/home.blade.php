@@ -185,6 +185,8 @@ namespace App\Tailoring;
         </li>
     </ol>
 </section>
+@include('partials.fit-guide')
+
 <section class="tracking-banner">
     <div>
         <p class="section-label">ALREADY ORDERED?</p>

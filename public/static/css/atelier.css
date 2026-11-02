@@ -1,0 +1,110 @@
+/* New Star's atelier finish. Small CSS layer; no extra fonts or animation runtime. */
+:root {
+  --atelier-paper: #fffdf8;
+  --atelier-line: #d9d7c9;
+  --atelier-sage: #dce3d8;
+}
+.storefront-page {
+  background-image: radial-gradient(ellipse at 5% 22%, #e6e9df66, transparent 42%);
+}
+.navbar-nst { border-bottom: 1px solid #213c3012; }
+.storefront-page .section-label { letter-spacing: .14em; }
+.storefront-page .tailor-hero {
+  border: 1px solid #2b4935;
+  border-radius: 22px 22px 80px 22px;
+  background-image: radial-gradient(ellipse at 80% 12%, #59725770, transparent 54%), linear-gradient(125deg, #162c24, #294c3a);
+  box-shadow: 0 22px 50px -30px #1831258c;
+  isolation: isolate;
+}
+.storefront-page .hero-copy h1 em { color: #e9cf9e; }
+.storefront-page .hero-note { border-top: 1px dashed #d8ddc74a; padding-top: 20px; }
+.storefront-page .hero-image-wrap { border-radius: 9px 9px 48px 9px; }
+.storefront-page .hero-stamp { box-shadow: 0 10px 26px #101f2426; }
+.storefront-page .promise-strip { border-bottom-style: dashed; }
+.storefront-page .promise-number { color: #8f7047; font-family: Georgia, serif; }
+.storefront-page .collection-card {
+  padding: 12px 12px 18px;
+  background: var(--atelier-paper);
+  border: 1px solid var(--atelier-line);
+  border-radius: 14px;
+  box-shadow: 0 5px 0 #e4e3d8;
+}
+.storefront-page .collection-image { border-radius: 7px; }
+.storefront-page .collection-meta { margin-top: 18px; gap: 10px; }
+.storefront-page .collection-card p { line-height: 1.65; }
+.storefront-page .craft-values > div { border-bottom: 1px dashed #c8cdbc; }
+.storefront-page .process-list > li { position: relative; }
+.storefront-page .process-list > li > span {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  border: 1px solid #c8cebc;
+  border-radius: 50%;
+  background: #ecede3;
+  font-family: Georgia, serif;
+}
+.fit-guide { padding-block: 12px 48px; }
+.fit-guide-heading { display: grid; grid-template-columns: 1.2fr 1fr; gap: 60px; align-items: end; margin-bottom: 30px; }
+.fit-guide-heading h2 { font: 400 clamp(30px, 3.5vw, 46px)/1.17 Georgia, "Noto Serif Devanagari", serif; letter-spacing: -.035em; margin-bottom: 0; }
+.fit-guide-heading > p { max-width: 390px; margin: 0 0 4px auto; color: #5a655d; line-height: 1.9; font-size: 14px; }
+.fit-guide-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.fit-guide-card { display: flex; flex-direction: column; padding: 27px; text-decoration: none; color: #233a2e; background: var(--atelier-paper); border: 1px solid var(--atelier-line); border-radius: 10px; transition: transform .2s, box-shadow .2s, border-color .2s; }
+.fit-guide-card-top { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 32px; }
+.fit-guide-card-top > span:first-child { font-size: 10px; letter-spacing: .16em; color: #6a7367; }
+.fabric-swatch { display: block; flex: 0 0 54px; height: 58px; transform: rotate(8deg); border: 3px solid #ffffffc9; outline: 1px solid #8c8d7e40; box-shadow: 4px 5px 0 #213d3010; background-size: 4px 4px; }
+.fabric-swatch--everyday { background-color: #738ba0; background-image: repeating-linear-gradient(90deg, #fff4 0 1px, transparent 1px 4px); }
+.fabric-swatch--uniform { background-color: #b6a384; background-image: repeating-linear-gradient(45deg, #fff3 0 1px, transparent 1px 4px); }
+.fabric-swatch--fabric { background-color: #647569; background-image: repeating-linear-gradient(0deg, #fff3 0 1px, transparent 1px 4px); }
+.fit-guide-card h3 { font: 400 26px/1.2 Georgia, "Noto Serif Devanagari", serif; letter-spacing: -.025em; margin-bottom: 14px; }
+.fit-guide-card p { color: #5b655c; line-height: 1.8; font-size: 13px; margin-bottom: 25px; }
+.fit-guide-link { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding-top: 17px; border-top: 1px dashed #d0d4c7; margin-top: auto; font-size: 12px; font-weight: 600; }
+.fit-guide-link > span { font-size: 22px; font-weight: 400; }
+.fit-guide-footnote { display: flex; gap: 14px; align-items: center; margin-top: 25px; font-size: 12px; color: #5b655c; line-height: 1.7; }
+.fit-guide-footnote > span:first-child { color: #8f7047; font-size: 24px; }
+.fit-guide-footnote a { margin-left: auto; flex-shrink: 0; color: #284c38; text-underline-offset: 5px; }
+.storefront-page .tracking-banner { position: relative; border-radius: 14px; border: 1px solid #46604b; background: linear-gradient(120deg, #19392a, #31513a); box-shadow: 0 8px 0 #e0e2d5; }
+.storefront-page .tracking-banner .btn { flex-shrink: 0; }
+.storefront-page .catalogue-card { border-radius: 13px; box-shadow: 0 5px 0 #e4e3d8; transition: transform .2s, box-shadow .2s; }
+.storefront-page .catalogue-photo { border-radius: 12px 12px 0 0; }
+.storefront-page .catalogue-card-body { border-top: 1px solid #d8dbce; }
+.storefront-page .services-intro { border-bottom: 1px dashed #c9cfbf; padding-bottom: 38px; }
+.storefront-page .location-card { border-radius: 16px; }
+.mobile-shop-actions { display: none; }
+a:focus-visible, button:focus-visible { outline: 3px solid #a77d39; outline-offset: 5px; }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .fit-guide-card:hover { transform: translateY(-5px); border-color: #91a189; box-shadow: 0 14px 28px -15px #1c3b3059; color: #233a2e; }
+  .storefront-page .catalogue-card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px -14px #183b3059; }
+}
+@media (max-width: 991px) {
+  .fit-guide-heading { gap: 28px; }
+  .fit-guide-card { padding: 20px; }
+  .fit-guide-card h3 { font-size: 23px; }
+}
+@media (max-width: 767px) {
+  .storefront-page { padding-bottom: calc(68px + env(safe-area-inset-bottom)); }
+  .storefront-page .tailor-hero { border-radius: 16px 16px 44px 16px; }
+  .fit-guide { padding-bottom: 30px; }
+  .fit-guide-heading, .fit-guide-grid { grid-template-columns: 1fr; }
+  .fit-guide-heading { gap: 18px; }
+  .fit-guide-heading > p { max-width: none; margin: 0; }
+  .fit-guide-card { padding: 25px; }
+  .fit-guide-card-top { margin-bottom: 22px; }
+  .fit-guide-card h3 { font-size: 28px; }
+  .fit-guide-card p { font-size: 14px; }
+  .fit-guide-footnote { flex-wrap: wrap; }
+  .fit-guide-footnote > span:nth-child(2) { flex: 1; }
+  .fit-guide-footnote a { margin-left: 38px; }
+  .mobile-shop-actions { display: grid; grid-template-columns: 1fr 1.15fr; position: fixed; inset: auto 0 0; z-index: 1030; gap: 8px; padding: 10px 14px calc(10px + env(safe-area-inset-bottom)); border-top: 1px solid #cbd1c0; background: #faf9f6; box-shadow: 0 -6px 20px #203b3010; }
+  .mobile-shop-actions a { display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 44px; padding: 8px; color: #233f30; border-radius: 6px; text-decoration: none; font-size: 12px; font-weight: 600; border: 1px solid #c2cbb9; }
+  .mobile-shop-actions .mobile-order-action { background: #244632; color: #fffdf6; border-color: #244632; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fit-guide-card, .storefront-page .catalogue-card { transition: none; }
+}
+@media print {
+  .mobile-shop-actions { display: none !important; }
+  .storefront-page { padding-bottom: 0; background: #fff; }
+  .fit-guide-card { break-inside: avoid; box-shadow: none; }
+}

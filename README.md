@@ -1,58 +1,153 @@
-# New Star Tailor — Laravel + MySQL
+# New Star Tailor
 
-Ek hi working/upload folder:
-`/home/shyam/Documents/Work/newstartailor`
+**Made to measure. Managed with care.**
 
-PHP target: **8.3.36**. Laravel 13; frontend ke liye Node/Vite build nahi chahiye.
+A bilingual tailoring storefront and shop-management application for New Star
+Tailor, Neemuch. Customers can explore services, place an order and follow its
+progress; staff can manage measurements, payments and delivery from one place.
 
-## Code kahan milega?
+[Website](https://newstartailor.itgurujan.com) ·
+[FileZilla deployment guide](FILEZILLA_SETUP_HINDI.md) ·
+[AI / developer handoff](AI_HANDOFF.md)
 
-| Kaam | File/folder |
+| Platform | Details |
 | --- | --- |
-| URL se controller mapping | `routes/web.php` |
-| Home, About, Contact, Services, tracking | `app/Http/Controllers/PublicController.php` |
-| Login, signup, first admin setup | `app/Http/Controllers/AuthController.php` |
-| New order, order details, photos, receipts | `app/Http/Controllers/OrderController.php` |
-| Customer account screens | `app/Http/Controllers/CustomerController.php` |
-| Staff management and reports | `app/Http/Controllers/AdminController.php` |
-| Shared session/error handling | `app/Http/Controllers/TailoringController.php` |
-| Order/payment calculations and validation | `app/Tailoring/services.php` |
-| Shared formatting/database/view helpers | `app/Tailoring/bootstrap.php` |
-| Shared request guards and system endpoints | `app/Tailoring/controllers.php` |
-| Header, footer, navigation | `resources/views/layouts/app.blade.php` |
-| Home/About/Contact HTML | `resources/views/pages/marketing/en/` and `hi/` |
-| Services catalogue HTML | `resources/views/pages/services.blade.php` |
-| Login/signup HTML | `resources/views/pages/auth.blade.php` |
-| Order form HTML | `resources/views/pages/order_form.blade.php` |
-| Other management HTML | `resources/views/pages/*.blade.php` |
-| CSS, JavaScript, photos, logo | `public/static/`, `public/assets/` |
-| MySQL credentials | `.env` (private; not committed) |
+| Backend | Laravel 13, PHP target **8.3.36** |
+| Database | MySQL / MariaDB |
+| Templates | Laravel Blade, English and Hindi |
+| Frontend | Bootstrap, custom CSS, lightweight JavaScript, responsive WebP |
+| Hosting | Hostinger shared hosting; one subdomain folder |
+| Development branch | `shyam` |
 
-Views use Blade loops, conditions, includes and escaped output. Existing monetary
-precision, payment verification and customer isolation rules are preserved.
+## What the website does
 
-## FileZilla upload
+- **Storefront:** editorial product photography, subtle CSS depth, searchable
+  services with live catalogue prices, real shop identity and embedded maps.
+- **Customer portal:** registration/login, orders, measurements, payments and
+  receipts, with access restricted to the signed-in customer's own data.
+- **Order workflow:** multiple services, fractional measurements, versioned
+  measurement snapshots, reference photos and order-number/mobile tracking.
+- **Shop workspace:** walk-in customers, catalogue edits, order status, payment
+  verification, enquiries, receipts and revenue reports.
+- **Practical mobile design:** responsive layouts, accessible focus states,
+  reduced-motion support and storefront Call / Order shortcuts.
 
-Read [FILEZILLA_SETUP_HINDI.md](FILEZILLA_SETUP_HINDI.md).
-Upload **the contents of this folder** into
-`/domains/itgurujan.com/public_html/newstartailor/`.
-The root `index.php` loads `public/index.php`; `.htaccess` maps public assets and blocks private Laravel files.
-No extra `newstartailor-app` folder is used. Do not move view files into `public/`.
+Money is calculated in integer paise and stored as decimal amounts. Catalogue
+price changes do not rewrite past orders. Online payment references need manual
+verification; a real payment gateway and outbound SMS provider are **not yet
+configured**. Notification records currently form a queue.
 
-The database is already imported: **do not reimport SQL or run migrate:fresh**.
-Runtime dependencies are included in `vendor/` for upload; no server Composer step
-is needed. On later code-only updates preserve `.env` and `storage/`.
+## One project, one location
 
-## Local development
+```text
+/home/shyam/Documents/Work/newstartailor/
+├── app/Http/Controllers/       # public, auth, order, customer and admin logic
+├── app/Http/Middleware/        # roles and response security headers
+├── app/Models/                # Laravel user authentication
+├── app/Tailoring/             # shared business rules, helpers, translations
+├── config/                    # framework and shop configuration
+├── database/                  # schema, migration and catalogue seeder
+├── public/                    # public entry point, CSS, JS, images and logo
+├── resources/views/           # Blade HTML templates
+│   ├── layouts/app.blade.php   # navigation, footer and shared page shell
+│   ├── pages/                 # customer/admin/order views
+│   ├── pages/marketing/       # English and Hindi marketing pages
+│   └── partials/              # reusable sections
+├── routes/web.php             # explicit Laravel routes and role groups
+├── storage/                   # private photos, logs, sessions and cache
+├── tests/                     # PHPUnit and guarded HTTP/MySQL verification
+├── index.php                  # shared-hosting adapter to public/index.php
+└── .env                       # private local/production settings; never in Git
+```
 
-Use PHP >=8.3 with Laravel's standard extensions and PDO MySQL.
-Run `composer install` to install developer tools. Use a separate local `.env`
-with local MySQL credentials and `SESSION_SECURE_COOKIE=false`, then
-`php artisan serve`. Do not use live database credentials for development tests.
-The supplied `.env` is configured for hosting; keep it private.
+The previous Flask project and experimental upload packages are archived locally
+under `/home/shyam/Documents/Work/_newstartailor_archive/`. They are not part of
+the current production source.
 
-Run `php artisan test` and `vendor/bin/pint --dirty --format agent`.
-`tests/http_edge_cases.py` is the real HTTP/MySQL suite; it only permits a guarded
-local `_test` database and URL. `NST_TEST_ENV` can select a separate QA env file.
-Before uploading, `composer install --no-dev --optimize-autoloader` keeps vendor
-free of developer tools. Production dependencies target PHP 8.3.36 in composer.lock.
+## Find the code you want to edit
+
+| Change | File |
+| --- | --- |
+| Home/About/Contact/Gallery HTML | `resources/views/pages/marketing/en/` and `hi/` |
+| Services catalogue | `resources/views/pages/services.blade.php` |
+| New homepage fit guide | `resources/views/partials/fit-guide.blade.php` |
+| Header, footer, mobile shortcuts | `resources/views/layouts/app.blade.php` |
+| Latest visual finish | `public/static/css/atelier.css` |
+| Existing design foundations | `public/static/css/theme.css`, `premium.css`, `catalogue.css` |
+| Logo and photographs | `public/static/img/` |
+| Login and signup | `app/Http/Controllers/AuthController.php` |
+| Order creation and money rules | `app/Tailoring/services.php` |
+| Staff management | `app/Http/Controllers/AdminController.php` |
+| Database / shop settings | `.env`, `config/database.php`, `config/tailoring.php` |
+
+No Node/Vite build is required for the storefront. Edit Blade/CSS/JS directly.
+Keep English and Hindi pages in sync.
+
+## Local setup
+
+Use PHP >=8.3 with Composer, PDO MySQL and Laravel's standard extensions
+(including mbstring, XML, curl and fileinfo), plus a separate local MySQL database.
+
+```sh
+composer install
+```
+
+For a **fresh clone**, copy `.env.example` to `.env`, configure your local MySQL
+credentials, set `APP_URL=http://127.0.0.1:8000` and
+`SESSION_SECURE_COOKIE=false`, then:
+
+```sh
+php artisan key:generate
+php artisan migrate
+php artisan serve --host=127.0.0.1 --port=8000
+```
+
+For initial admin creation, set `NST_SETUP_KEY` to a private random value of at
+least 32 characters and open `/setup`. The setup route locks after the first
+administrator. There is no default admin password.
+
+**This existing working folder already contains hosting settings in its private
+`.env`. Preserve them. Use a separate environment for local testing rather than
+pointing tests at the live database. Never regenerate the live APP_KEY.**
+
+## Verification
+
+```sh
+php artisan test
+vendor/bin/pint --dirty --format agent
+```
+
+The HTTP/MySQL suite (`tests/http_edge_cases.py`) exercises real requests,
+authentication, order amounts, uploads and customer isolation. It deliberately
+requires `NST_PHP_TEST=1`, a local `*_test` database and the QA URL
+`http://127.0.0.1:5058`. `NST_TEST_ENV` selects a private QA environment file.
+Python test dependencies: requests, PyMySQL and python-dotenv. Never run this
+suite against the production database.
+
+## Update the live website with FileZilla
+
+Local: **`/home/shyam/Documents/Work/newstartailor/`**
+
+Remote: **`/domains/itgurujan.com/public_html/newstartailor/`**
+
+Follow [the Hindi guide](FILEZILLA_SETUP_HINDI.md), especially its **existing live
+site update** section. Upload only the changed source/assets for this design
+release. **Do not replace `.env`, `storage/`, uploaded photos or the live database.**
+There is no SQL import, schema migration or vendor update for the design refresh.
+
+For a fresh installation only, build production dependencies locally with
+`composer install --no-dev --optimize-autoloader`. Git excludes `vendor/`, so a
+GitHub clone needs Composer before it becomes upload-ready. The current local
+folder already includes production vendor dependencies.
+
+Root `.htaccess` is essential: it maps public asset URLs and denies direct access
+to private Laravel code. Keep the subdomain at `/`; do not add `/public` to its
+browser URL. SSL and secure session cookies stay enabled in production.
+
+## Shop details
+
+**New Star Tailor** · Old UCO Bank Gully, Near Patel Plaza, Tagore Marg, Neemuch,
+Madhya Pradesh · **+91 94240 35393**. Map coordinates: `24.4570252, 74.870045`.
+
+The red/black star logo follows the real shop signboard. Product and shop images
+already belong to this project; preserve the existing identity when updating it.
