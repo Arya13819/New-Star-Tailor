@@ -19,6 +19,21 @@ progress; staff can manage measurements, payments and delivery from one place.
 | Hosting | Hostinger shared hosting; one subdomain folder |
 | Development branch | `shyam` |
 
+## About the website
+
+**Live website: [https://newstartailor.itgurujan.com/](https://newstartailor.itgurujan.com/)**
+
+New Star Tailor is a men's tailoring and uniform shop in Neemuch, Madhya Pradesh.
+The website brings its shirt, trouser, Police, CRPF and Army tailoring services
+online, with service prices, shop photographs, directions and direct contact.
+Customers can register, place an order and track its progress. Staff use a
+protected workspace to manage customers, measurements, orders and payments.
+
+The site is built with Laravel and MySQL for Hostinger shared hosting, with
+English/Hindi pages and a responsive design for phones and desktops. The current
+production website is **newstartailor.itgurujan.com**; the previous Render address
+is a legacy deployment.
+
 ## What the website does
 
 - **Storefront:** editorial product photography, subtle CSS depth, searchable
