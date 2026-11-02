@@ -1,0 +1,6 @@
+<?php
+
+namespace App\Tailoring;
+
+?>
+<div class="card"><div class="card-body"><div class="table-responsive"><table class="table align-middle"><thead><tr><th><?= t('Order')?></th><?php if ($admin) { ?><th><?= t('Customer')?></th><?php } ?><th><?= t('Status')?></th><th><?= t('Delivery')?></th><th class="text-end"><?= t('Total')?></th><th class="text-end"><?= t('Balance due')?></th></tr></thead><tbody><?php foreach ($orders as $o) { ?><tr><td><a href="/<?= $admin ? 'admin' : 'customer'?>/orders/<?= (int) $o['id']?>"><?= e($o['order_number'])?></a><?php if ($o['priority'] === 'URGENT') { ?><span class="badge text-bg-danger ms-2"><?= t('Urgent')?></span><?php } ?></td><?php if ($admin) { ?><td><?= e($o['customer_name'] ?? '')?></td><?php } ?><td><span class="badge text-bg-secondary"><?= e($o['status'])?></span></td><td><?= e($o['confirmed_delivery_date'] ?: '—')?></td><td class="text-end"><?= money($o['grand_total'])?></td><td class="text-end"><?= money(decimal(cents($o['grand_total']) - cents($o['paid'])))?></td></tr><?php } ?><?php if (! $orders) { ?><tr><td colspan="6" class="py-4 text-secondary"><?= t('No orders yet.')?></td></tr><?php } ?></tbody></table></div><?php if ($admin) { ?><p class="small text-secondary mb-0"><?= t('Showing up to 500 matching records. Use search and filters to narrow results.')?></p><?php } ?></div></div>

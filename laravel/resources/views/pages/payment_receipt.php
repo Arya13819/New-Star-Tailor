@@ -1,0 +1,6 @@
+<?php
+
+namespace App\Tailoring;
+
+?>
+<div class="card print-area php-receipt mx-auto"><div class="card-body"><img src="/static/img/brand-star.svg" width="52" height="52" alt=""><h1 class="h3 mt-3"><?= e(SHOP_NAME)?></h1><p class="small text-secondary"><?= e(SHOP_ADDRESS)?><br>+91 <?= e(SHOP_PHONE)?></p><hr><h2 class="h4"><?= t('Payment receipt')?> #<?= (int) $payment['id']?></h2><p><?= e($payment['order_number'])?> · <?= e($payment['customer_name'])?></p><strong class="h2"><?= money($payment['amount'])?></strong><dl class="row mt-4"><dt class="col-5"><?= t('Method')?></dt><dd class="col-7"><?= e($payment['method'])?></dd><dt class="col-5"><?= t('Status')?></dt><dd class="col-7"><?= e($payment['status'])?></dd><dt class="col-5"><?= t('Payment reference')?></dt><dd class="col-7"><?= e($payment['transaction_reference'] ?: '—')?></dd><dt class="col-5"><?= t('Verified at')?></dt><dd class="col-7"><?= e($payment['verified_at'] ?: '—')?> UTC</dd></dl><?php if ($payment['status'] !== 'VERIFIED') { ?><p class="alert alert-warning"><?= t('This payment has not been verified and is not counted as paid.')?></p><?php } ?><button class="btn btn-primary no-print" data-print><?= t('Print receipt')?></button></div></div>

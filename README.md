@@ -11,6 +11,28 @@ notifications. Scope is **men's tailoring only**.
 
 > Business logic is authoritative in **[docs/BUSINESS_RULES.md](docs/BUSINESS_RULES.md)** — read it first.
 
+## Hostinger shared hosting: Laravel + MySQL
+
+For `newstartailor.itgurujan.com` on PHP 8.3.36, use [laravel/](laravel/).
+The complete application includes customer/staff login, order tracking, versioned
+measurements, private reference photos, payment verification, receipts, enquiries,
+reports and the notification queue, with the refreshed bilingual storefront.
+
+Follow [the Hindi FileZilla guide](laravel/FILEZILLA_SETUP_HINDI.md).
+Install production Composer dependencies locally, then build:
+
+```sh
+python3 scripts/build_laravel_hostinger.py
+```
+
+`New-Star-Tailor-Laravel-Hostinger.zip` is written beside this checkout.
+It includes production dependencies and fresh private setup/encryption keys;
+keep this archive private. Upload the private application outside `public_html`
+and only the supplied public folder into the subdomain document root.
+Create/import MySQL, enter your database credentials in the private `.env`, then
+create your own administrator through `/setup`. No default login is supplied.
+The original Flask implementation below is preserved for reference.
+
 ## Redesign and MySQL handoff (`shyam`)
 
 The refreshed site uses warm ivory, a dark forest-green hero, layered product

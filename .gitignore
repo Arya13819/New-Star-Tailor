@@ -51,3 +51,19 @@ logs/
 # Stray tool caches
 .vite/
 node_modules/
+
+# Shared-hosting deployment secrets and generated local assets
+hostinger/config.php
+hostinger/static
+hostinger/storage/
+
+# Laravel runtime and deployment artifacts
+laravel/vendor/
+laravel/.env
+laravel/storage/logs/*
+laravel/storage/framework/cache/data/*
+laravel/storage/framework/sessions/*
+laravel/storage/framework/views/*
+laravel/storage/app/private/references/
+laravel/bootstrap/cache/*.php
+laravel/public/static/
